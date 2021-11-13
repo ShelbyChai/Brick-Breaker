@@ -26,6 +26,7 @@ public class Wall {
 
     private static final int LEVELS_COUNT = 4;
 
+    // Refactor: Don't use integer to represent the type of brick
     private static final int CLAY = 1;
     private static final int STEEL = 2;
     private static final int CEMENT = 3;
@@ -200,24 +201,25 @@ public class Wall {
         }
     }
 
+    // Refactor: Since crack is extracted : Brick.Crack.Up -> Crack.Up
     private boolean impactWall(){
         for(Brick b : bricks){
             switch(b.findImpact(ball)) {
                 //Vertical Impact
                 case Brick.UP_IMPACT:
                     ball.reverseY();
-                    return b.setImpact(ball.down, Brick.Crack.UP);
+                    return b.setImpact(ball.getDown(), Crack.UP);
                 case Brick.DOWN_IMPACT:
                     ball.reverseY();
-                    return b.setImpact(ball.up,Brick.Crack.DOWN);
+                    return b.setImpact(ball.getUp(),Crack.DOWN);
 
                 //Horizontal Impact
                 case Brick.LEFT_IMPACT:
                     ball.reverseX();
-                    return b.setImpact(ball.right,Brick.Crack.RIGHT);
+                    return b.setImpact(ball.getRight(),Crack.RIGHT);
                 case Brick.RIGHT_IMPACT:
                     ball.reverseX();
-                    return b.setImpact(ball.left,Brick.Crack.LEFT);
+                    return b.setImpact(ball.getLeft(),Crack.LEFT);
             }
         }
         return false;
@@ -280,11 +282,11 @@ public class Wall {
     }
 
     public void setBallXSpeed(int s){
-        ball.setXSpeed(s);
+        ball.setSpeedX(s);
     }
 
     public void setBallYSpeed(int s){
-        ball.setYSpeed(s);
+        ball.setSpeedY(s);
     }
 
     public void resetBallCount(){
