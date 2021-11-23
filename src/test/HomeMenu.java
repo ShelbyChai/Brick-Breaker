@@ -89,8 +89,6 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
         creditsFont = new Font("Monospaced",Font.PLAIN,10);
         buttonFont = new Font("Monospaced",Font.PLAIN,startButton.height-2);
 
-
-
     }
 
 
@@ -277,7 +275,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     @Override
     public void mouseReleased(MouseEvent mouseEvent) {
-        if(startClicked ){
+        if(startClicked){
             startClicked = false;
             repaint(startButton.x,startButton.y,startButton.width+1,startButton.height+1);
         }

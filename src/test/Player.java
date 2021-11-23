@@ -28,25 +28,33 @@ public class Player {
 
     private static final int DEF_MOVE_AMOUNT = 5;
 
-    private Rectangle playerFace;
-    private Point ballPoint;
+    //Refactor: Rectangle, min, max, Point from none -> final
+    final private Rectangle playerFace;
+    final private Point ballPoint;
+    final private int min;
+    final private int max;
+
     private int moveAmount;
-    private int min;
-    private int max;
 
 
+    // Container -> x: 600, y: 450
     public Player(Point ballPoint,int width,int height,Rectangle container) {
+        // ballPoint-x: 300, ballPoint-y: 430
         this.ballPoint = ballPoint;
-        moveAmount = 0;
-        playerFace = makeRectangle(width, height);
-        min = container.x + (width / 2);
-        max = min + container.width - width;
+        this.moveAmount = 0;
+        // width: 150, height: 10
+        this.playerFace = makeRectangle(width, height);
+
+
+        this.min = container.x + (width / 2); // This shows the least x-axis value the board can go which is 75 (because rectangle have midpoint so when moving it doesn't go through walls)
+        this.max = min + container.width - width; // This shows the maximum x-axis value the board can go which is 525
 
     }
 
     private Rectangle makeRectangle(int width,int height){
-        Point p = new Point((int)(ballPoint.getX() - (width / 2)),(int)ballPoint.getY());
-        return  new Rectangle(p,new Dimension(width,height));
+        // p.x: 225 , p.y: 430
+        Point p = new Point((int)(ballPoint.getX() - (width / 2)),(int)ballPoint.getY());   // This set the initial upper-left corner value of the player
+        return new Rectangle(p,new Dimension(width,height));
     }
 
     public boolean impact(Ball b){
@@ -54,10 +62,15 @@ public class Player {
     }
 
     public void move(){
+        // ballPoint is the midpoint of the player rectangle
         double x = ballPoint.getX() + moveAmount;
+        // Check if the center position of the player (x) go beyond x and y
         if(x < min || x > max)
             return;
+
+        // Move the midpoint of the rectangle
         ballPoint.setLocation(x,ballPoint.getY());
+        // Move the upper-left-corner value of the player
         playerFace.setLocation(ballPoint.x - (int)playerFace.getWidth()/2,ballPoint.y);
     }
 
@@ -77,6 +90,7 @@ public class Player {
         return  playerFace;
     }
 
+    // Reset the position of the player
     public void moveTo(Point p){
         ballPoint.setLocation(p);
         playerFace.setLocation(ballPoint.x - (int)playerFace.getWidth()/2,ballPoint.y);

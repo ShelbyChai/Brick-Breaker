@@ -37,17 +37,21 @@ public class DebugPanel extends JPanel {
 
     private Wall wall;
 
-    public DebugPanel(Wall wall){
+    private Levels levels;
+
+    public DebugPanel(Wall wall,Levels levels){
 
         this.wall = wall;
+        this.levels = levels;
 
         initialize();
 
-        skipLevel = makeButton("Skip Level",e -> wall.nextLevel());
-        resetBalls = makeButton("Reset Balls",e -> wall.resetBallCount());
+        // Refactor: Change wall -> this.wall (Name: Remove assignment to parameters)
+        skipLevel = makeButton("Skip Level",e -> this.levels.nextLevel());
+        resetBalls = makeButton("Reset Balls",e -> this.wall.resetBallCount());
 
-        ballXSpeed = makeSlider(-4,4,e -> wall.setBallXSpeed(ballXSpeed.getValue()));
-        ballYSpeed = makeSlider(-4,4,e -> wall.setBallYSpeed(ballYSpeed.getValue()));
+        ballXSpeed = makeSlider(-4,4,e -> this.wall.setBallXSpeed(ballXSpeed.getValue()));
+        ballYSpeed = makeSlider(-4,4,e -> this.wall.setBallYSpeed(ballYSpeed.getValue()));
 
         this.add(skipLevel);
         this.add(resetBalls);
