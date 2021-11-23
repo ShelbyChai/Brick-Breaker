@@ -63,16 +63,10 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
 
     public HomeMenu(GameFrame owner,Dimension area){
+        // Create an instantiate method
 
-        this.setFocusable(true);
-        this.requestFocusInWindow();
-
-        this.addMouseListener(this);
-        this.addMouseMotionListener(this);
-
+        this.initialize();
         this.owner = owner;
-
-
 
         menuFace = new Rectangle(new Point(0,0),area);
         this.setPreferredSize(area);
@@ -91,6 +85,12 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     }
 
+    public void initialize() {
+        this.setFocusable(true);
+        this.requestFocusInWindow();
+        this.addMouseListener(this);
+        this.addMouseMotionListener(this);
+    }
 
     public void paint(Graphics g){
         drawMenu((Graphics2D)g);
