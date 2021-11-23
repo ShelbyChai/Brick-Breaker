@@ -23,18 +23,17 @@ import java.util.Random;
 
 // TODO Refactor: Crazy idea -> From the wall class make a level, brick logic, player logic, ball logic
 public class Wall {
-
-    Brick[] bricks;
-    private int brickCount;
-
-
     private Rectangle area;
     private Random rnd;
+
+    Brick[] bricks;
     Ball ball;
     Player player;
+
     private Point startPoint;
     private int ballCount;
     private boolean ballLost;
+    private int brickCount;
 
     // Refactor: Create a new class call Levels and change the Wall(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio, Point ballPos) -> (Rectangle drawArea, Point ballPos)
     public Wall(Rectangle drawArea, Point ballPos){
@@ -55,7 +54,7 @@ public class Wall {
         this.startPoint = new Point(ballPos);
         this.ballCount = 3;
         this.ballLost = false;
-                makeBall(ballPos);
+        makeBall(ballPos);
         ball.setSpeed(speedX,speedY);
         player = new Player((Point) ballPos.clone(),150,10, drawArea);
 
@@ -167,10 +166,10 @@ public class Wall {
         int speedX,speedY;
         do{
             speedX = rnd.nextInt(5) - 2;
-        }while(speedX == 0);
+        } while(speedX == 0);
         do{
             speedY = -rnd.nextInt(3);
-        }while(speedY == 0);
+        } while(speedY == 0);
 
         ball.setSpeed(speedX,speedY);
         ballLost = false;

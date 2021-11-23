@@ -3,8 +3,7 @@ package test;
 import java.awt.*;
 
 public class Levels {
-    
-    // TODO Note to Refactor: Don't use integer to represent the type of brick
+
     private static final int LEVELS_COUNT = 4;
 
     private Brick[][] levels;
@@ -13,7 +12,6 @@ public class Levels {
     private BrickFactory brickFactory;
 
 
-    // Rectangle, 30, 3, 3, 300, 430
     public Levels(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio, Wall wall){
 
         levels = makeLevels(drawArea,brickCount,lineCount,brickDimensionRatio);
