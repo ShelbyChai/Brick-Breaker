@@ -30,21 +30,20 @@ abstract public class Ball {
     private int speedX;
     private int speedY;
 
-
     // Refactor: changed the parameter name from inner and border to innerColor, borderColor
     public Ball(Point2D center,int radiusA,int radiusB,Color innerColor,Color borderColor){
-        this.ballFace = makeBall(center,radiusA,radiusB);
+        ballFace = makeBall(center,radiusA,radiusB);
         this.center = center;
 
-        this.up = new Point2D.Double();
-        this.down = new Point2D.Double();
-        this.left = new Point2D.Double();
-        this.right = new Point2D.Double();
+        up = new Point2D.Double();
+        down = new Point2D.Double();
+        left = new Point2D.Double();
+        right = new Point2D.Double();
 
         this.borderColor = borderColor;
         this.innerColor = innerColor;
-        this.setSpeed(0,0);
-        this.setPoints(radiusB, radiusA);
+        setSpeed(0,0);
+        setPoints(radiusB, radiusA);
 
         // Combine the code below with method setPoints
 //        getUp().setLocation(center.getX(),center.getY()-(radiusB / 2));
