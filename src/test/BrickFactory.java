@@ -17,7 +17,6 @@ public class BrickFactory {
         if (brickType.equalsIgnoreCase("Steel Brick")) {
             return new SteelBrick(point, size);
         }
-
         return null;
     }
 }
