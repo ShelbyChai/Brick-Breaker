@@ -3,6 +3,7 @@ package test;
 import java.awt.*;
 
 public class Levels {
+    
     // TODO Note to Refactor: Don't use integer to represent the type of brick
     private static final int LEVELS_COUNT = 4;
 
