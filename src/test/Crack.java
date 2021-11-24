@@ -7,6 +7,7 @@ import java.util.Random;
 
 public class Crack{
 
+    public static final int MIN_CRACK = 1;
     private static final int CRACK_SECTIONS = 3;
     private static final double JUMP_PROBABILITY = 0.7;
 
@@ -151,21 +152,22 @@ public class Crack{
 
     }
 
+    // TODO Refactor: Use Enum
     private Point makeRandomPoint(Point from,Point to, int direction){
 
         Point out = new Point();
         int pos;
 
-        switch(direction){
-            case HORIZONTAL:
+        switch (direction) {
+            case HORIZONTAL -> {
                 // Generate a random int between the start to the end of the crack brick
                 pos = rnd.nextInt(to.x - from.x) + from.x;
-                out.setLocation(pos,to.y);
-                break;
-            case VERTICAL:
+                out.setLocation(pos, to.y);
+            }
+            case VERTICAL -> {
                 pos = rnd.nextInt(to.y - from.y) + from.y;
-                out.setLocation(to.x,pos);
-                break;
+                out.setLocation(to.x, pos);
+            }
         }
         return out;
     }

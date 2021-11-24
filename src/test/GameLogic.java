@@ -22,7 +22,7 @@ import java.awt.geom.Point2D;
 import java.util.Random;
 
 // TODO Refactor: Crazy idea -> From the wall class make a level, brick logic, player logic, ball logic
-public class Wall {
+public class GameLogic {
     private Rectangle area;
     private Random rnd;
 
@@ -36,49 +36,49 @@ public class Wall {
     private int brickCount;
 
     // Refactor: Create a new class call Levels and change the Wall(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio, Point ballPos) -> (Rectangle drawArea, Point ballPos)
-    public Wall(Rectangle drawArea, Point ballPos){
+    public GameLogic(Rectangle drawArea, Point ballPos){
 
         rnd = new Random();
-        int speedX,speedY;
-        // if speedX is negative then to left else to right (velocity)
-        do{
-            speedX = rnd.nextInt(5) - 2;
-        }while(speedX == 0);
-
-        // speedY is negative because move from down to up
-        do{
-            speedY = -rnd.nextInt(3);
-        }while(speedY == 0);
-
-
         this.startPoint = new Point(ballPos);
         this.ballCount = 3;
         this.ballLost = false;
-        makeBall(ballPos);
-        ball.setSpeed(speedX,speedY);
-        player = new Player((Point) ballPos.clone(),150,10, drawArea);
 
+        makeBall(ballPos);
+        ball.setSpeed(randomSpeedX(),randomSpeedY());
+        // Refactor: Create a make player class
+        makePlayer((Point) ballPos.clone(),150,10, drawArea);
 
         // drawArea -> screen width and height
         area = drawArea;
     }
 
-    // Refactor: Created 4 new method
-    public Brick[] getBricks() {return bricks;}
-    public void setBricks(Brick[] bricks) {
-        this.bricks = bricks;
-    }
-    public void setBrickCount(int brickCount){
-        this.brickCount = brickCount;
-    }
-    public void decrementBrickCount() {brickCount--;}
+    public int randomSpeedX() {
+        // if speedX is negative then to left else to right (velocity)
+        int speedX;
+        do{
+            speedX = rnd.nextInt(5) - 2;
+        }while(speedX == 0);
 
+        return speedX;
+    }
+
+    public int randomSpeedY() {
+        // speedY is negative because move from down to up
+        int speedY;
+        do{
+            speedY = -rnd.nextInt(3);
+        }while(speedY == 0);
+
+        return speedY;
+    }
 
 
     public int getBrickCount(){
         return brickCount;
     }
-
+    public boolean isDone(){
+        return brickCount == 0;
+    }
 
     // Refactor: Created a new method to decrement the brickCount
     public void wallReset(){
@@ -88,12 +88,10 @@ public class Wall {
         ballCount = 3;
     }
 
-    public boolean isDone(){
-        return brickCount == 0;
+
+    private void makePlayer(Point pos, int width, int height, Rectangle drawArea) {
+        player = new Player(pos, width, height, drawArea);
     }
-
-
-
 
     private void makeBall(Point2D ballPos){
         ball = new RubberBall(ballPos);
@@ -198,5 +196,15 @@ public class Wall {
     public boolean isBallLost(){
         return ballLost;
     }
+
+    // Refactor: Created method
+    public Brick[] getBricks() {return bricks;}
+    public void setBricks(Brick[] bricks) {
+        this.bricks = bricks;
+    }
+    public void setBrickCount(int brickCount){
+        this.brickCount = brickCount;
+    }
+    public void decrementBrickCount() {brickCount--;}
 
 }

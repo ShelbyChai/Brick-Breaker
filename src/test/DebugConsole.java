@@ -30,19 +30,19 @@ public class DebugConsole extends JDialog implements WindowListener{
     private JFrame owner;
     private DebugPanel debugPanel;
     private GameBoard gameBoard;
-    private Wall wall;
+    private GameLogic gameLogic;
 
     private Levels levels;
 
-    public DebugConsole(JFrame owner,Wall wall,Levels levels, GameBoard gameBoard){
+    public DebugConsole(JFrame owner, GameLogic gameLogic, Levels levels, GameBoard gameBoard){
 
-        this.wall = wall;
+        this.gameLogic = gameLogic;
         this.levels = levels;
         this.owner = owner;
         this.gameBoard = gameBoard;
         initialize();
 
-        debugPanel = new DebugPanel(this.wall,this.levels);
+        debugPanel = new DebugPanel(this.gameLogic,this.levels);
         this.add(debugPanel,BorderLayout.CENTER);
 
 
@@ -94,7 +94,7 @@ public class DebugConsole extends JDialog implements WindowListener{
     @Override
     public void windowActivated(WindowEvent windowEvent) {
         setLocation();
-        Ball b = wall.ball;
+        Ball b = gameLogic.ball;
         debugPanel.setValues(b.getSpeedX(),b.getSpeedY());
     }
 

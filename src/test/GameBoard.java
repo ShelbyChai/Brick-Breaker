@@ -29,7 +29,7 @@ public class GameBoard extends JComponent implements KeyListener {
     private static final int DEF_HEIGHT = 450;
     private static final Color BG_COLOR = Color.WHITE;
     private Timer gameTimer;
-    private Wall wall;
+    private GameLogic gameLogic;
     private String message;
     private DebugConsole debugConsole;
     // Refactor:
@@ -42,35 +42,35 @@ public class GameBoard extends JComponent implements KeyListener {
         message = "";
         this.initialize();
 
-        wall = new Wall(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),new Point(300,430));
-        levels = new Levels(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),30,3,6/2,wall);
+        gameLogic = new GameLogic(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),new Point(300,430));
+        levels = new Levels(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),30,3,6/2, gameLogic);
 
-        pauseMenu = new PauseMenu(wall, this,this);
+        pauseMenu = new PauseMenu(gameLogic, this,this);
 
-        debugConsole = new DebugConsole(owner,wall,levels,this);
+        debugConsole = new DebugConsole(owner, gameLogic,levels,this);
         //initialize the first level
         levels.nextLevel();
 
         // Refresh frame per 10millisecond
         gameTimer = new Timer(10,e ->{
-            wall.move();
-            wall.findImpacts();
-            message = String.format("Bricks: %d Balls %d",wall.getBrickCount(),wall.getBallCount());
+            gameLogic.move();
+            gameLogic.findImpacts();
+            message = String.format("Bricks: %d Balls %d", gameLogic.getBrickCount(), gameLogic.getBallCount());
 
-            if(wall.isBallLost()){
-                if(wall.ballEnd()){
-                    wall.wallReset();
+            if(gameLogic.isBallLost()){
+                if(gameLogic.ballEnd()){
+                    gameLogic.wallReset();
                     message = "Game over";
                 }
-                wall.ballReset();
+                gameLogic.ballReset();
                 gameTimer.stop();
             }
-            else if(wall.isDone()){
+            else if(gameLogic.isDone()){
                 if(levels.hasLevel()){
                     message = "Go to Next Level";
                     gameTimer.stop();
-                    wall.ballReset();
-                    wall.wallReset();
+                    gameLogic.ballReset();
+                    gameLogic.wallReset();
                     levels.nextLevel();
                 }
                 else{
@@ -101,13 +101,13 @@ public class GameBoard extends JComponent implements KeyListener {
         g2d.setColor(Color.BLUE);
         g2d.drawString(message,250,225);
 
-        drawBall(wall.ball,g2d);
+        drawBall(gameLogic.ball,g2d);
 
-        for(Brick b : wall.bricks)
+        for(Brick b : gameLogic.bricks)
             if(b.isBroken())
                 drawBrick(b,g2d);
 
-        drawPlayer(wall.player,g2d);
+        drawPlayer(gameLogic.player,g2d);
 
         pauseMenu.displayMenu(g2d);
 
@@ -178,10 +178,10 @@ public class GameBoard extends JComponent implements KeyListener {
     public void keyPressed(KeyEvent keyEvent) {
         switch(keyEvent.getKeyCode()){
             case KeyEvent.VK_A:
-                wall.player.moveLeft();
+                gameLogic.player.moveLeft();
                 break;
             case KeyEvent.VK_D:
-                wall.player.movRight();
+                gameLogic.player.movRight();
                 break;
             case KeyEvent.VK_ESCAPE:
                 pauseMenu.setShowPauseMenu(pauseMenu.isShowPauseMenu());
@@ -200,13 +200,13 @@ public class GameBoard extends JComponent implements KeyListener {
                 if(keyEvent.isAltDown() && keyEvent.isShiftDown())
                     debugConsole.setVisible(true);
             default:
-                wall.player.stop();
+                gameLogic.player.stop();
         }
     }
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
-        wall.player.stop();
+        gameLogic.player.stop();
     }
 
     public void setMessage(String message) {this.message = message;}
