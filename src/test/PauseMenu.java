@@ -17,7 +17,7 @@ public class PauseMenu implements MouseListener, MouseMotionListener {
     private static final Color MENU_COLOR = new Color(0,255,0);
     private static final int DEF_WIDTH = 600;
     private static final int DEF_HEIGHT = 450;
-    private String message;
+
     private boolean showPauseMenu;
     private Font menuFont;
     private Rectangle continueButtonRect;
@@ -26,22 +26,21 @@ public class PauseMenu implements MouseListener, MouseMotionListener {
     private int strLen;
     private Wall wall;
     private JComponent owner;
+    private GameBoard gameBoard;
 
-    public PauseMenu(Wall wall, JComponent jComponent) {
+    public PauseMenu(Wall wall, JComponent jComponent, GameBoard gameBoard) {
         super();
         this.owner = jComponent;
+        this.gameBoard = gameBoard;
+        this.wall = wall;
+
         this.initialize();
         showPauseMenu = false;
         strLen = 0;
         menuFont = new Font("Monospaced",Font.PLAIN,TEXT_SIZE);
-        message = "";
-        this.wall = wall;
     }
 
     private void initialize(){
-//        this.owner.setPreferredSize(new Dimension(DEF_WIDTH,DEF_HEIGHT));
-//        this.owner.setFocusable(true);
-//        this.owner.requestFocusInWindow();
         this.owner.addMouseListener(this);
         this.owner.addMouseMotionListener(this);
     }
@@ -128,7 +127,7 @@ public class PauseMenu implements MouseListener, MouseMotionListener {
             owner.repaint();
         }
         else if(restartButtonRect.contains(p)){
-            message = "Restarting Game...";
+            gameBoard.setMessage("Restarting Game...");
             wall.ballReset();
             wall.wallReset();
             showPauseMenu = false;
@@ -138,6 +137,8 @@ public class PauseMenu implements MouseListener, MouseMotionListener {
             System.exit(0);
         }
     }
+
+
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {}
@@ -169,7 +170,7 @@ public class PauseMenu implements MouseListener, MouseMotionListener {
     }
 
     public boolean isShowPauseMenu() {
-        return showPauseMenu;
+        return !showPauseMenu;
     }
 
     public void setShowPauseMenu(boolean showPauseMenu) {
