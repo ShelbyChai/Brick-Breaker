@@ -3,6 +3,7 @@ package test;
 import java.awt.*;
 
 public class BrickFactory {
+    // TODO Refactor: Try to make a get method to access the name of the type of brick
     public Brick getBrick(Point point, Dimension size, String brickType) {
         if (brickType == null) {
             return null;

@@ -35,23 +35,23 @@ public class DebugPanel extends JPanel {
     private JSlider ballXSpeed;
     private JSlider ballYSpeed;
 
-    private Wall wall;
+    private GameLogic gameLogic;
 
     private Levels levels;
 
-    public DebugPanel(Wall wall,Levels levels){
+    public DebugPanel(GameLogic gameLogic, Levels levels){
 
-        this.wall = wall;
+        this.gameLogic = gameLogic;
         this.levels = levels;
 
         initialize();
 
         // Refactor: Change wall -> this.wall (Name: Remove assignment to parameters)
         skipLevel = makeButton("Skip Level",e -> this.levels.nextLevel());
-        resetBalls = makeButton("Reset Balls",e -> this.wall.resetBallCount());
+        resetBalls = makeButton("Reset Balls",e -> this.gameLogic.resetBallCount());
 
-        ballXSpeed = makeSlider(-4,4,e -> this.wall.setBallXSpeed(ballXSpeed.getValue()));
-        ballYSpeed = makeSlider(-4,4,e -> this.wall.setBallYSpeed(ballYSpeed.getValue()));
+        ballXSpeed = makeSlider(-4,4,e -> this.gameLogic.setBallXSpeed(ballXSpeed.getValue()));
+        ballYSpeed = makeSlider(-4,4,e -> this.gameLogic.setBallYSpeed(ballYSpeed.getValue()));
 
         this.add(skipLevel);
         this.add(resetBalls);

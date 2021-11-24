@@ -8,15 +8,15 @@ public class Levels {
 
     private Brick[][] levels;
     private int level;
-    private Wall wall;
+    private GameLogic gameLogic;
     private BrickFactory brickFactory;
 
 
-    public Levels(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio, Wall wall){
+    public Levels(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio, GameLogic gameLogic){
 
         levels = makeLevels(drawArea,brickCount,lineCount,brickDimensionRatio);
         level = 0;
-        this.wall = wall;
+        this.gameLogic = gameLogic;
     }
 
     // Refactor: makeSingleTypeLevel create a local variable instead of modifying the parameter
@@ -85,8 +85,8 @@ public class Levels {
     }
 
     public void nextLevel(){
-        wall.setBricks(levels[level++]);
-        wall.setBrickCount(wall.getBricks().length);
+        gameLogic.setBricks(levels[level++]);
+        gameLogic.setBrickCount(gameLogic.getBricks().length);
     }
 
     public boolean hasLevel(){

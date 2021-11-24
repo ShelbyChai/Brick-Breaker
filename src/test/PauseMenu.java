@@ -24,15 +24,15 @@ public class PauseMenu implements MouseListener, MouseMotionListener {
     private Rectangle exitButtonRect;
     private Rectangle restartButtonRect;
     private int strLen;
-    private Wall wall;
+    private GameLogic gameLogic;
     private JComponent owner;
     private GameBoard gameBoard;
 
-    public PauseMenu(Wall wall, JComponent jComponent, GameBoard gameBoard) {
+    public PauseMenu(GameLogic gameLogic, JComponent jComponent, GameBoard gameBoard) {
         super();
         this.owner = jComponent;
         this.gameBoard = gameBoard;
-        this.wall = wall;
+        this.gameLogic = gameLogic;
 
         this.initialize();
         showPauseMenu = false;
@@ -128,8 +128,8 @@ public class PauseMenu implements MouseListener, MouseMotionListener {
         }
         else if(restartButtonRect.contains(p)){
             gameBoard.setMessage("Restarting Game...");
-            wall.ballReset();
-            wall.wallReset();
+            gameLogic.ballReset();
+            gameLogic.wallReset();
             showPauseMenu = false;
             owner.repaint();
         }

@@ -13,10 +13,10 @@ public class LogicBoard {
     private int ballCount;
     private boolean ballLost;
 
-    Wall wall;
+    GameLogic gameLogic;
 
-    public LogicBoard(Rectangle drawArea, Point ballPos, Wall wall) {
-        this.wall = wall;
+    public LogicBoard(Rectangle drawArea, Point ballPos, GameLogic gameLogic) {
+        this.gameLogic = gameLogic;
 
         int speedX,speedY;
         // if speedX is negative then to left else to right (velocity)
@@ -54,7 +54,7 @@ public class LogicBoard {
             /*for efficiency reverse is done into method impactWall
              * because for every brick program checks for horizontal and vertical impacts
              */
-            wall.decrementBrickCount();
+            gameLogic.decrementBrickCount();
         }
         // Check if the ball's midpoint hit the left or right of the border screen
         else if(impactBorder()) {
@@ -74,7 +74,7 @@ public class LogicBoard {
     // Refactor: Since crack is extracted : Brick.Crack.Up -> Crack.Up
     private boolean impactWall(){
         // Find the impact for each bricks
-        for(Brick b : wall.getBricks()){
+        for(Brick b : gameLogic.getBricks()){
             switch(b.findImpact(ball)) {
                 //Vertical Impact
                 case Brick.UP_IMPACT:

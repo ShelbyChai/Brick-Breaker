@@ -13,6 +13,9 @@ import java.awt.geom.RectangularShape;
 abstract public class Ball {
 
     private Shape ballFace;
+    // Refactor: Rename to borderColor and innerColor
+    final private Color borderColor;
+    final private Color innerColor;
 
     final private Point2D center;
     // Refactor: From protected to private
@@ -22,10 +25,6 @@ abstract public class Ball {
     final private Point2D down;
     final private Point2D left;
     final private Point2D right;
-
-    // Refactor: Rename to borderColor and innerColor
-    final private Color borderColor;
-    final private Color innerColor;
 
     private int speedX;
     private int speedY;
