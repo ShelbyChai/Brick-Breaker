@@ -19,69 +19,31 @@ public class Levels {
         this.wall = wall;
     }
 
-    private Brick[] makeSingleTypeLevel(Rectangle drawArea, int brickCount, int lineCount, double brickSizeRatio, String brickType){
+    // Refactor: makeSingleTypeLevel create a local variable instead of modifying the parameter
+    private Brick[] makeLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, String brickTypeA, String brickTypeB){
         brickFactory = new BrickFactory();
-        brickCount -= brickCount % lineCount;
-        int brickOnLine = brickCount / lineCount;
+        int brickCount = brickCnt;
+        brickCount -= brickCount % lineCnt;
+        int brickOnLine = brickCount / lineCnt;
         double brickLen = drawArea.getWidth() / brickOnLine;
         double brickHgt = brickLen / brickSizeRatio;
-        brickCount += lineCount / 2;
+
+        brickCount += lineCnt / 2;
         Brick[] tmp  = new Brick[brickCount];
         Dimension brickSize = new Dimension((int) brickLen,(int) brickHgt);
         Point p = new Point();
         int i;
         for(i = 0; i < tmp.length; i++){
             int line = i / brickOnLine;
-            if(line == lineCount)
+            if(line == lineCnt)
                 break;
             double x = (i % brickOnLine) * brickLen;
             x =(line % 2 == 0) ? x : (x - (brickLen / 2));
             double y = (line) * brickHgt;
             p.setLocation(x,y);
-            tmp[i] = brickFactory.getBrick(p,brickSize,brickType);
-        }
 
-        for(double y = brickHgt;i < tmp.length;i++, y += 2*brickHgt){
-            double x = (brickOnLine * brickLen) - (brickLen / 2);
-            p.setLocation(x,y);
-            tmp[i] = brickFactory.getBrick(p,brickSize,brickType);
-        }
+            tmp[i] = generateBrickType(chooseBrick(line, i, brickOnLine), p, brickSize, brickTypeA, brickTypeB);
 
-        return tmp;
-    }
-
-    //TODO Diference: 1 Parameter, 6 lines of code
-    private Brick[] makeChessboardLevel(Rectangle drawArea, int brickCount, int lineCount, double brickSizeRatio, String brickTypeA, String brickTypeB){
-        brickFactory = new BrickFactory();
-        brickCount -= brickCount % lineCount;
-        int brickOnLine = brickCount / lineCount;
-
-        int centerLeft = brickOnLine / 2 - 1;
-        int centerRight = brickOnLine / 2 + 1;
-
-        double brickLen = drawArea.getWidth() / brickOnLine;
-        double brickHgt = brickLen / brickSizeRatio;
-        brickCount += lineCount / 2;
-        Brick[] tmp  = new Brick[brickCount];
-        Dimension brickSize = new Dimension((int) brickLen,(int) brickHgt);
-        Point p = new Point();
-        int i;
-        for(i = 0; i < tmp.length; i++){
-            int line = i / brickOnLine;
-            if(line == lineCount)
-                break;
-
-            int posX = i % brickOnLine;
-
-            double x = posX * brickLen;
-
-            x =(line % 2 == 0) ? x : (x - (brickLen / 2));
-            double y = (line) * brickHgt;
-            p.setLocation(x,y);
-
-            boolean b = ((line % 2 == 0 && i % 2 == 0) || (line % 2 != 0 && posX > centerLeft && posX <= centerRight));
-
-            tmp[i] = b ?  brickFactory.getBrick(p,brickSize,brickTypeA) : brickFactory.getBrick(p,brickSize,brickTypeB);
         }
 
         for(double y = brickHgt;i < tmp.length;i++, y += 2*brickHgt){
@@ -93,20 +55,36 @@ public class Levels {
         return tmp;
     }
 
-    // Refactor
+    public Boolean isOneType(String brickTypeA, String brickTypeB) {
+        return brickTypeA == null || brickTypeB == null;
+    }
+
+    public Boolean chooseBrick(int line, int i, int brickOnLine) {
+        int posX = i % brickOnLine;
+        int centerLeft = brickOnLine / 2 - 1;
+        int centerRight = brickOnLine / 2 + 1;
+
+        return ((line % 2 == 0 && i % 2 == 0) || (line % 2 != 0 && posX > centerLeft && posX <= centerRight));
+    }
+
+    public Brick generateBrickType(boolean b, Point p, Dimension brickSize, String brickTypeA, String brickTypeB) {
+        if (isOneType(brickTypeA, brickTypeB))
+            return brickFactory.getBrick(p,brickSize,brickTypeA);
+        else
+            return b ?  brickFactory.getBrick(p,brickSize,brickTypeA) : brickFactory.getBrick(p,brickSize,brickTypeB);
+    }
+
+    // TODO Level factory?
     private Brick[][] makeLevels(Rectangle drawArea,int brickCount,int lineCount,double brickDimensionRatio){
         Brick[][] tmp = new Brick[LEVELS_COUNT][];
-        tmp[0] = makeSingleTypeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,"Clay Brick");
-        tmp[1] = makeChessboardLevel(drawArea,brickCount,lineCount,brickDimensionRatio,"Clay Brick","Cement Brick");
-        tmp[2] = makeChessboardLevel(drawArea,brickCount,lineCount,brickDimensionRatio,"Clay Brick","Steel Brick");
-        tmp[3] = makeChessboardLevel(drawArea,brickCount,lineCount,brickDimensionRatio,"Steel Brick","Cement Brick");
+        tmp[0] = makeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,"Clay Brick", null);
+        tmp[1] = makeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,"Clay Brick","Cement Brick");
+        tmp[2] = makeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,"Clay Brick","Steel Brick");
+        tmp[3] = makeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,"Steel Brick","Cement Brick");
         return tmp;
     }
 
     public void nextLevel(){
-        // Postfix increment
-//        bricks = levels[level++];
-//        this.brickCount = bricks.length;
         wall.setBricks(levels[level++]);
         wall.setBrickCount(wall.getBricks().length);
     }

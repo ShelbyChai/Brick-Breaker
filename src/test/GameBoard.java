@@ -41,10 +41,11 @@ public class GameBoard extends JComponent implements KeyListener {
         super();
         message = "";
         this.initialize();
+
         wall = new Wall(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),new Point(300,430));
         levels = new Levels(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),30,3,6/2,wall);
 
-        pauseMenu = new PauseMenu(wall, this);
+        pauseMenu = new PauseMenu(wall, this,this);
 
         debugConsole = new DebugConsole(owner,wall,levels,this);
         //initialize the first level
@@ -183,14 +184,13 @@ public class GameBoard extends JComponent implements KeyListener {
                 wall.player.movRight();
                 break;
             case KeyEvent.VK_ESCAPE:
-//                showPauseMenu = !showPauseMenu;
-                pauseMenu.setShowPauseMenu(!pauseMenu.isShowPauseMenu());
+                pauseMenu.setShowPauseMenu(pauseMenu.isShowPauseMenu());
                 repaint();
                 gameTimer.stop();
                 break;
             case KeyEvent.VK_SPACE:
 //                if(!showPauseMenu)
-                if(!pauseMenu.isShowPauseMenu())
+                if(pauseMenu.isShowPauseMenu())
                     if(gameTimer.isRunning())
                         gameTimer.stop();
                     else
@@ -208,4 +208,6 @@ public class GameBoard extends JComponent implements KeyListener {
     public void keyReleased(KeyEvent keyEvent) {
         wall.player.stop();
     }
+
+    public void setMessage(String message) {this.message = message;}
 }
