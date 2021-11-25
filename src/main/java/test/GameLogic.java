@@ -38,7 +38,6 @@ public class GameLogic {
     // Refactor: Create a new class call Levels and change the Wall(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio, Point ballPos) -> (Rectangle drawArea, Point ballPos)
     public GameLogic(Rectangle drawArea, Point ballPos){
 
-        rnd = new Random();
         this.startPoint = new Point(ballPos);
         this.ballCount = 3;
         this.ballLost = false;
@@ -53,6 +52,7 @@ public class GameLogic {
     }
 
     public int randomSpeedX() {
+        rnd = new Random();
         // if speedX is negative then to left else to right (velocity)
         int speedX;
         do{
@@ -63,6 +63,7 @@ public class GameLogic {
     }
 
     public int randomSpeedY() {
+        rnd = new Random();
         // speedY is negative because move from down to up
         int speedY;
         do{
@@ -159,6 +160,7 @@ public class GameLogic {
     }
 
     public void ballReset(){
+        rnd = new Random();
         player.moveTo(startPoint);
         ball.moveTo(startPoint);
         int speedX,speedY;
@@ -206,5 +208,10 @@ public class GameLogic {
         this.brickCount = brickCount;
     }
     public void decrementBrickCount() {brickCount--;}
+
+//    public void nextLevel(){
+//        setBricks();
+//        setBrickCount(getBricks().length);
+//    }
 
 }

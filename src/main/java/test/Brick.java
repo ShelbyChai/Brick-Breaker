@@ -4,10 +4,6 @@ import java.awt.*;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 
-/**
- * Created by filippo on 04/09/16.
- *
- */
 abstract public class Brick  {
 
     // These 2 var only used in cementBrick
@@ -55,16 +51,6 @@ abstract public class Brick  {
         return broken;
     }
 
-    public abstract Shape getBrick();
-
-    public Color getBorderColor(){
-        return borderColor;
-    }
-
-    public Color getInnerColor(){
-        return innerColor;
-    }
-
     // Refactor: Rename b -> ball for meaningful naming convention
     public final int findImpact(Ball ball){
         if(broken)
@@ -94,6 +80,16 @@ abstract public class Brick  {
     public void impact(){
         strength--;
         broken = (strength == 0);
+    }
+
+    public abstract Shape getBrick();
+
+    public Color getBorderColor(){
+        return borderColor;
+    }
+
+    public Color getInnerColor(){
+        return innerColor;
     }
 
     // New created getter

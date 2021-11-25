@@ -152,7 +152,7 @@ public class Crack{
 
     }
 
-    // TODO Refactor: Use Enum
+    // TODO Refactor: Use Enum and make a method
     private Point makeRandomPoint(Point from,Point to, int direction){
 
         Point out = new Point();
@@ -171,5 +171,4 @@ public class Crack{
         }
         return out;
     }
-
 }

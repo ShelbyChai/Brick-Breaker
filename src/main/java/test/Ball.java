@@ -4,11 +4,6 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.geom.RectangularShape;
 
-/**
- * Created by filippo on 04/09/16.
- *
- */
-
 // TODO Crazy Idea: Instead of a Ball abstract class make it Ball and BallMove
 abstract public class Ball {
 

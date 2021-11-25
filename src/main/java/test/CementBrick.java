@@ -13,7 +13,7 @@ public class CementBrick extends Brick {
     private static final Color DEF_INNER = new Color(147, 147, 147);
     private static final int CEMENT_STRENGTH = 2;
 
-    private Crack crack;
+    final private Crack crack;
     private Shape brickFace;
 
     // Refactor: Rename the parameter Point point to pos
@@ -42,7 +42,6 @@ public class CementBrick extends Brick {
         return true;
     }
 
-
     @Override
     public Shape getBrick() {
         return brickFace;
@@ -51,7 +50,7 @@ public class CementBrick extends Brick {
     private void updateBrick(){
         if(super.isBroken()){
             GeneralPath gp = crack.draw();
-            gp.append(super.getBrickFace(),false);
+            gp.append(getBrick(),false);
             brickFace = gp;
         }
     }
@@ -59,6 +58,6 @@ public class CementBrick extends Brick {
     public void repair(){
         super.repair();
         crack.reset();
-        brickFace = super.getBrickFace();
+        brickFace = getBrick();
     }
 }

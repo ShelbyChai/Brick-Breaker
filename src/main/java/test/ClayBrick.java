@@ -3,11 +3,6 @@ package test;
 import java.awt.*;
 import java.awt.Point;
 
-
-/**
- * Created by filippo on 04/09/16.
- *
- */
 public class ClayBrick extends Brick {
 
     private static final String NAME = "Clay Brick";
