@@ -9,7 +9,6 @@ public class Levels {
     private Brick[][] levels;
     private int level;
     private GameLogic gameLogic;
-    private BrickFactory brickFactory;
 
 
     public Levels(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio, GameLogic gameLogic){
@@ -21,7 +20,6 @@ public class Levels {
 
     // Refactor: makeSingleTypeLevel create a local variable instead of modifying the parameter
     private Brick[] makeLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, String brickTypeA, String brickTypeB){
-        brickFactory = new BrickFactory();
         int brickCount = brickCnt;
         brickCount -= brickCount % lineCnt;
         int brickOnLine = brickCount / lineCnt;
@@ -49,10 +47,15 @@ public class Levels {
         for(double y = brickHgt;i < tmp.length;i++, y += 2*brickHgt){
             double x = (brickOnLine * brickLen) - (brickLen / 2);
             p.setLocation(x,y);
-            tmp[i] = brickFactory.getBrick(p,brickSize,brickTypeA);
+            tmp[i] = makeBrick(p,brickSize,brickTypeA);
         }
 
         return tmp;
+    }
+
+    public Brick makeBrick(Point point, Dimension brickSize, String brickType) {
+        BrickFactory brickFactory = new BrickFactory();
+        return brickFactory.getBrick(point, brickSize, brickType);
     }
 
     public Boolean isOneType(String brickTypeA, String brickTypeB) {
@@ -69,9 +72,9 @@ public class Levels {
 
     public Brick generateBrickType(boolean b, Point p, Dimension brickSize, String brickTypeA, String brickTypeB) {
         if (isOneType(brickTypeA, brickTypeB))
-            return brickFactory.getBrick(p,brickSize,brickTypeA);
+            return makeBrick(p,brickSize,brickTypeA);
         else
-            return b ?  brickFactory.getBrick(p,brickSize,brickTypeA) : brickFactory.getBrick(p,brickSize,brickTypeB);
+            return b ?  makeBrick(p,brickSize,brickTypeA) : makeBrick(p,brickSize,brickTypeB);
     }
 
     // TODO Level factory?
@@ -89,9 +92,6 @@ public class Levels {
         gameLogic.setBrickCount(gameLogic.getBricks().length);
     }
 
-    public Brick[] incrementLevels() {
-        return levels[level++];
-    }
     public boolean hasLevel(){
         return level < levels.length;
     }
