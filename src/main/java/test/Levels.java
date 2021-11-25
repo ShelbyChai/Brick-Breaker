@@ -89,6 +89,9 @@ public class Levels {
         gameLogic.setBrickCount(gameLogic.getBricks().length);
     }
 
+    public Brick[] incrementLevels() {
+        return levels[level++];
+    }
     public boolean hasLevel(){
         return level < levels.length;
     }

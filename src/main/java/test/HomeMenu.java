@@ -26,6 +26,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
 
+// TODO Create a HomeMenu Controller and View
 public class HomeMenu extends JComponent implements MouseListener, MouseMotionListener {
 
     private static final String GREETINGS = "Welcome to:";
@@ -97,6 +98,7 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
     }
 
 
+    // From here onwards all is View
     public void drawMenu(Graphics2D g2d){
 
         drawContainer(g2d);
@@ -178,10 +180,10 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     }
 
+    // TODO Refactor: 2 similar implementation algorithm in drawButton method
     private void drawButton(Graphics2D g2d){
 
         FontRenderContext frc = g2d.getFontRenderContext();
-
         Rectangle2D txtRect = buttonFont.getStringBounds(START_TEXT,frc);
         Rectangle2D mTxtRect = buttonFont.getStringBounds(MENU_TEXT,frc);
 
@@ -189,18 +191,13 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
         int x = (menuFace.width - startButton.width) / 2;
         int y =(int) ((menuFace.height - startButton.height) * 0.8);
-
         startButton.setLocation(x,y);
+
 
         x = (int)(startButton.getWidth() - txtRect.getWidth()) / 2;
         y = (int)(startButton.getHeight() - txtRect.getHeight()) / 2;
-
         x += startButton.x;
         y += startButton.y + (startButton.height * 0.9);
-
-
-
-
         if(startClicked){
             Color tmp = g2d.getColor();
             g2d.setColor(CLICKED_BUTTON_COLOR);
@@ -214,25 +211,19 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
             g2d.drawString(START_TEXT,x,y);
         }
 
+
         x = startButton.x;
         y = startButton.y;
-
         y *= 1.2;
-
         menuButton.setLocation(x,y);
-
-
 
 
         x = (int)(menuButton.getWidth() - mTxtRect.getWidth()) / 2;
         y = (int)(menuButton.getHeight() - mTxtRect.getHeight()) / 2;
-
         x += menuButton.x;
         y += menuButton.y + (startButton.height * 0.9);
-
         if(menuClicked){
             Color tmp = g2d.getColor();
-
             g2d.setColor(CLICKED_BUTTON_COLOR);
             g2d.draw(menuButton);
             g2d.setColor(CLICKED_TEXT);
@@ -246,6 +237,8 @@ public class HomeMenu extends JComponent implements MouseListener, MouseMotionLi
 
     }
 
+
+    // From here onwards all is controller
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         Point p = mouseEvent.getPoint();
