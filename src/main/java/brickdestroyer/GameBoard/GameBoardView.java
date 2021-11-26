@@ -1,11 +1,7 @@
 package brickdestroyer.GameBoard;
 
-import brickdestroyer.GameLogic;
-import javafx.geometry.Point2D;
 import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 
 

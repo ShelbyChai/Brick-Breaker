@@ -3,7 +3,6 @@ package brickdestroyer.HomeMenu;
 import brickdestroyer.Actor.Ball;
 import brickdestroyer.Actor.RubberBall;
 import brickdestroyer.GameBoard.GameBoardView;
-import brickdestroyer.GameLogic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
@@ -11,7 +10,6 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
