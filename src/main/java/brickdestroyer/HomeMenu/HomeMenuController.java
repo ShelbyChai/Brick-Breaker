@@ -1,12 +1,9 @@
 package brickdestroyer.HomeMenu;
 
-import brickdestroyer.Actor.Ball;
-import brickdestroyer.Actor.RubberBall;
-import brickdestroyer.GameBoard.GameBoardView;
+import brickdestroyer.GameBoard.GameBoardViewController;
+import brickdestroyer.GameBoard.GameBoardModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Point2D;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,26 +18,19 @@ public class HomeMenuController {
     private Button exitButton;
 
     private Stage stage;
-    private Scene scene;
-    GameBoardView gameView;
-    private Ball ball;
+    GameBoardViewController gameBoardViewController;
 
     @FXML
-    protected void clickedStartButton(ActionEvent event) {
-        ball = new RubberBall(new Point2D(300,430));
+    protected void onStartButtonClick(ActionEvent event) {
 
-        Group root = new Group(ball.getBallFace());
-
-        gameView = new GameBoardView();
+        gameBoardViewController = new GameBoardViewController();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(gameView.asParent(),600,450);
-        scene.setRoot(root);
-        stage.setScene(scene);
-        stage.show();
+        stage.setScene(gameBoardViewController.getGameScene());
+        gameBoardViewController.start();
     }
 
     @FXML
-    protected void clickedExitButton(ActionEvent event) {
+    protected void onExitButtonClick(ActionEvent event) {
         System.out.println("Goodbye " + System.getProperty("user.name"));
         System.exit(0);
     }

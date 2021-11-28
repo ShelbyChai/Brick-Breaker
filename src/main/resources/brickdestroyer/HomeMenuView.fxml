@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
+
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="brickdestroyer.HomeMenu.HomeMenuController">
    <children>
       <Label text="Brick Destroyer" />
-      <Button fx:id="startButton" mnemonicParsing="false" onAction="#clickedStartButton" text="Start" />
-      <Button fx:id="exitButton" mnemonicParsing="false" onAction="#clickedExitButton" text="Exit" />
+      <Button fx:id="startButton" mnemonicParsing="false" onAction="#onStartButtonClick" text="Start">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button fx:id="exitButton" mnemonicParsing="false" onAction="#onExitButtonClick" text="Exit">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
    </children>
 </VBox>

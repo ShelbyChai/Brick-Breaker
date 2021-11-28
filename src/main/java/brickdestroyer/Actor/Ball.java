@@ -2,6 +2,7 @@ package brickdestroyer.Actor;
 
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
@@ -11,11 +12,11 @@ abstract public class Ball {
     final private Color borderColor;
     final private Color innerColor;
 
-    final private Point2D center;
-    final private Point2D up;
-    final private Point2D down;
-    final private Point2D left;
-    final private Point2D right;
+    private Point2D center;
+    private Point2D up;
+    private Point2D down;
+    private Point2D left;
+    private Point2D right;
 
     private int speedX;
     private int speedY;
@@ -42,15 +43,23 @@ abstract public class Ball {
     protected abstract Shape makeBall(Point2D center,int radiusA,int radiusB);
 
     private void setPoints(double width,double height){
-        getUp().add(center.getX(),center.getY()-(height / 2));
-        getDown().add(center.getX(),center.getY()+(height / 2));
 
-        getLeft().add(center.getX()-(width / 2),center.getY());
-        getRight().add(center.getX()+(width / 2),center.getY());
+        // TODO Maybe add is not setLocation!!!
+        up = new Point2D(center.getX(),center.getY()-(height / 2));
+        down = new Point2D(center.getX(),center.getY()+(height / 2));
+
+        left = new Point2D(center.getX()-(width / 2),center.getY());
+        right = new Point2D(center.getX()+(width / 2),center.getY());
+
+
+//        getUp().add(center.getX(),center.getY()-(height / 2));
+//        getDown().add(center.getX(),center.getY()+(height / 2));
+//
+//        getLeft().add(center.getX()-(width / 2),center.getY());
+//        getRight().add(center.getX()+(width / 2),center.getY());
 
     }
 
-    // To Rectangle2D
     private Rectangle generateRectangle() {
 
         Rectangle rectangle = (Rectangle) ballFace;
@@ -76,6 +85,11 @@ abstract public class Ball {
     public void moveTo(Point2D p){
         center.add(p);
         ballFace = generateRectangle();
+
+        //        RectangularShape tmp = (RectangularShape) ballFace;
+//        double w = tmp.getWidth();
+//        double h = tmp.getHeight();
+//        tmp.setFrame((center.getX() -(w / 2)),(center.getY() - (h / 2)),w,h);
     }
 
     public void reverseX(){
@@ -140,5 +154,6 @@ abstract public class Ball {
     public int getSpeedY(){
         return speedY;
     }
+
 
 }
