@@ -1,22 +1,21 @@
 package brickdestroyer.Actor;
 
-import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 
 public class Player {
 
 
     private static final Color BORDER_COLOR = Color.GREEN.darker().darker();
-    private static final Color INNER_COLOR = Color.LIGHTGREEN;
+    private static final Color INNER_COLOR = Color.GREEN;
 
     private static final int DEF_MOVE_AMOUNT = 5;
 
     //Refactor: Rectangle, min, max, Point from none -> final
     private Rectangle playerFace;
     private Point2D ballPoint;
+
     final private int min;
     final private int max;
 
@@ -33,6 +32,7 @@ public class Player {
 
         this.min = (int)container.getX() + (width / 2); // This shows the least x-axis value the board can go which is 75 (because rectangle have midpoint so when moving it doesn't go through walls)
         this.max = min + (int)container.getWidth() - width; // This shows the maximum x-axis value the board can go which is 525
+
 
     }
 
@@ -90,7 +90,7 @@ public class Player {
 //        ballPoint.setLocation(p);
 //        playerFace.setLocation(ballPoint.x - (int)playerFace.getWidth()/2,ballPoint.y);
 
-        playerFace.setX(ballPoint.getX() - playerFace.getWidth()/2);
+        playerFace.setX(ballPoint.getX() - (int)playerFace.getWidth()/2);
         playerFace.setY(ballPoint.getY());
     }
 
@@ -106,4 +106,5 @@ public class Player {
     public Color getInnerColor() {return INNER_COLOR;}
 
     public Color getBorderColor() {return BORDER_COLOR;}
+
 }

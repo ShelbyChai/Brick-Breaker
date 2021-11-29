@@ -25,13 +25,14 @@ public class GameBoardModel {
 
         this.startPoint = new Point2D(ballPos.getX(),ballPos.getY());
 
-
         this.ballCount = 3;
         this.ballLost = false;
 
         makeBall(ballPos);
         ball.setSpeed(randomSpeedX(),randomSpeedY());
         makePlayer(ballPos,150,10, drawArea);
+
+        area = drawArea;
     }
 
     public int randomSpeedX() {

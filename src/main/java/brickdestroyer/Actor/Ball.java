@@ -1,9 +1,9 @@
 package brickdestroyer.Actor;
 
 import javafx.geometry.Point2D;
+import javafx.scene.effect.Light;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 abstract public class Ball {
@@ -21,9 +21,17 @@ abstract public class Ball {
     private int speedX;
     private int speedY;
 
+    private int radius;
+
     public Ball(Point2D center,int radiusA,int radiusB,Color innerColor,Color borderColor){
-        ballFace = makeBall(center,radiusA,radiusB);
+//        double centerUpX = center.getX() + radius;
+//        double centerUpY = center.getY() + radius;
+//        Point2D newCenter = new Point2D(centerUpX,centerUpY);
+//        ballFace = makeBall(newCenter,radiusA,radiusB);
+//        this.center = newCenter;
+
         this.center = center;
+        this.radius = radiusA;
 
         up = new Point2D(0,0);
         down = new Point2D(0,0);
@@ -32,64 +40,46 @@ abstract public class Ball {
 
         this.borderColor = borderColor;
         this.innerColor = innerColor;
+        ballFace = makeBall(center,radiusA,radiusB);
 
-        ballFace.setFill(innerColor);
-        ballFace.setStroke(borderColor);
-
-        setSpeed(0,0);
-        setPoints(radiusB, radiusA);
+        speedX =0;
+        speedY=0;
     }
 
-    protected abstract Shape makeBall(Point2D center,int radiusA,int radiusB);
+    protected abstract Circle makeBall(Point2D center,int radiusA,int radiusB);
 
     private void setPoints(double width,double height){
 
-        // TODO Maybe add is not setLocation!!!
         up = new Point2D(center.getX(),center.getY()-(height / 2));
         down = new Point2D(center.getX(),center.getY()+(height / 2));
 
         left = new Point2D(center.getX()-(width / 2),center.getY());
         right = new Point2D(center.getX()+(width / 2),center.getY());
 
-
-//        getUp().add(center.getX(),center.getY()-(height / 2));
-//        getDown().add(center.getX(),center.getY()+(height / 2));
-//
-//        getLeft().add(center.getX()-(width / 2),center.getY());
-//        getRight().add(center.getX()+(width / 2),center.getY());
-
     }
 
-    private Rectangle generateRectangle() {
+    private Circle generateCircle() {
 
-        Rectangle rectangle = (Rectangle) ballFace;
-        double rectangleWidth = rectangle.getWidth();
-        double rectangleHeight = rectangle.getHeight();
-        rectangle.setX(center.getX() -(rectangleWidth / 2));
-        rectangle.setY(center.getY() - (rectangleHeight / 2));
-        rectangle.setWidth(rectangleWidth);
-        rectangle.setHeight(rectangleHeight);
+        Circle circle = (Circle) ballFace;
+        double radius = circle.getRadius();
+        circle.setCenterX(getUpperLeftX());
+        circle.setCenterY(getUpperLeftY());
+        circle.setRadius(radius);
 
-        return rectangle;
+        return circle;
     }
 
     public void move(){
-        center.add((center.getX() + speedX),(center.getY() + speedY));
-
-        Rectangle temp = generateRectangle();
+        center = new Point2D((center.getX() + speedX),(center.getY() + speedY));
+        Circle temp = generateCircle();
         ballFace = temp;
 
-        setPoints(temp.getWidth(),temp.getHeight());
+        setPoints(temp.getRadius(),temp.getRadius());
     }
 
     public void moveTo(Point2D p){
-        center.add(p);
-        ballFace = generateRectangle();
-
-        //        RectangularShape tmp = (RectangularShape) ballFace;
-//        double w = tmp.getWidth();
-//        double h = tmp.getHeight();
-//        tmp.setFrame((center.getX() -(w / 2)),(center.getY() - (h / 2)),w,h);
+        center = p;
+        ballFace = generateCircle();
     }
 
     public void reverseX(){
@@ -122,6 +112,9 @@ abstract public class Ball {
         return center;
     }
 
+    public Double getUpperLeftX() {return center.getX() - (radius/2);}
+
+    public Double getUpperLeftY() {return center.getY() - (radius/2);}
 
     public Point2D getUp() {
         return up;
@@ -155,5 +148,7 @@ abstract public class Ball {
         return speedY;
     }
 
-
+    public int getRadius() {
+        return radius;
+    }
 }
