@@ -2,77 +2,93 @@ package brickdestroyer.GameBoard;
 
 import brickdestroyer.Actor.Ball;
 import brickdestroyer.Actor.Player;
-import brickdestroyer.Actor.RubberBall;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.EventHandler;
+import javafx.animation.AnimationTimer;
 import javafx.geometry.Point2D;
-import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
-import javafx.util.Duration;
-
-import java.security.Key;
 
 
 public class GameBoardViewController {
     private static final int DEF_WIDTH = 600;
     private static final int DEF_HEIGHT = 450;
 
-//    private StackPane stackPane;
     private Canvas canvas;
-    private Timeline t1;
+    String input = "";
+    GraphicsContext gc;
 
     GameBoardModel gameBoardModel;
 
-    public GameBoardViewController() {
+    public GameBoardViewController(){
+
         gameBoardModel = new GameBoardModel(new Rectangle(0,0,DEF_WIDTH,DEF_HEIGHT),new Point2D(300,430));
 
         canvas = new Canvas(DEF_WIDTH,DEF_HEIGHT);
         canvas.setFocusTraversable(true);
 
-        GraphicsContext gc = canvas.getGraphicsContext2D();
+        gc = canvas.getGraphicsContext2D();
 
-        t1 = new Timeline(new KeyFrame(Duration.millis(10), e-> run(gc)));
-        t1.setCycleCount(Timeline.INDEFINITE);
+        keyPressed(canvas);
+        keyReleased(canvas);
 
-        canvas.setOnKeyTyped(e->{});
+        new AnimationTimer()
+        {
+            public void handle(long currentNanoTimer) {
+                paint(gc,gameBoardModel);
 
-        canvas.setOnKeyPressed(e->{
-                if(e.getCode()== KeyCode.A){
+                // TODO refactor this string thing
+                if (input.contains("A")){
                     gameBoardModel.player.moveLeft();
+                    gameBoardModel.player.move();
                 }
-                else if (e.getCode()== KeyCode.D){
+                if (input.contains("D")){
                     gameBoardModel.player.moveRight();
+                    gameBoardModel.player.move();
                 }
-            gameBoardModel.player.move();
-        });
+                if (input.contains("SPACE")){
+                }
+
+                gameBoardModel.findImpacts();
+                gameBoardModel.ball.move();
+
+            }
+        }.start();
     }
 
     public Scene getGameScene() {
         return new Scene(new StackPane(canvas));
     }
 
-    public void start() {
-        t1.play();
+    private void paint(GraphicsContext gc, GameBoardModel gameBoardModel) {
+        gc.clearRect(0,0,DEF_WIDTH,DEF_HEIGHT);
+        drawBall(gameBoardModel.ball,gc);
+        drawPlayer(gameBoardModel.player,gc);
     }
 
-    private void run(GraphicsContext gc) {
-        gc.clearRect(0,0,DEF_WIDTH,DEF_HEIGHT);
-        drawPlayer(gameBoardModel.player,gc);
-//        gameBoardModel.player.move();
-//        drawBall(gameBoardModel.ball,gc);
+
+
+    private void keyPressed(Canvas canvas) {
+        canvas.setOnKeyPressed(e->{
+            if(e.getCode()== KeyCode.A){
+                input = "A";
+            }
+            else if (e.getCode()== KeyCode.D){
+                input = "D";
+            }
+            else if (e.getCode()== KeyCode.SPACE){
+            }
+        });
     }
+
+    private void keyReleased(Canvas canvas) {
+        canvas.setOnKeyReleased(e->{
+            input="";
+        });
+    }
+
 
     private void drawPlayer(Player player, GraphicsContext gc) {
         // Create inner
@@ -85,11 +101,15 @@ public class GameBoardViewController {
     }
 
     private void drawBall(Ball ball, GraphicsContext gc) {
-//        gc.fillOval(gameBoardModel.ball.);
-        gc.setFill(gameBoardModel.ball.getInnerColor());
-        gc.fillOval(300,430,10,10);
+        int ballRadius = ball.getRadius();
+        double ballUpperLeftX = ball.getUpperLeftX();
+        double ballUpperLeftY = ball.getUpperLeftY();
 
-        gc.setStroke(gameBoardModel.ball.getBorderColor());
-        gc.strokeOval(300,430,10,10);
+        gc.setFill(ball.getInnerColor());
+        gc.fillOval(ballUpperLeftX,ballUpperLeftY,ballRadius,ballRadius);
+
+        gc.setStroke(ball.getBorderColor());
+        gc.strokeOval(ballUpperLeftX,ballUpperLeftY,ballRadius,ballRadius);
     }
+
 }
