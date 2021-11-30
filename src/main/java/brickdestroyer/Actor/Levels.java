@@ -32,7 +32,8 @@ public class Levels {
         brickCount += lineCnt / 2;
         Brick[] tmp  = new Brick[brickCount];
         Dimension2D brickSize = new Dimension2D((int) brickLen,(int) brickHgt);
-        Point2D p = new Point2D(0,0);
+        Point2D p;
+
         int i;
         for(i = 0; i < tmp.length; i++){
             int line = i / brickOnLine;
@@ -42,7 +43,6 @@ public class Levels {
             x =(line % 2 == 0) ? x : (x - (brickLen / 2));
             double y = (line) * brickHgt;
             p = new Point2D(x,y);
-//            p.setLocation(x,y);
 
             tmp[i] = generateBrickType(chooseBrick(line, i, brickOnLine), p, brickSize, brickTypeA, brickTypeB);
 
@@ -51,7 +51,6 @@ public class Levels {
         for(double y = brickHgt;i < tmp.length;i++, y += 2*brickHgt){
             double x = (brickOnLine * brickLen) - (brickLen / 2);
             p = new Point2D(x,y);
-//            p.setLocation(x,y);
             tmp[i] = makeBrick(p,brickSize,brickTypeA);
         }
 

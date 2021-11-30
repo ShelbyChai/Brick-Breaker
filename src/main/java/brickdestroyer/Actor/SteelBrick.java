@@ -1,9 +1,9 @@
 package brickdestroyer.Actor;
 
-
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
@@ -35,6 +35,11 @@ public class SteelBrick extends Brick{
     @Override
     public Shape getBrick() {
         return brickFace;
+    }
+
+    @Override
+    public Path getCrackPath() {
+        return null;
     }
 
     public  boolean setImpact(Point2D point , int dir){

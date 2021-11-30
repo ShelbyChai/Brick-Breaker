@@ -4,6 +4,7 @@ package brickdestroyer.Actor;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Path;
 import javafx.scene.shape.Shape;
 
 abstract public class Brick {
@@ -30,7 +31,6 @@ abstract public class Brick {
     final private Color borderColor;
     final private Color innerColor;
 
-    // NEW for fx
     private Point2D pos;
     private Dimension2D size;
 
@@ -43,8 +43,6 @@ abstract public class Brick {
         this.innerColor = innerColor;
         fullStrength = this.strength = strength;
 
-
-        // New for fx
         this.pos = pos;
         this.size = size;
 
@@ -112,4 +110,6 @@ abstract public class Brick {
     public Dimension2D getSize() {
         return size;
     }
+
+    public abstract Path getCrackPath();
 }
