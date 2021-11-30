@@ -41,9 +41,6 @@ abstract public class Ball {
         this.borderColor = borderColor;
         this.innerColor = innerColor;
         ballFace = makeBall(center,radiusA,radiusB);
-
-        speedX =0;
-        speedY=0;
     }
 
     protected abstract Circle makeBall(Point2D center,int radiusA,int radiusB);

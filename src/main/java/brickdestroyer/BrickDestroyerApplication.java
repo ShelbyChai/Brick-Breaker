@@ -23,7 +23,7 @@ public class BrickDestroyerApplication extends Application {
 
 
 
-        stage.initStyle(StageStyle.UNDECORATED);
+//        stage.initStyle(StageStyle.UNDECORATED);
         stage.setTitle("BrickDestroyer");
         stage.setScene(scene);
         stage.setResizable(false);
