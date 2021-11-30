@@ -27,7 +27,6 @@ public class GameBoardModel {
         this.ballLost = false;
 
         makeBall(ballPos);
-//        ball.setSpeed(randomSpeedX(),randomSpeedY());
         ballReset();
         makePlayer(ballPos,150,10, drawArea);
 

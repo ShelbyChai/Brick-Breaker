@@ -24,11 +24,6 @@ abstract public class Ball {
     private int radius;
 
     public Ball(Point2D center,int radiusA,int radiusB,Color innerColor,Color borderColor){
-//        double centerUpX = center.getX() + radius;
-//        double centerUpY = center.getY() + radius;
-//        Point2D newCenter = new Point2D(centerUpX,centerUpY);
-//        ballFace = makeBall(newCenter,radiusA,radiusB);
-//        this.center = newCenter;
 
         this.center = center;
         this.radius = radiusA;

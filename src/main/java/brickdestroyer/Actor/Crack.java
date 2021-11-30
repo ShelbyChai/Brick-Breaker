@@ -1,10 +1,8 @@
 package brickdestroyer.Actor;
 
-import javafx.animation.PathTransition;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.*;
-import javafx.util.Duration;
 
 import java.util.Random;
 
@@ -23,7 +21,6 @@ public class Crack {
 
     private static Random rnd;
     private Path crack;
-    private PathTransition pathTransition;
 
     private int crackDepth;
     private int steps;
@@ -36,7 +33,6 @@ public class Crack {
         this.steps = steps;
     }
 
-
     // Return the crack path
     public Path draw(){
 
@@ -45,8 +41,6 @@ public class Crack {
 
     public void reset(){
         crack.getElements().clear();
-//        crack = new Path();
-//        crack.reset();
     }
 
     // Polymorphism method overloading (there is 2 makeCrack method)
@@ -55,16 +49,11 @@ public class Crack {
     // TODO Note to refactor: In this makeCrack method it call the other makeCrack method to do something. This means they are not doing the same thing thus can't method overloading (Try to rename the method)
     protected void makeCrack(Point2D point, int direction, Shape brickBounds){
         // bounds: java.awt.Rectangle[x=60,y=40,width=60,height=20], each brick is 60 width & 20 height, the x and y represent the position of the crack brick
-//        Rectangle bounds = brickBounds.getBounds();
         Bounds bounds = brickBounds.getBoundsInParent();
-//        Bounds bounds = brickBounds.getBoundsInLocal();
-//        Rectangle bounds = brickBounds.getBoundsInLocal();
-
-//        System.out.println(bounds);
 
         Point2D impact = new Point2D((int)point.getX(),(int)point.getY());
-        Point2D start = new Point2D(0,0);
-        Point2D end = new Point2D(0,0);
+        Point2D start;
+        Point2D end;
 
 
         // TODO Note to refactor: Polymorphism (Left extends Directions) or Form Template Method (pull up)
@@ -78,24 +67,12 @@ public class Crack {
                 Point2D tmp = makeRandomPoint(start,end,VERTICAL);
                 makeCrack(impact,tmp);
 
-
-//                start.setLocation(bounds.x + bounds.width, bounds.y);
-//                end.setLocation(bounds.x + bounds.width, bounds.y + bounds.height);
-//                // Inconsistent code as only LEFT have Point tmp
-//                Point tmp = makeRandomPoint(start,end,VERTICAL);
-//                makeCrack(impact,tmp);
-
                 break;
             case RIGHT:
                 start = new Point2D(bounds.getMinX(),bounds.getMinY());
                 end = new Point2D(bounds.getMinX(),bounds.getMaxY());
                 tmp = makeRandomPoint(start,end,VERTICAL);
                 makeCrack(impact,tmp);
-
-//                start.setLocation(bounds.getLocation());
-//                end.setLocation(bounds.x, bounds.y + bounds.height);
-//                tmp = makeRandomPoint(start,end,VERTICAL);
-//                makeCrack(impact,tmp);
 
                 break;
             case UP:
@@ -104,23 +81,12 @@ public class Crack {
                 tmp = makeRandomPoint(start,end,HORIZONTAL);
                 makeCrack(impact,tmp);
 
-//                start.setLocation(bounds.x, bounds.y + bounds.height);
-//                end.setLocation(bounds.x + bounds.width, bounds.y + bounds.height);
-//                tmp = makeRandomPoint(start,end,HORIZONTAL);
-//                makeCrack(impact,tmp);
-
                 break;
             case DOWN:
                 start = new Point2D(bounds.getMinX(),bounds.getMinY());
                 end = new Point2D(bounds.getMaxX(),bounds.getMinY());
                 tmp = makeRandomPoint(start,end,HORIZONTAL);
                 makeCrack(impact,tmp);
-
-
-//                start.setLocation(bounds.getLocation());
-//                end.setLocation(bounds.x + bounds.width, bounds.y);
-//                tmp = makeRandomPoint(start,end,HORIZONTAL);
-//                makeCrack(impact,tmp);
 
                 break;
         }
@@ -155,26 +121,10 @@ public class Crack {
                 y += jumps(jump);
 
             path.getElements().add(new LineTo(x,y));
-//            path.lineTo(x,y);
 
         }
         path.getElements().add(new LineTo(end.getX(), end.getY()));
-        // TODO this not confirm
-//        crack.getElements().add(new LineTo(end.getX(), end.getY()));
-//        crack.setLayoutX(path.getLayoutX());
-//        crack.setLayoutY(path.getLayoutY());
-
-//        pathTransition = new PathTransition();
-////        pathTransition.setDuration(Duration.millis(1000));
-//        pathTransition.setNode(crack);
-//        pathTransition.setPath(path);
-////        pathTransition.setCycleCount(1);
-////        pathTransition.setAutoReverse(true);
-//        pathTransition.play();
         crack = path;
-
-//        path.lineTo(end.getX(),end.getY());
-//        crack.append(path,true);
     }
 
     private int randomInBounds(int bound){

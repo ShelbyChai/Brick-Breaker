@@ -86,10 +86,6 @@ public class Player {
     // Reset the position of the player
     public void moveTo(Point2D p){
         ballPoint = p;
-
-//        ballPoint.setLocation(p);
-//        playerFace.setLocation(ballPoint.x - (int)playerFace.getWidth()/2,ballPoint.y);
-
         playerFace.setX(ballPoint.getX() - (int)playerFace.getWidth()/2);
         playerFace.setY(ballPoint.getY());
     }

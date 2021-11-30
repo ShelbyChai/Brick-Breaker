@@ -5,7 +5,6 @@ import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 
 public class BrickFactory {
-    // TODO Refactor: Try to make a get method to access the name of the type of brick
     public Brick getBrick(Point2D point, Dimension2D size, String brickType) {
         if (brickType == null) {
             return null;
