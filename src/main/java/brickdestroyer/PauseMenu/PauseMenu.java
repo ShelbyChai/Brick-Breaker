@@ -1,6 +1,5 @@
 package brickdestroyer.PauseMenu;
 //
-//
 //import javafx.scene.paint.Color;
 //import javafx.scene.text.Font;
 //
