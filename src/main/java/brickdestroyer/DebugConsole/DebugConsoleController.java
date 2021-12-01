@@ -7,9 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 
-public class DebugConsoleController{
-
-//    private static final Color DEF_BKG = Color.WHITE;
+public class DebugConsoleController {
+    GameBoardModel gameBoardModel;
+    Levels levels;
 
     @FXML
     private Button skipLevel;
@@ -23,32 +23,27 @@ public class DebugConsoleController{
     @FXML
     private Slider ballYSpeed;
 
-    private GameBoardModel gameBoardModel;
-    private Levels levels;
-
-    public DebugConsoleController(GameBoardModel gameBoardModel, Levels levels) {
-        this.gameBoardModel = gameBoardModel;
-        this.levels = levels;
-    }
-
     @FXML
     protected void onSkipLevelClick(ActionEvent event) {
-        this.levels.nextLevel();
     }
 
     @FXML
     protected void onResetButtonClick(ActionEvent event) {
-        this.gameBoardModel.resetBallCount();
     }
 
     @FXML
-    protected void onBallXSpeedSliderChange() {
-        this.gameBoardModel.setBallXSpeed((int)ballXSpeed.getValue());
+    protected void onBallXSpeedSliderChange(ActionEvent event) {
     }
 
     @FXML
-    protected void onBallYSpeedSliderChange() {
-        this.gameBoardModel.setBallYSpeed((int)ballYSpeed.getValue());
+    protected void onBallYSpeedSliderChange(ActionEvent event) {
     }
 
+    public void setGameBoardModel(GameBoardModel gameBoardModel) {
+        this.gameBoardModel = gameBoardModel;
+    }
+
+    public void setLevels(Levels levels) {
+        this.levels = levels;
+    }
 }

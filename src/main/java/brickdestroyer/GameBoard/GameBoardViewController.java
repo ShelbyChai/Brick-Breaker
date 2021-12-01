@@ -10,14 +10,17 @@ import javafx.animation.AnimationTimer;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
-import javafx.stage.Popup;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -244,7 +247,10 @@ public class GameBoardViewController {
                     animationTimer.start();
             }
             else if (e.getCode() == KeyCode.F1) {
-//                getDebugConsole();
+                if (e.isShiftDown() && e.isAltDown()){
+                    animationTimer.stop();
+                    getDebugConsole(e);
+                }
             }
         });
     }
@@ -255,19 +261,23 @@ public class GameBoardViewController {
         });
     }
 
-//    Popup popup;
-//    DebugConsoleController debugConsoleController;
-//    FXMLLoader fxmlLoader;
-//
-//    public void getDebugConsole() {
-//        popup = new Popup();
-//        debugConsoleController = new DebugConsoleController(gameBoardModel,levels);
-//        fxmlLoader = new FXMLLoader(BrickDestroyerApplication.class.getResource("/DebugConsoleView.fxml"));
-//        fxmlLoader.setController(debugConsoleController);
-//        try {
-//            popup.getContent().add((Node)fxmlLoader.load());
-//        } catch (IOException ex) {
-//            ex.printStackTrace();
-//        }
-//    }
+    Stage stage;
+    Parent root;
+
+    DebugConsoleController debugConsoleController;
+
+    public void getDebugConsole(KeyEvent event) {
+        stage = new Stage();
+        try {
+            root = FXMLLoader.load(getClass().getResource("DebugConsoleView.fxml"));
+            debugConsoleController = new DebugConsoleController();
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(((Node)event.getSource()).getScene().getWindow());
+            stage.showAndWait();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 }

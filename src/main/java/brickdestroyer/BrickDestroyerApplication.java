@@ -17,9 +17,6 @@ public class BrickDestroyerApplication extends Application {
         Scene scene = new Scene(homePane);
         scene.getStylesheets().add(BrickDestroyerApplication.class.getResource("HomeMenuStyle.css").toExternalForm());
 
-//        FXMLLoader testloader = new FXMLLoader(BrickDestroyerApplication.class.getResource("DebugConsoleView.fxml"));
-//        Scene scene = new Scene(testloader.load());
-
 //        stage.initStyle(StageStyle.UNDECORATED);
         stage.setTitle("BrickDestroyer");
         stage.setScene(scene);
