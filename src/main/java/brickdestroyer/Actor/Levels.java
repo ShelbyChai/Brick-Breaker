@@ -86,9 +86,9 @@ public class Levels {
         Brick[][] tmp = new Brick[LEVELS_COUNT][];
 
         // TODO test crack path draw
-        tmp[0] = makeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,"Cement Brick", "Cement Brick");
+//        tmp[0] = makeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,"Cement Brick", "Cement Brick");
 //        tmp[0] = makeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,"Steel Brick","Steel Brick");
-//        tmp[0] = makeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,"Clay Brick", null);
+        tmp[0] = makeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,"Clay Brick", null);
         tmp[1] = makeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,"Clay Brick","Cement Brick");
         tmp[2] = makeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,"Clay Brick","Steel Brick");
         tmp[3] = makeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,"Steel Brick","Cement Brick");

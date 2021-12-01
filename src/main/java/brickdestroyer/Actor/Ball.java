@@ -51,14 +51,7 @@ abstract public class Ball {
     }
 
     private Circle generateCircle() {
-
-        Circle circle = (Circle) ballFace;
-        double radius = circle.getRadius();
-        circle.setCenterX(getUpperLeftX());
-        circle.setCenterY(getUpperLeftY());
-        circle.setRadius(radius);
-
-        return circle;
+        return new Circle(getUpperLeftX(),getUpperLeftY(),radius);
     }
 
     public void move(){

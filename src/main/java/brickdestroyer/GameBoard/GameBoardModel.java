@@ -1,6 +1,9 @@
 package brickdestroyer.GameBoard;
 
 import brickdestroyer.Actor.*;
+import brickdestroyer.Actor.Brick;
+import brickdestroyer.Actor.Player;
+import brickdestroyer.Actor.Ball;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -11,9 +14,9 @@ public class GameBoardModel {
     private Rectangle area;
     private Random rnd;
 
-    Brick[] bricks;
-    Ball ball;
-    Player player;
+    private Brick[] bricks;
+    private Player player;
+    private Ball ball;
 
     private Point2D startPoint;
     private int ballCount;
@@ -27,7 +30,7 @@ public class GameBoardModel {
         this.ballLost = false;
 
         makeBall(ballPos);
-        ballReset();
+        ball.setSpeed(randomSpeedX(),randomSpeedY());
         makePlayer(ballPos,150,10, drawArea);
 
         area = drawArea;
@@ -54,6 +57,14 @@ public class GameBoardModel {
         return speedY;
     }
 
+    public void ballReset(){
+        rnd = new Random();
+        player.moveTo(startPoint);
+        ball.moveTo(startPoint);
+        ball.setSpeed(randomSpeedX(),randomSpeedY());
+        ballLost = false;
+    }
+
     public int getBrickCount(){
         return brickCount;
     }
@@ -68,7 +79,6 @@ public class GameBoardModel {
         brickCount = bricks.length;
         ballCount = 3;
     }
-
 
     private void makePlayer(Point2D pos, int width, int height, Rectangle drawArea) {
         player = new Player(pos, width, height,drawArea);
@@ -138,21 +148,6 @@ public class GameBoardModel {
         return ((p.getX() < area.getX()) ||(p.getX() > (area.getX() + area.getWidth())));
     }
 
-    public void ballReset(){
-        rnd = new Random();
-        ball.moveTo(startPoint);
-        int speedX,speedY;
-        do{
-            speedX = rnd.nextInt(5) - 2;
-        } while(speedX == 0);
-        do{
-            speedY = -rnd.nextInt(3);
-        } while(speedY == 0);
-
-        ball.setSpeed(speedX,speedY);
-        ballLost = false;
-    }
-
     public boolean ballEnd(){
         return ballCount == 0;
     }
@@ -177,10 +172,11 @@ public class GameBoardModel {
         return ballLost;
     }
 
-    public Shape getPlayer() {return player.getPlayerFace();}
+    public Player getPlayer() {return player;}
 
-    public Shape getBall() {return ball.getBallFace();}
+    public Ball getBall() {return ball;}
 
+    public Brick[] getBrick() {return bricks;}
 
     // Refactor: Created method
     public Brick[] getBricks() {return bricks;}

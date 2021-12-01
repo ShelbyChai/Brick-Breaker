@@ -78,15 +78,10 @@ public class Player {
         moveAmount = 0;
     }
 
-    // Change from Shape to Rectangle
-    public Rectangle getPlayerFace(){
-        return playerFace;
-    }
-
     // Reset the position of the player
     public void moveTo(Point2D p){
         ballPoint = p;
-        playerFace.setX(ballPoint.getX() - (int)playerFace.getWidth()/2);
+        playerFace.setX(ballPoint.getX() - playerFace.getWidth()/2);
         playerFace.setY(ballPoint.getY());
     }
 

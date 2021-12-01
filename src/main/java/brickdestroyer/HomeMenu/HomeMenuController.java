@@ -12,6 +12,10 @@ public class HomeMenuController {
 
     @FXML
     private Button startButton;
+
+    @FXML
+    private Button infoButton;
+
     @FXML
     private Button exitButton;
 
@@ -24,6 +28,10 @@ public class HomeMenuController {
         gameBoardViewController = new GameBoardViewController();
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         stage.setScene(gameBoardViewController.getGameScene());
+    }
+
+    @FXML
+    protected void onInfoButtonClick(ActionEvent event) {
     }
 
     @FXML
