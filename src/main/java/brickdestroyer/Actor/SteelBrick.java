@@ -26,7 +26,6 @@ public class SteelBrick extends Brick{
         brickFace = super.getBrickFace();
     }
 
-
     @Override
     protected Shape makeBrickFace(Point2D pos, Dimension2D size) {
         return new Rectangle(pos.getX(),pos.getY(),size.getWidth(),size.getHeight());

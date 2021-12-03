@@ -20,7 +20,7 @@
         </rowConstraints>
          <children>
             <Button fx:id="skipLevel" mnemonicParsing="false" onAction="#onSkipLevelClick" text="Skip Level" />
-            <Button fx:id="resetBalls" mnemonicParsing="false" text="Reset Balls" GridPane.columnIndex="1" />
+            <Button fx:id="resetBalls" mnemonicParsing="false" onAction="#onResetButtonClick" text="Reset Balls" GridPane.columnIndex="1" />
             <Slider fx:id="ballXSpeed" blockIncrement="1.0" majorTickUnit="1.0" max="4.0" min="-4.0" minorTickCount="0" showTickMarks="true" snapToTicks="true" GridPane.rowIndex="1" />
             <Slider fx:id="ballYSpeed" blockIncrement="1.0" majorTickUnit="1.0" max="4.0" min="-4.0" minorTickCount="0" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
