@@ -12,16 +12,15 @@ public class RubberBall extends Ball{
 
 
     public RubberBall(Point2D center){
-        super(center,DEF_RADIUS,DEF_RADIUS,DEF_INNER_COLOR,DEF_BORDER_COLOR);
+        super(center,DEF_RADIUS, DEF_INNER_COLOR,DEF_BORDER_COLOR);
     }
 
     @Override
-    protected Circle makeBall(Point2D center, int radiusA, int radiusB) {
-
-        double x = center.getX() - (radiusA / 2);
-        double y = center.getY() - (radiusB / 2);
-
-        return new Circle(x,y,radiusA);
+    protected Circle makeBall(Point2D center, int radius) {
+        return new Circle(super.getUpperLeftX(),super.getUpperLeftY(), radius);
+//        double x = center.getX() - (radius / 2);
+//        double y = center.getY() - (radius / 2);
+//        return new Circle(x,y,radius);
     }
 
 }

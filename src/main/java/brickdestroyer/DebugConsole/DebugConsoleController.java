@@ -4,12 +4,16 @@ import brickdestroyer.Actor.Levels;
 import brickdestroyer.GameBoard.GameBoardModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 
-public class DebugConsoleController{
+import java.net.URL;
+import java.util.ResourceBundle;
 
-//    private static final Color DEF_BKG = Color.WHITE;
+
+public class DebugConsoleController implements Initializable {
+    private GameBoardModel gameBoardModel;
 
     @FXML
     private Button skipLevel;
@@ -23,17 +27,18 @@ public class DebugConsoleController{
     @FXML
     private Slider ballYSpeed;
 
-    private GameBoardModel gameBoardModel;
-    private Levels levels;
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
-    public DebugConsoleController(GameBoardModel gameBoardModel, Levels levels) {
-        this.gameBoardModel = gameBoardModel;
-        this.levels = levels;
+        ballXSpeed.valueProperty().addListener(e -> gameBoardModel.setBallXSpeed((int)ballXSpeed.getValue()));
+        ballYSpeed.valueProperty().addListener(e -> gameBoardModel.setBallYSpeed((int)ballYSpeed.getValue()));
+
     }
 
     @FXML
     protected void onSkipLevelClick(ActionEvent event) {
-        this.levels.nextLevel();
+        if (this.gameBoardModel.hasLevel())
+            this.gameBoardModel.nextLevel();
     }
 
     @FXML
@@ -41,14 +46,8 @@ public class DebugConsoleController{
         this.gameBoardModel.resetBallCount();
     }
 
-    @FXML
-    protected void onBallXSpeedSliderChange() {
-        this.gameBoardModel.setBallXSpeed((int)ballXSpeed.getValue());
-    }
-
-    @FXML
-    protected void onBallYSpeedSliderChange() {
-        this.gameBoardModel.setBallYSpeed((int)ballYSpeed.getValue());
+    public void setGameBoardModel(GameBoardModel gameBoardModel) {
+        this.gameBoardModel = gameBoardModel;
     }
 
 }

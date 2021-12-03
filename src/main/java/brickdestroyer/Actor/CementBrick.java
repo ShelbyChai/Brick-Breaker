@@ -8,9 +8,6 @@ import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
-// TODO CrackableBrick extends Brick CementBrick extends CrackableBrick ClayBrick extends Brick
-// TODO so i have a separate abstract class that extends from entities to accomodate movement functions
-
 public class CementBrick extends Brick{
 
     private static final String NAME = "Cement Brick";

@@ -1,7 +1,6 @@
 package brickdestroyer.Actor;
 
 import javafx.geometry.Point2D;
-import javafx.scene.effect.Light;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
@@ -18,15 +17,15 @@ abstract public class Ball {
     private Point2D left;
     private Point2D right;
 
+    final private int radius;
+
     private int speedX;
     private int speedY;
 
-    private int radius;
-
-    public Ball(Point2D center,int radiusA,int radiusB,Color innerColor,Color borderColor){
+    public Ball(Point2D center, int radius, Color innerColor, Color borderColor){
 
         this.center = center;
-        this.radius = radiusA;
+        this.radius = radius;
 
         up = new Point2D(0,0);
         down = new Point2D(0,0);
@@ -35,10 +34,10 @@ abstract public class Ball {
 
         this.borderColor = borderColor;
         this.innerColor = innerColor;
-        ballFace = makeBall(center,radiusA,radiusB);
+        ballFace = makeBall(center,radius);
     }
 
-    protected abstract Circle makeBall(Point2D center,int radiusA,int radiusB);
+    protected abstract Circle makeBall(Point2D center,int radius);
 
     private void setPoints(double width,double height){
 
@@ -47,7 +46,6 @@ abstract public class Ball {
 
         left = new Point2D(center.getX()-(width / 2),center.getY());
         right = new Point2D(center.getX()+(width / 2),center.getY());
-
     }
 
     private Circle generateCircle() {
@@ -56,14 +54,15 @@ abstract public class Ball {
 
     public void move(){
         center = new Point2D((center.getX() + speedX),(center.getY() + speedY));
-        Circle temp = generateCircle();
-        ballFace = temp;
 
-        setPoints(temp.getRadius(),temp.getRadius());
+        Circle tempCircle = generateCircle();
+        ballFace = tempCircle;
+
+        setPoints(tempCircle.getRadius(),tempCircle.getRadius());
     }
 
-    public void moveTo(Point2D p){
-        center = p;
+    public void moveTo(Point2D position){
+        center = position;
         ballFace = generateCircle();
     }
 
@@ -84,56 +83,36 @@ abstract public class Ball {
     public void setSpeedX (int s){
         speedX = s;
     }
-
     public void setSpeedY(int s){
         speedY = s;
-    }
-
-    public Shape getBallFace(){
-        return ballFace;
     }
 
     public Point2D getPosition(){
         return center;
     }
-
     public Double getUpperLeftX() {return center.getX() - (radius/2);}
-
     public Double getUpperLeftY() {return center.getY() - (radius/2);}
-
     public Point2D getUp() {
         return up;
     }
-
     public Point2D getDown() {
         return down;
     }
-
     public Point2D getLeft() {
         return left;
     }
-
     public Point2D getRight() {
         return right;
     }
-
     public Color getBorderColor(){
         return borderColor;
     }
-
     public Color getInnerColor(){
         return innerColor;
     }
-
-    public int getSpeedX(){
-        return speedX;
-    }
-
-    public int getSpeedY(){
-        return speedY;
-    }
-
     public int getRadius() {
         return radius;
     }
+
+//    public Shape getBallFace(){return ballFace;}
 }

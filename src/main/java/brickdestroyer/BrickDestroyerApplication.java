@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -17,14 +18,11 @@ public class BrickDestroyerApplication extends Application {
         Scene scene = new Scene(homePane);
         scene.getStylesheets().add(BrickDestroyerApplication.class.getResource("HomeMenuStyle.css").toExternalForm());
 
-//        FXMLLoader testloader = new FXMLLoader(BrickDestroyerApplication.class.getResource("DebugConsoleView.fxml"));
-//        Scene scene = new Scene(testloader.load());
-
-//        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.setTitle("BrickDestroyer");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
-    }
 
+    }
 }
