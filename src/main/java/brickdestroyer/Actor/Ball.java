@@ -3,21 +3,20 @@ package brickdestroyer.Actor;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Shape;
 
-abstract public class Ball {
+// TODO not consistent cause no name for ball factory
+abstract public class Ball implements Movable{
 
-    private Shape ballFace;
-    final private Color borderColor;
-    final private Color innerColor;
+    private Circle ballFace;
+    private final Color borderColor;
+    private final Color innerColor;
+    private final int radius;
 
     private Point2D center;
     private Point2D up;
     private Point2D down;
     private Point2D left;
     private Point2D right;
-
-    final private int radius;
 
     private int speedX;
     private int speedY;
@@ -49,18 +48,24 @@ abstract public class Ball {
     }
 
     private Circle generateCircle() {
-        return new Circle(getUpperLeftX(),getUpperLeftY(),radius);
+        Circle tempCircle = ballFace;
+
+        tempCircle.setCenterX(getUpperLeftX());
+        tempCircle.setCenterY(getUpperLeftY());
+        tempCircle.setRadius(radius);
+
+        return tempCircle;
     }
 
+    @Override
     public void move(){
         center = new Point2D((center.getX() + speedX),(center.getY() + speedY));
-
         Circle tempCircle = generateCircle();
         ballFace = tempCircle;
-
         setPoints(tempCircle.getRadius(),tempCircle.getRadius());
     }
 
+    @Override
     public void moveTo(Point2D position){
         center = position;
         ballFace = generateCircle();
@@ -79,40 +84,47 @@ abstract public class Ball {
         this.speedY = speedY;
     }
 
-    // TODO Note to refactor: Both of the setter only used in wall class, they are used at the same time so can replace with setSpeed instead
-    public void setSpeedX (int s){
-        speedX = s;
+    public void setSpeedX (int speedX){
+        this.speedX = speedX;
     }
-    public void setSpeedY(int s){
-        speedY = s;
+    public void setSpeedY(int speedY){
+        this.speedY = speedY;
     }
 
     public Point2D getPosition(){
         return center;
     }
-    public Double getUpperLeftX() {return center.getX() - (radius/2);}
-    public Double getUpperLeftY() {return center.getY() - (radius/2);}
+
     public Point2D getUp() {
         return up;
     }
+
     public Point2D getDown() {
         return down;
     }
+
     public Point2D getLeft() {
         return left;
     }
+
     public Point2D getRight() {
         return right;
     }
+
     public Color getBorderColor(){
         return borderColor;
     }
+
     public Color getInnerColor(){
         return innerColor;
     }
+
+    public double getUpperLeftX() {return center.getX() - (double)(radius/2);}
+
+    public double getUpperLeftY() {return center.getY() - (double)(radius/2);}
+
     public int getRadius() {
         return radius;
     }
 
-//    public Shape getBallFace(){return ballFace;}
 }

@@ -6,55 +6,63 @@ import javafx.scene.shape.Rectangle;
 
 public class Levels {
 
-    private static final int LEVELS_COUNT = 4;
+    public static final int LEVELS_COUNT = 4;
 
-    final private Brick[][] levels;
+    private final Brick[][] levels;
+    private final Rectangle drawArea;
+    private final int brickCount;
+    private final int lineCount;
+    private final double brickDimensionRatio;
 
     public Levels(Rectangle drawArea, int brickCount, int lineCount, double brickDimensionRatio){
-        levels = makeLevels(drawArea,brickCount,lineCount,brickDimensionRatio);
+        this.drawArea = drawArea;
+        this.brickCount = brickCount;
+        this.lineCount = lineCount;
+        this.brickDimensionRatio = brickDimensionRatio;
+
+        levels = makeLevels();
     }
 
-    // Refactor: makeSingleTypeLevel create a local variable instead of modifying the parameter
-    private Brick[] makeLevel(Rectangle drawArea, int brickCnt, int lineCnt, double brickSizeRatio, String brickTypeA, String brickTypeB){
-        int brickCount = brickCnt;
-        brickCount -= brickCount % lineCnt;
-        int brickOnLine = brickCount / lineCnt;
-        double brickLen = drawArea.getWidth() / brickOnLine;
-        double brickHgt = brickLen / brickSizeRatio;
+    private Brick[] makeLevel(String brickTypeA, String brickTypeB){
+        int brickCount = this.brickCount;
+        brickCount -= brickCount % this.lineCount;
+        int brickOnLine = brickCount / this.lineCount;
+        double brickLength = drawArea.getWidth() / brickOnLine;
+        double brickHeight = brickLength / this.brickDimensionRatio;
 
-        brickCount += lineCnt / 2;
+        brickCount += this.lineCount / 2;
         Brick[] brickWall  = new Brick[brickCount];
-        Dimension2D brickSize = new Dimension2D((int) brickLen,(int) brickHgt);
-        Point2D p;
+        Dimension2D brickSize = new Dimension2D((int) brickLength,(int) brickHeight);
+        Point2D brickPosition;
 
-        int i;
-        for(i = 0; i < brickWall.length; i++){
-            int line = i / brickOnLine;
-            if(line == lineCnt)
+        int brickIndex;
+        for(brickIndex = 0; brickIndex < brickWall.length; brickIndex++){
+            int line = brickIndex / brickOnLine;
+            if(line == this.lineCount)
                 break;
-            double x = (i % brickOnLine) * brickLen;
-            x =(line % 2 == 0) ? x : (x - (brickLen / 2));
-            double y = (line) * brickHgt;
-            p = new Point2D(x,y);
+            double positionX = (brickIndex % brickOnLine) * brickLength;
+            positionX =(line % 2 == 0) ? positionX : (positionX - (brickLength / 2));
+            double positionY = (line) * brickHeight;
+            brickPosition = new Point2D(positionX,positionY);
 
-            brickWall[i] = generateBrickType(chooseBrick(line, i, brickOnLine), p, brickSize, brickTypeA, brickTypeB);
+            brickWall[brickIndex] = generateBrickType(chooseBrick(line, brickIndex, brickOnLine), brickPosition, brickSize, brickTypeA, brickTypeB);
         }
 
-        for(double y = brickHgt; i < brickWall.length; i++, y += 2 * brickHgt){
-            double x = (brickOnLine * brickLen) - (brickLen / 2);
-            p = new Point2D(x,y);
-            brickWall[i] = makeBrick(brickTypeA, p,brickSize);
+        for(double y = brickHeight; brickIndex < brickWall.length; brickIndex++, y += 2 * brickHeight){
+            double x = (brickOnLine * brickLength) - (brickLength / 2);
+            brickPosition = new Point2D(x,y);
+            brickWall[brickIndex] = makeBrick(brickTypeA, brickPosition,brickSize);
         }
 
         return brickWall;
     }
 
-    private Boolean chooseBrick(int line, int i, int brickOnLine) {
-        int posX = i % brickOnLine;
+    private Boolean chooseBrick(int line, int brickIndex, int brickOnLine) {
+        int posX = brickIndex % brickOnLine;
         int centerLeft = brickOnLine / 2 - 1;
         int centerRight = brickOnLine / 2 + 1;
 
-        return ((line % 2 == 0 && i % 2 == 0) || (line % 2 != 0 && posX > centerLeft && posX <= centerRight));
+        return ((line % 2 == 0 && brickIndex % 2 == 0) || (line % 2 != 0 && posX > centerLeft && posX <= centerRight));
     }
 
     private Brick makeBrick(String brickType, Point2D position, Dimension2D brickSize) {
@@ -66,25 +74,24 @@ public class Levels {
         return brickTypeA == null || brickTypeB == null;
     }
 
-    private Brick generateBrickType(boolean b, Point2D p, Dimension2D brickSize, String brickTypeA, String brickTypeB) {
+    private Brick generateBrickType(boolean b, Point2D brickPosition, Dimension2D brickSize, String brickTypeA, String brickTypeB) {
         if (isOneType(brickTypeA, brickTypeB))
-            return makeBrick(brickTypeA, p,brickSize);
+            return makeBrick(brickTypeA, brickPosition,brickSize);
         else
-            return b ? makeBrick(brickTypeA, p,brickSize) : makeBrick(brickTypeB, p,brickSize);
+            return b ? makeBrick(brickTypeA, brickPosition,brickSize) : makeBrick(brickTypeB, brickPosition,brickSize);
     }
 
-    private Brick[][] makeLevels(Rectangle drawArea,int brickCount,int lineCount,double brickDimensionRatio){
+    // TODO Level factory maybe
+    private Brick[][] makeLevels(){
         Brick[][] level = new Brick[LEVELS_COUNT][];
 
-        level[0] = makeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,"Clay Brick", null);
-        level[1] = makeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,"Clay Brick","Cement Brick");
-        level[2] = makeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,"Clay Brick","Steel Brick");
-        level[3] = makeLevel(drawArea,brickCount,lineCount,brickDimensionRatio,"Steel Brick","Cement Brick");
+        level[0] = makeLevel("Clay Brick", null);
+        level[1] = makeLevel("Clay Brick","Cement Brick");
+        level[2] = makeLevel("Clay Brick","Steel Brick");
+        level[3] = makeLevel("Steel Brick","Cement Brick");
         return level;
     }
 
     public Brick[][] getLevels(){return levels;}
-
-    public int getLevelsCount(){return LEVELS_COUNT;}
 }
 

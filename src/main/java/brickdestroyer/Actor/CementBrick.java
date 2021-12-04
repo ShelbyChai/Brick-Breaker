@@ -19,6 +19,7 @@ public class CementBrick extends Brick{
     private Shape brickFace;
     private Path path;
 
+
     public CementBrick(Point2D point, Dimension2D size){
         super(NAME,point,size,DEF_BORDER,DEF_INNER,CEMENT_STRENGTH);
         crack = new Crack(DEF_CRACK_DEPTH,DEF_STEPS);
@@ -31,7 +32,7 @@ public class CementBrick extends Brick{
     }
 
     @Override
-    public boolean setImpact(Point2D point, int direction) {
+    public boolean setImpact(Point2D point, Brick.ImpactDirection direction) {
         if(!super.isBroken())
             return false;
         super.impact();
@@ -58,6 +59,7 @@ public class CementBrick extends Brick{
         return path;
     }
 
+    @Override
     public void repair(){
         super.repair();
         crack.reset();

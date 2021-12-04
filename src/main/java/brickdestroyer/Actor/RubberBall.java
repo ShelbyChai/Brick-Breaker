@@ -18,9 +18,6 @@ public class RubberBall extends Ball{
     @Override
     protected Circle makeBall(Point2D center, int radius) {
         return new Circle(super.getUpperLeftX(),super.getUpperLeftY(), radius);
-//        double x = center.getX() - (radius / 2);
-//        double y = center.getY() - (radius / 2);
-//        return new Circle(x,y,radius);
     }
 
 }

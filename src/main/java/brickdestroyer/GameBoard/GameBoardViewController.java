@@ -1,43 +1,40 @@
 package brickdestroyer.GameBoard;
 
-import brickdestroyer.Actor.*;
-import brickdestroyer.BrickDestroyerApplication;
+import brickdestroyer.Actor.Ball;
+import brickdestroyer.Actor.Brick;
+import brickdestroyer.Actor.Player;
 import brickdestroyer.DebugConsole.DebugConsoleController;
 import brickdestroyer.PauseMenu.PauseMenuController;
 import javafx.animation.AnimationTimer;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
-import javafx.scene.*;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.GaussianBlur;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.*;
-import javafx.stage.Modality;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-
-import java.io.IOException;
 
 
 public class GameBoardViewController{
     public static final int DEF_WIDTH = 600;
     public static final int DEF_HEIGHT = 450;
 
-    final private GameBoardModel gameBoardModel;
+    private final GameBoardModel gameBoardModel;
     private String message;
-//    private DebugConsole debugConsole;
-//    private PauseMenu pauseMenu;
+    private DebugConsoleController debugConsoleController;
+    private PauseMenuController pauseMenuController;
 
     final private Canvas canvas;
     private String userKeyInput = "";
     final private GraphicsContext gc;
     private volatile boolean isTimerRunning;
 
+
     public GameBoardViewController() {
+
         isTimerRunning = false;
         message = "";
         gameBoardModel = new GameBoardModel(new Rectangle(0, 0, DEF_WIDTH, DEF_HEIGHT), new Point2D(300, 430));
@@ -58,8 +55,6 @@ public class GameBoardViewController{
             animationTimer.start();
     }
 
-    public void setMessage(String message) {this.message = message;}
-
     public Scene getGameScene() {
         return new Scene(new StackPane(canvas));
     }
@@ -77,27 +72,28 @@ public class GameBoardViewController{
                 setUserKeyInput();
                 gameBoardModel.move();
                 gameBoardModel.findImpacts();
-                message = String.format("Bricks: %d Balls %d", gameBoardModel.getBrickCount(), gameBoardModel.getBallCount());
 
+                repaintMessage(String.format("Bricks: %d Balls %d", gameBoardModel.getBrickCount(), gameBoardModel.getBallCount()));
 
                 if (gameBoardModel.isBallLost()) {
                     if (gameBoardModel.ballEnd()) {
                         gameBoardModel.wallReset();
-                        message = "Game over";
+                        repaintMessage("Game Over");
                     }
-                    gameBoardModel.ballReset();
+                    gameBoardModel.resetPoint();
+                    paint(gc, gameBoardModel);
                     animationTimer.stop();
 
                 } else if (gameBoardModel.isDone()) {
                     if (gameBoardModel.hasLevel()) {
-                        message = "Go to Next Level";
+                        repaintMessage("Go to Next Level");
                         animationTimer.stop();
-                        gameBoardModel.ballReset();
+                        gameBoardModel.resetPoint();
                         gameBoardModel.wallReset();
                         gameBoardModel.nextLevel();
 
                     } else {
-                        message = "ALL WALLS DESTROYED";
+                        repaintMessage("All WALLS DESTROYED");
                         animationTimer.stop();
                     }
                 }
@@ -118,19 +114,17 @@ public class GameBoardViewController{
         }
     };
 
-    // Not private because of PauseMenuController
-    public void paint(GraphicsContext gc, GameBoardModel gameBoardModel) {
+    private void paint(GraphicsContext gc, GameBoardModel gameBoardModel) {
         gc.clearRect(0,0,DEF_WIDTH,DEF_HEIGHT);
         drawBall(gameBoardModel.getBall(),gc);
 
         gc.setFill(Color.BLUE);
         gc.fillText(message, 250,225);
 
-        for(Brick b : gameBoardModel.getBrick())
-            if(b.isBroken()) {
-                drawBrick(b, gc);
-//                if (b.getName() == "CementBrick")
-                drawCrack(b.getCrackPath(), gc);
+        for(Brick brick : gameBoardModel.getBrick())
+            if(brick.isBroken()) {
+                drawBrick(brick, gc);
+                drawCrack(brick.getCrackPath(), gc);
             }
 
         drawPlayer(gameBoardModel.getPlayer(),gc);
@@ -161,10 +155,10 @@ public class GameBoardViewController{
 
     private void drawBrick(Brick brick, GraphicsContext gc) {
         gc.setFill(brick.getInnerColor());
-        gc.fillRect(brick.getPos().getX(),brick.getPos().getY(),brick.getSize().getWidth(),brick.getSize().getHeight());
+        gc.fillRect(brick.getPosition().getX(),brick.getPosition().getY(),brick.getSize().getWidth(),brick.getSize().getHeight());
 
         gc.setFill(brick.getBorderColor());
-        gc.strokeRect(brick.getPos().getX(),brick.getPos().getY(),brick.getSize().getWidth(),brick.getSize().getHeight());
+        gc.strokeRect(brick.getPosition().getX(),brick.getPosition().getY(),brick.getSize().getWidth(),brick.getSize().getHeight());
     }
 
     private void drawPlayer(Player player, GraphicsContext gc) {
@@ -198,7 +192,6 @@ public class GameBoardViewController{
         }
     }
 
-    Stage stage;
     private void keyPressed(Canvas canvas) {
         canvas.setOnKeyPressed(keyEvent->{
             switch(keyEvent.getCode()){
@@ -212,34 +205,8 @@ public class GameBoardViewController{
 
                 case ESCAPE:
                     animationTimer.stop();
-
-                    stage = (Stage)((Node)keyEvent.getSource()).getScene().getWindow();
-                    FXMLLoader fxmlLoader = new FXMLLoader(BrickDestroyerApplication.class.getResource("PauseMenuView.fxml"));
-                    try {
-                        stage.getScene().getRoot().setEffect(new GaussianBlur());
-                        Stage pauseMenu = new Stage(StageStyle.TRANSPARENT);
-                        pauseMenu.initOwner(stage);
-                        pauseMenu.initModality(Modality.APPLICATION_MODAL);
-                        Scene scene = new Scene(fxmlLoader.load());
-                        scene.getStylesheets().add(BrickDestroyerApplication.class.getResource("PauseMenuStyle.css").toExternalForm());
-//                    pauseMenu.setScene(new Scene(fxmlLoader.load(), Color.TRANSPARENT));
-                        pauseMenu.setScene(scene);
-
-                    // TODO Use css to set the background Opacity
-//                    pauseMenu.setWidth(DEF_WIDTH);
-//                    pauseMenu.setHeight(DEF_HEIGHT);
-                        pauseMenu.setX(stage.getX());
-                        pauseMenu.setY(stage.getY());
-                        pauseMenu.show();
-
-                        PauseMenuController pauseMenuController = fxmlLoader.getController();
-                        pauseMenuController.setRootStage(stage);
-                        pauseMenuController.setGameBoard(gameBoardModel);
-                        pauseMenuController.setGameBoardViewController(this);
-
-                    } catch (IOException ex) {
-                    ex.printStackTrace();
-                    }
+                    pauseMenuController = new PauseMenuController();
+                    pauseMenuController.getPauseMenu((Stage)((Node)keyEvent.getSource()).getScene().getWindow(),gameBoardModel,this);
                     break;
 
                 case SPACE:
@@ -248,12 +215,15 @@ public class GameBoardViewController{
                     else
                         animationTimer.start();
                     break;
+
                 case F1:
                     if (keyEvent.isShiftDown() && keyEvent.isAltDown()){
                         animationTimer.stop();
-                        getDebugConsole(keyEvent);
+                        debugConsoleController = new DebugConsoleController();
+                        debugConsoleController.getDebugConsole((Stage)((Node)keyEvent.getSource()).getScene().getWindow() , gameBoardModel);
                     }
                     break;
+
                 default:
                     break;
             }
@@ -261,27 +231,11 @@ public class GameBoardViewController{
     }
 
     private void keyReleased(Canvas canvas) {
-        canvas.setOnKeyReleased(e->{
-            userKeyInput = "";
-        });
+        canvas.setOnKeyReleased(e-> userKeyInput = "");
     }
 
-    private void getDebugConsole(KeyEvent event) {
-        stage = new Stage();
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(BrickDestroyerApplication.class.getResource("DebugConsoleView.fxml"));
-            stage.setScene(new Scene(fxmlLoader.load()));
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initOwner(((Node)event.getSource()).getScene().getWindow());
-            stage.show();
-
-            DebugConsoleController debugConsoleController = fxmlLoader.getController();
-            debugConsoleController.setGameBoardModel(gameBoardModel);
-
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
+    public void repaintMessage(String message) {
+        this.message = message;
+        paint(gc, gameBoardModel);
     }
-
-    public void repaint() {paint(gc, gameBoardModel);}
 }

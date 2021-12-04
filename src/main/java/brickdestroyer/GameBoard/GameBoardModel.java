@@ -1,27 +1,27 @@
 package brickdestroyer.GameBoard;
 
-import brickdestroyer.Actor.*;
-import brickdestroyer.Actor.Brick;
-import brickdestroyer.Actor.Player;
 import brickdestroyer.Actor.Ball;
+import brickdestroyer.Actor.BallFactory;
+import brickdestroyer.Actor.Brick;
+import brickdestroyer.Actor.Levels;
+import brickdestroyer.Actor.Player;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Rectangle;
-
 import java.util.Random;
 
 import static brickdestroyer.GameBoard.GameBoardViewController.DEF_HEIGHT;
 import static brickdestroyer.GameBoard.GameBoardViewController.DEF_WIDTH;
 
 public class GameBoardModel {
-    private Rectangle area;
     private Random rnd;
-
     private Brick[] bricks;
     private Player player;
     private Ball ball;
-    private Levels levels;
 
-    private Point2D startPoint;
+    private final Levels levels;
+    private final Rectangle area;
+    private final Point2D startPoint;
+
     private int ballCount;
     private boolean ballLost;
     private int brickCount;
@@ -37,35 +37,14 @@ public class GameBoardModel {
         makeBall("Rubber Ball", ballPos);
         makePlayer(ballPos,150,10, drawArea);
 
-        levels = new Levels(new Rectangle(0, 0, DEF_WIDTH, DEF_HEIGHT), 30, 3, 6/2);
+        levels = new Levels(new Rectangle(0, 0, DEF_WIDTH, DEF_HEIGHT), 30, 3, (double)6/2);
         ball.setSpeed(randomSpeedX(),randomSpeedY());
-        // Anything uses this are related to border
+
         area = drawArea;
     }
 
-    public int randomSpeedX() {
-        rnd = new Random();
-        int speedX;
-        do{
-            speedX = rnd.nextInt(5) - 2;
-        }while(speedX == 0);
-
-        return speedX;
-    }
-
-    public int randomSpeedY() {
-        rnd = new Random();
-        int speedY;
-        do{
-            speedY = -rnd.nextInt(3);
-
-        }while(speedY == 0);
-
-        return speedY;
-    }
-
     // MVC: Controller
-    public void ballReset(){
+    public void resetPoint(){
         rnd = new Random();
         player.moveTo(startPoint);
         ball.moveTo(startPoint);
@@ -73,7 +52,7 @@ public class GameBoardModel {
         ballLost = false;
     }
 
-    // MVC: Controller
+    // MVC: Controller call but in wall class
     // Refactor: Created a new method to decrement the brickCount
     public void wallReset(){
         for(Brick b : bricks)
@@ -82,18 +61,7 @@ public class GameBoardModel {
         ballCount = 3;
     }
 
-    // MVC: Model call in controller
-    private void makePlayer(Point2D pos, int width, int height, Rectangle drawArea) {
-        player = new Player(pos, width, height,drawArea);
-    }
-
-    // MVC: Model
-    private void makeBall(String ballType, Point2D center){
-        BallFactory ballFactory = new BallFactory();
-        ball = ballFactory.getBallType(ballType, center);
-    }
-
-    // Lazy method can remove
+    // MVC: Controller
     public void move(){
         player.move();
         ball.move();
@@ -123,25 +91,37 @@ public class GameBoardModel {
         }
     }
 
+    // MVC: Controller
+    public void nextLevel(){
+        setBricks(levels.getLevels()[currentLevel++]);
+        setBrickCount(getBrick().length);
+    }
+
+    // MVC: Controller call -> in wall class
     private boolean impactWall(){
         // Find the impact for each bricks
-        for(Brick b : bricks){
-            switch(b.findImpact(ball)) {
+        for(Brick brick : bricks){
+            // Refactor: Polymorphism
+            boolean isCrackableBrick = brick.getName().equalsIgnoreCase("Cement Brick");
+            switch (brick.findImpact(ball)) {
                 //Vertical Impact
-                case Brick.UP_IMPACT:
+                case UP -> {
                     ball.reverseY();
-                    return b.setImpact(ball.getDown(), Crack.UP);
-                case Brick.DOWN_IMPACT:
+                    return isCrackableBrick ? brick.setImpact(ball.getDown(), Brick.ImpactDirection.UP) : brick.setImpact();
+                }
+                case DOWN -> {
                     ball.reverseY();
-                    return b.setImpact(ball.getUp(), Crack.DOWN);
-
+                    return isCrackableBrick ? brick.setImpact(ball.getUp(), Brick.ImpactDirection.DOWN) : brick.setImpact();
+                }
                 //Horizontal Impact
-                case Brick.LEFT_IMPACT:
+                case LEFT -> {
                     ball.reverseX();
-                    return b.setImpact(ball.getRight(), Crack.RIGHT);
-                case Brick.RIGHT_IMPACT:
+                    return isCrackableBrick ? brick.setImpact(ball.getRight(), Brick.ImpactDirection.RIGHT) : brick.setImpact();
+                }
+                case RIGHT -> {
                     ball.reverseX();
-                    return b.setImpact(ball.getLeft(), Crack.LEFT);
+                    return isCrackableBrick ? brick.setImpact(ball.getLeft(), Brick.ImpactDirection.LEFT) : brick.setImpact();
+                }
             }
         }
         return false;
@@ -149,17 +129,44 @@ public class GameBoardModel {
 
     private boolean impactBorder(){
         Point2D p = ball.getPosition();
-        // Check if the ball's midpoint hit the left or right of the border screen
+
         return ((p.getX() < area.getX()) ||(p.getX() > (area.getX() + area.getWidth())));
     }
 
-    public void nextLevel(){
-        setBricks(levels.getLevels()[currentLevel++]);
-        setBrickCount(getBrick().length);
+    // MVC: Model call in controller
+    private void makePlayer(Point2D pos, int width, int height, Rectangle drawArea) {
+        player = new Player(pos, width, height,drawArea);
+    }
+
+    // MVC: Model
+    private void makeBall(String ballType, Point2D center){
+        BallFactory ballFactory = new BallFactory();
+        ball = ballFactory.getBallType(ballType, center);
+    }
+
+    private int randomSpeedX() {
+        rnd = new Random();
+        int speedX;
+        do{
+            speedX = rnd.nextInt(5) - 2;
+        }while(speedX == 0);
+
+        return speedX;
+    }
+
+    private int randomSpeedY() {
+        rnd = new Random();
+        int speedY;
+        do{
+            speedY = -rnd.nextInt(3);
+
+        }while(speedY == 0);
+
+        return speedY;
     }
 
     public boolean hasLevel(){
-        return currentLevel < levels.getLevelsCount();
+        return currentLevel < Levels.LEVELS_COUNT;
     }
     public boolean ballEnd(){
         return ballCount == 0;
