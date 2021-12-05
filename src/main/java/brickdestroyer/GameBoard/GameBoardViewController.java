@@ -3,19 +3,28 @@ package brickdestroyer.GameBoard;
 import brickdestroyer.Actor.Ball;
 import brickdestroyer.Actor.Brick;
 import brickdestroyer.Actor.Player;
+import brickdestroyer.BrickDestroyerApplication;
 import brickdestroyer.DebugConsole.DebugConsoleController;
+import brickdestroyer.DebugConsole.DebugConsoleModel;
 import brickdestroyer.PauseMenu.PauseMenuController;
+import brickdestroyer.PauseMenu.PauseMenuModel;
 import javafx.animation.AnimationTimer;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
+import java.io.IOException;
 
 
 public class GameBoardViewController{
@@ -50,9 +59,6 @@ public class GameBoardViewController{
         keyReleased(canvas);
 
         paint(gc, gameBoardModel);
-
-        if (isTimerRunning)
-            animationTimer.start();
     }
 
     public Scene getGameScene() {
@@ -60,6 +66,7 @@ public class GameBoardViewController{
     }
 
     final private AnimationTimer animationTimer = new AnimationTimer() {
+
         private long lastUpdate = 0;
         // Default: 10_000_000
         final private static long TIMER_DELAY = 1_000_000;
@@ -130,7 +137,6 @@ public class GameBoardViewController{
         drawPlayer(gameBoardModel.getPlayer(),gc);
     }
 
-    // TODO the crack color is the border color of the brick
     private void drawCrack(Path crackPath, GraphicsContext gc) {
         if (crackPath != null && !crackPath.getElements().isEmpty()) {
 
@@ -178,7 +184,6 @@ public class GameBoardViewController{
     }
 
     private void setUserKeyInput(){
-        // TODO refactor this string thing
         if (userKeyInput.contains("A")) {
             gameBoardModel.getPlayer().moveLeft();
             gameBoardModel.getPlayer().move();
@@ -205,8 +210,34 @@ public class GameBoardViewController{
 
                 case ESCAPE:
                     animationTimer.stop();
-                    pauseMenuController = new PauseMenuController();
-                    pauseMenuController.getPauseMenu((Stage)((Node)keyEvent.getSource()).getScene().getWindow(),gameBoardModel,this);
+
+                    Stage primaryStage = (Stage)((Node)keyEvent.getSource()).getScene().getWindow();
+
+                    FXMLLoader pauseMenuLoader = new FXMLLoader(BrickDestroyerApplication.class.getResource("PauseMenuView.fxml"));
+                    Stage pauseMenu = new Stage(StageStyle.TRANSPARENT);
+
+                    primaryStage.getScene().getRoot().setEffect(new GaussianBlur());
+
+                    try {
+                        Scene scene = new Scene(pauseMenuLoader.load());
+                        scene.getStylesheets().add(BrickDestroyerApplication.class.getResource("PauseMenuStyle.css").toExternalForm());
+                        pauseMenu.setScene(scene);
+
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+
+                    pauseMenu.initModality(Modality.APPLICATION_MODAL);
+                    pauseMenu.initOwner(primaryStage);
+                    pauseMenu.setX(primaryStage.getX());
+                    pauseMenu.setY(primaryStage.getY());
+                    pauseMenu.show();
+
+                    PauseMenuModel pauseMenuModel = new PauseMenuModel(primaryStage, gameBoardModel, this);
+                    PauseMenuController pauseMenuController = pauseMenuLoader.getController();
+                    pauseMenuController.setPauseMenuModel(pauseMenuModel);
+
+
                     break;
 
                 case SPACE:
@@ -219,8 +250,27 @@ public class GameBoardViewController{
                 case F1:
                     if (keyEvent.isShiftDown() && keyEvent.isAltDown()){
                         animationTimer.stop();
-                        debugConsoleController = new DebugConsoleController();
-                        debugConsoleController.getDebugConsole((Stage)((Node)keyEvent.getSource()).getScene().getWindow() , gameBoardModel);
+
+                        Stage debugConsole = new Stage();
+                        FXMLLoader debugConsoleLoader = new FXMLLoader(BrickDestroyerApplication.class.getResource("DebugConsoleView.fxml"));
+
+                        try {
+                            debugConsole.setScene(new Scene(debugConsoleLoader.load()));
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+
+                        }
+                        // TODO Set Icon for the debug Console: https://icons8.com/icons/set/debug-console
+                        debugConsole.setTitle("Debug Console");
+                        debugConsole.setResizable(false);
+                        debugConsole.initModality(Modality.APPLICATION_MODAL);
+                        debugConsole.initOwner(((Node)keyEvent.getSource()).getScene().getWindow());
+                        debugConsole.show();
+
+                        DebugConsoleModel debugConsoleModel = new DebugConsoleModel(gameBoardModel);
+                        DebugConsoleController debugConsoleController = debugConsoleLoader.getController();
+                        debugConsoleController.setDebugConsoleModel(debugConsoleModel);
+
                     }
                     break;
 

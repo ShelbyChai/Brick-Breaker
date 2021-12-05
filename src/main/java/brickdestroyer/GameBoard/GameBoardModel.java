@@ -76,16 +76,16 @@ public class GameBoardModel {
             brickCount--;
         }
         // Check if the ball's midpoint hit the left or right of the border screen
-        else if(impactBorder()) {
+        else if(impactBorderX()) {
             ball.reverseX();
         }
         // TODO refactor else if
         // Check if the ball's midpoint hit the top of the screen
-        else if(ball.getPosition().getY() < area.getY()){
+        else if(impactBorderCeiling()){
             ball.reverseY();
         }
         // Check if the ball's midpoint hit the bottom of the screen
-        else if(ball.getPosition().getY() > area.getY() + area.getHeight()){
+        else if(impactBorderFloor()){
             ballCount--;
             ballLost = true;
         }
@@ -127,10 +127,18 @@ public class GameBoardModel {
         return false;
     }
 
-    private boolean impactBorder(){
+    private boolean impactBorderX(){
         Point2D p = ball.getPosition();
 
         return ((p.getX() < area.getX()) ||(p.getX() > (area.getX() + area.getWidth())));
+    }
+
+    private boolean impactBorderCeiling() {
+        return ball.getPosition().getY() < area.getY();
+    }
+
+    private boolean impactBorderFloor() {
+        return ball.getPosition().getY() > area.getY() + area.getHeight();
     }
 
     // MVC: Model call in controller

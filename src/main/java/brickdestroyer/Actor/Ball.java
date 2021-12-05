@@ -4,7 +4,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-// TODO not consistent cause no name for ball factory
+
 abstract public class Ball implements Movable{
 
     private Circle ballFace;
