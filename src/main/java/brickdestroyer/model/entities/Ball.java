@@ -1,31 +1,30 @@
-package brickdestroyer.model.abstract_entities;
+package brickdestroyer.model.entities;
 
-import brickdestroyer.model.Movable;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 
-abstract public class Ball implements Movable {
+abstract public class Ball implements Entity,Movable {
 
-    private Circle ballFace;
     private final Color borderColor;
     private final Color innerColor;
-    private final int radius;
-
+    private Circle ballFace;
+    private final int radiusA;
+    private final int radiusB;
     private Point2D center;
     private Point2D up;
     private Point2D down;
     private Point2D left;
     private Point2D right;
-
     private int speedX;
     private int speedY;
 
-    public Ball(Point2D center, int radius, Color innerColor, Color borderColor){
+    public Ball(Point2D center, int width, int height, Color innerColor, Color borderColor){
 
         this.center = center;
-        this.radius = radius;
+        this.radiusA = width;
+        this.radiusB = height;
 
         up = new Point2D(0,0);
         down = new Point2D(0,0);
@@ -34,7 +33,7 @@ abstract public class Ball implements Movable {
 
         this.borderColor = borderColor;
         this.innerColor = innerColor;
-        ballFace = makeBall(center,radius);
+        ballFace = makeBall(center,radiusA);
     }
 
     @Override
@@ -56,9 +55,9 @@ abstract public class Ball implements Movable {
     private Circle generateCircle() {
         Circle tempCircle = ballFace;
 
-        tempCircle.setCenterX(getUpperLeftX());
-        tempCircle.setCenterY(getUpperLeftY());
-        tempCircle.setRadius(radius);
+        tempCircle.setCenterX(getXPosition());
+        tempCircle.setCenterY(getYPosition());
+        tempCircle.setRadius(radiusA);
 
         return tempCircle;
     }
@@ -88,11 +87,12 @@ abstract public class Ball implements Movable {
     public void setSpeedX (int speedX){
         this.speedX = speedX;
     }
+
     public void setSpeedY(int speedY){
         this.speedY = speedY;
     }
 
-    public Point2D getPosition(){
+    public Point2D getCenter(){
         return center;
     }
 
@@ -112,20 +112,34 @@ abstract public class Ball implements Movable {
         return right;
     }
 
+    @Override
     public Color getBorderColor(){
         return borderColor;
     }
 
+    @Override
     public Color getInnerColor(){
         return innerColor;
     }
 
-    public double getUpperLeftX() {return center.getX() - (double)(radius/2);}
+    @Override
+    public double getXPosition() {
+        return center.getX() - (double)(radiusA/2);
+    }
 
-    public double getUpperLeftY() {return center.getY() - (double)(radius/2);}
+    @Override
+    public double getYPosition() {
+        return center.getY() - (double)(radiusB/2);
+    }
 
-    public int getRadius() {
-        return radius;
+    @Override
+    public double getWidth() {
+        return radiusA;
+    }
+
+    @Override
+    public double getHeight() {
+        return radiusB;
     }
 
 }

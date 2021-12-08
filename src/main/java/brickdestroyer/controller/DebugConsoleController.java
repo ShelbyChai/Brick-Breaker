@@ -19,9 +19,8 @@ import java.util.ResourceBundle;
 
 public class DebugConsoleController implements Initializable {
 
-    private final Stage debugConsole;
     private final DebugConsoleModel debugConsoleModel;
-    private SceneManager sceneManager;
+    private final SceneManager sceneManager;
 
     @FXML
     private Button skipLevelButton;
@@ -36,13 +35,37 @@ public class DebugConsoleController implements Initializable {
     private Slider ballYSpeed;
 
     public DebugConsoleController(DebugConsoleModel debugConsoleModel, SceneManager sceneManager) {
-
         this.debugConsoleModel = debugConsoleModel;
+        this.sceneManager = sceneManager;
+    }
 
-        debugConsole = new Stage();
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        ballXSpeed.valueProperty().addListener(e ->
+                debugConsoleModel.getGameLogic().setBallSpeedX((int)ballXSpeed.getValue()));
+
+        ballYSpeed.valueProperty().addListener(e ->
+                debugConsoleModel.getGameLogic().setBallSpeedY((int)ballYSpeed.getValue()));
+
+
+        skipLevelButton.setOnAction(actionEvent -> {
+            if (debugConsoleModel.getGameLogic().hasLevel()) {
+                debugConsoleModel.getGameLogic().nextLevel();
+                debugConsoleModel.getGameBoardView().paint();
+            }
+        });
+
+        resetBallsButton.setOnAction(actionEvent -> {
+            debugConsoleModel.getGameLogic().resetBallCount();
+            debugConsoleModel.getGameBoardView().paint();
+        });
+    }
+
+    public void showDebugConsole() {
+        Stage debugConsole = new Stage();
         FXMLLoader debugConsoleLoader = new FXMLLoader(BrickDestroyerMain.class.getResource("/brickdestroyer/fxml/DebugConsole.fxml"));
         debugConsoleLoader.setController(this);
-        this.sceneManager = sceneManager;
 
         try {
             debugConsole.setScene(new Scene(debugConsoleLoader.load()));
@@ -55,29 +78,8 @@ public class DebugConsoleController implements Initializable {
         debugConsole.setResizable(false);
         debugConsole.initModality(Modality.APPLICATION_MODAL);
         debugConsole.getIcons().add(new Image(String.valueOf(BrickDestroyerMain.class.getResource("/brickdestroyer/images/debugconsole-icon.png"))));
-
-        initializeListener();
+        debugConsole.initOwner(sceneManager.getPrimaryStage());
+        debugConsole.show();
     }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        ballXSpeed.valueProperty().addListener(e ->
-                debugConsoleModel.getGameBoardModel().setBallSpeedX((int)ballXSpeed.getValue()));
-
-        ballYSpeed.valueProperty().addListener(e ->
-                debugConsoleModel.getGameBoardModel().setBallSpeedY((int)ballYSpeed.getValue()));
-    }
-
-    private void initializeListener() {
-        skipLevelButton.setOnAction(actionEvent -> {
-            if (debugConsoleModel.getGameBoardModel().hasLevel())
-                debugConsoleModel.getGameBoardModel().nextLevel();
-        });
-
-        resetBallsButton.setOnAction(actionEvent -> debugConsoleModel.getGameBoardModel().resetBallCount());
-    }
-
-    public final Stage getDebugConsole() {return debugConsole;}
 
 }

@@ -1,6 +1,5 @@
 package brickdestroyer.model.entities;
 
-import brickdestroyer.model.abstract_entities.Brick;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
@@ -28,7 +27,7 @@ public class SteelBrick extends Brick {
     }
 
     @Override
-    public Shape getBrick() {
+    public Shape getBrickFace() {
         return super.getBrickFace();
     }
 

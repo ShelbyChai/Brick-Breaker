@@ -1,6 +1,6 @@
 package brickdestroyer.model;
 
-import brickdestroyer.model.abstract_entities.Brick;
+import brickdestroyer.model.entities.Brick;
 import brickdestroyer.model.entities_factory.BrickFactory;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
@@ -25,7 +25,6 @@ public class Levels {
         levels = makeLevels();
     }
 
-    // TODO Level factory maybe
     private Brick[][] makeLevels(){
         Brick[][] level = new Brick[LEVELS_COUNT][];
 
@@ -45,6 +44,7 @@ public class Levels {
 
         brickCount += this.lineCount / 2;
         Brick[] brickWall  = new Brick[brickCount];
+
         Dimension2D brickSize = new Dimension2D((int) brickLength,(int) brickHeight);
         Point2D brickPosition;
 

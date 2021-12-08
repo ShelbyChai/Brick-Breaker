@@ -12,9 +12,10 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import java.io.FileNotFoundException;
 
 
-public class GameBoardController {
+public class GameBoardController{
 
     private final GameBoardModel gameBoardModel;
     private final GameLogic gameLogic;
@@ -23,22 +24,25 @@ public class GameBoardController {
     private Stage primaryStage;
 
 
-    public GameBoardController(GameBoardModel gameBoardModel, GameBoardView gameBoardView, GameLogic gameLogic, SceneManager sceneManager) {
+    public GameBoardController(GameBoardModel gameBoardModel, GameBoardView gameBoardView, SceneManager sceneManager) {
         this.gameBoardModel = gameBoardModel;
-        this.gameLogic = gameLogic;
+        this.gameLogic = gameBoardModel.getGameLogic();
         this.gameBoardView = gameBoardView;
         this.sceneManager = sceneManager;
 
         this.gameLogic.nextLevel();
-
         initializeListener();
-
         this.gameBoardView.paint();
     }
 
     private void initializeListener() {
         keyPressed(this.gameBoardView.getCanvas());
         keyReleased(this.gameBoardView.getCanvas());
+    }
+
+    public void showGameBoard() {
+        primaryStage = sceneManager.getPrimaryStage();
+        primaryStage.setScene(this.getGameBoard());
     }
 
     final private AnimationTimer animationTimer = new AnimationTimer() {
@@ -56,10 +60,16 @@ public class GameBoardController {
                 gameLogic.move();
                 gameLogic.findImpacts();
 
+                gameBoardView.repaintScore("Score: " + gameLogic.getScore());
                 gameBoardView.repaintMessage(String.format("Bricks: %d Balls %d", gameLogic.getBrickCount(), gameLogic.getBallCount()));
 
                 handleBallLost();
-                handleNextLevel();
+
+                try {
+                    handleNextLevel();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
 
                 lastUpdate = currentNanoTimer;
             }
@@ -91,17 +101,21 @@ public class GameBoardController {
         }
     }
 
-    private void handleNextLevel() {
+    private void handleNextLevel() throws FileNotFoundException {
         if (gameLogic.isDone()) {
             if (gameLogic.hasLevel()) {
+
+                animationTimer.stop();
                 gameBoardView.repaintMessage("Go to Next Level");
                 animationTimer.stop();
                 gameLogic.resetPoint();
                 gameLogic.wallReset();
                 gameLogic.nextLevel();
+                animationTimer.stop();
             } else {
                 gameBoardView.repaintMessage("All WALLS DESTROYED");
                 animationTimer.stop();
+                sceneManager.getScoreBoard();
             }
         }
     }
@@ -135,15 +149,9 @@ public class GameBoardController {
                     animationTimer.stop();
 
                     primaryStage = (Stage)((Node)keyEvent.getSource()).getScene().getWindow();
-                    primaryStage.getScene().getRoot().setEffect(new GaussianBlur());
-
                     sceneManager.setPrimaryStage(primaryStage);
-
-                    Stage pauseMenu = sceneManager.getPauseMenu();
-                    pauseMenu.initOwner(primaryStage);
-                    pauseMenu.setX(primaryStage.getX());
-                    pauseMenu.setY(primaryStage.getY());
-                    pauseMenu.show();
+                    primaryStage.getScene().getRoot().setEffect(new GaussianBlur());
+                    sceneManager.getPauseMenu();
 
                     break;
 
@@ -157,10 +165,12 @@ public class GameBoardController {
                 case F1:
                     if (keyEvent.isShiftDown() && keyEvent.isAltDown()){
                         animationTimer.stop();
-                        Stage debugConsole = sceneManager.getDebugConsole();
-                        debugConsole.initOwner(((Node)keyEvent.getSource()).getScene().getWindow());
-                        debugConsole.show();
+                        sceneManager.getDebugConsole();
                     }
+                    break;
+                    // TODO TEST ScoreBoardModel
+                case F2:
+                    sceneManager.getScoreBoard();
                     break;
             }
         });
@@ -171,5 +181,4 @@ public class GameBoardController {
     }
 
     public final Scene getGameBoard() {return new Scene(new StackPane(gameBoardView.getCanvas()));}
-
 }

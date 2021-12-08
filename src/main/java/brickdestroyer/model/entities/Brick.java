@@ -1,4 +1,4 @@
-package brickdestroyer.model.abstract_entities;
+package brickdestroyer.model.entities;
 
 
 import javafx.geometry.Dimension2D;
@@ -7,21 +7,18 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Shape;
 
-abstract public class Brick {
+abstract public class Brick implements Entity {
     public static final int DEF_CRACK_DEPTH = 1;
     public static final int DEF_STEPS = 35;
 
     public enum ImpactDirection {LEFT, RIGHT, UP, DOWN, NONE}
 
     private final String name;
-    // TODO Note to refactor: Brick and Ball class have the same 3 variable declaration
-    private final Shape brickFace;
     private final Color borderColor;
     private final Color innerColor;
-
+    private final Shape brickFace;
     private final Point2D position;
     private final Dimension2D size;
-
     private final int fullStrength;
     private int strength;
     private boolean broken;
@@ -42,7 +39,6 @@ abstract public class Brick {
 
     protected abstract Shape makeBrickFace(Point2D pos,Dimension2D size);
 
-    // Refactor: Polymorphism
     public boolean setImpact(){
         if(broken)
             return false;
@@ -62,35 +58,9 @@ abstract public class Brick {
         broken = (strength == 0);
     }
 
-    public final boolean isBroken(){
-        return !broken;
-    }
-
     public void repair() {
         broken = false;
         strength = fullStrength;
-    }
-
-    public abstract Shape getBrick();
-
-    public Color getBorderColor(){
-        return borderColor;
-    }
-
-    public Color getInnerColor(){
-        return innerColor;
-    }
-
-    public Shape getBrickFace() {
-        return brickFace;
-    }
-
-    public Point2D getPosition() {
-        return position;
-    }
-
-    public Dimension2D getSize() {
-        return size;
     }
 
     public abstract Path getCrackPath();
@@ -100,5 +70,43 @@ abstract public class Brick {
     }
 
     public boolean getBroken(){return broken;}
+
+    public final boolean isBroken(){
+        return !broken;
+    }
+
+    public Shape getBrickFace() {
+        return brickFace;
+    }
+
+    @Override
+    public Color getBorderColor(){
+        return borderColor;
+    }
+
+    @Override
+    public Color getInnerColor(){
+        return innerColor;
+    }
+
+    @Override
+    public double getXPosition() {
+        return position.getX();
+    }
+
+    @Override
+    public double getYPosition() {
+        return position.getY();
+    }
+
+    @Override
+    public double getWidth() {
+        return size.getWidth();
+    }
+
+    @Override
+    public double getHeight() {
+        return size.getHeight();
+    }
 
 }

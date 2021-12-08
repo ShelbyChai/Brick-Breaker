@@ -1,6 +1,5 @@
 package brickdestroyer.model.entities;
 
-import brickdestroyer.model.abstract_entities.Ball;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -13,12 +12,12 @@ public class RubberBall extends Ball {
 
 
     public RubberBall(Point2D center){
-        super(center,DEF_RADIUS, DEF_INNER_COLOR,DEF_BORDER_COLOR);
+        super(center,DEF_RADIUS, DEF_RADIUS ,DEF_INNER_COLOR,DEF_BORDER_COLOR);
     }
 
     @Override
     protected Circle makeBall(Point2D center, int radius) {
-        return new Circle(super.getUpperLeftX(),super.getUpperLeftY(), radius);
+        return new Circle(super.getXPosition(),super.getYPosition(), radius);
     }
 
 }

@@ -1,11 +1,6 @@
 .root {
     -fx-font-family: sans-serif;
-    -fx-background-color: transparent;
-}
-
-#PauseMenuPane {
-    -fx-background-radius: 0 0 18 18;
-    -fx-border-radius: 0 0 18 18;
+    -fx-focus-color: transparent;
 }
 
 .button {

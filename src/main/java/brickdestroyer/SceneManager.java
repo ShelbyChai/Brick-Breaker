@@ -1,71 +1,67 @@
 package brickdestroyer;
 
-import brickdestroyer.controller.DebugConsoleController;
-import brickdestroyer.controller.GameBoardController;
-import brickdestroyer.controller.HomeMenuController;
-import brickdestroyer.controller.PauseMenuController;
-import brickdestroyer.model.game.DebugConsoleModel;
-import brickdestroyer.model.game.GameBoardModel;
-import brickdestroyer.model.game.GameLogic;
-import brickdestroyer.model.game.PauseMenuModel;
+import brickdestroyer.controller.*;
+import brickdestroyer.model.game.*;
 import brickdestroyer.view.GameBoardView;
-import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
 public class SceneManager {
 
-    private HomeMenuController homeMenuController;
-    private GameBoardModel gameBoardModel;
     private GameBoardView gameBoardView;
-    private GameBoardController gameBoardController;
-    private DebugConsoleModel debugConsoleModel;
-    private DebugConsoleController debugConsoleController;
-    private PauseMenuModel pauseMenuModel;
-    private PauseMenuController pauseMenuController;
-
+    private PlayerBoxController playerBoxController;
     private final GameLogic gameLogic;
     private Stage primaryStage;
-    private final VBox mainWindow;
 
     public SceneManager(GameLogic gameLogic) {
         this.gameLogic = gameLogic;
-        mainWindow = getHomeMenu();
     }
 
-    private VBox getHomeMenu() {
-        homeMenuController = new HomeMenuController(this);
-        return homeMenuController.getHomeMenu();
+    public void getHomeMenu() {
+        HomeMenuController homeMenuController = new HomeMenuController(this);
+        homeMenuController.showHomeMenu();
     }
 
-    public Scene getGameBoard() {
-        gameBoardModel = new GameBoardModel();
-        gameBoardView = new GameBoardView(gameBoardModel, gameLogic);
-        gameBoardController = new GameBoardController(gameBoardModel, gameBoardView, gameLogic, this);
-
-        return gameBoardController.getGameBoard();
+    public void getInfoMenu() {
+        InfoMenuController infoMenuController = new InfoMenuController(this);
+        infoMenuController.showInfoMenu();
     }
 
-    public Stage getDebugConsole() {
-        debugConsoleModel = new DebugConsoleModel(gameLogic);
-        debugConsoleController = new DebugConsoleController(debugConsoleModel, this);
-
-        return debugConsoleController.getDebugConsole();
+    public void getPlayerBox() {
+        playerBoxController = new PlayerBoxController(this);
+        playerBoxController.showPlayerBox();
     }
 
-    public Stage getPauseMenu() {
-        pauseMenuModel = new PauseMenuModel(primaryStage,gameLogic, gameBoardView);
-        pauseMenuController = new PauseMenuController(pauseMenuModel, this);
-
-        return pauseMenuController.getPauseMenu();
+    public void getGameBoard() {
+        GameBoardModel gameBoardModel = new GameBoardModel(gameLogic);
+        gameBoardView = new GameBoardView(gameBoardModel);
+        GameBoardController gameBoardController = new GameBoardController(gameBoardModel, gameBoardView, this);
+        gameBoardController.showGameBoard();
     }
 
-    public Scene getScene() {
-        return new Scene(mainWindow);
+    public void getDebugConsole() {
+        DebugConsoleModel debugConsoleModel = new DebugConsoleModel(gameLogic, gameBoardView);
+        DebugConsoleController debugConsoleController = new DebugConsoleController(debugConsoleModel, this);
+        debugConsoleController.showDebugConsole();
+    }
+
+    public void getPauseMenu() {
+        PauseMenuModel pauseMenuModel = new PauseMenuModel(gameLogic, gameBoardView);
+        PauseMenuController pauseMenuController = new PauseMenuController(pauseMenuModel, this);
+        pauseMenuController.showPauseMenu();
+    }
+
+    public void getScoreBoard(){
+        ScoreBoardModel scoreBoardModel = new ScoreBoardModel(gameLogic, playerBoxController);
+        ScoreBoardController scoreBoardController = new ScoreBoardController(scoreBoardModel, this);
+        scoreBoardController.showScoreBoard();
     }
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 }

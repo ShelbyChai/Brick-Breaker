@@ -1,11 +1,8 @@
 .root {
     -fx-font-family: sans-serif;
-    -fx-background-color: transparent;
-}
-
-#PauseMenuPane {
-    -fx-background-radius: 0 0 18 18;
-    -fx-border-radius: 0 0 18 18;
+    // -fx-background-image: url("");
+    -fx-background-size: 450 300;
+    -fx-focus-color: transparent;
 }
 
 .button {
@@ -24,4 +21,14 @@
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
     -fx-scale-z: 1.05;
+}
+
+#gameplayLabel, #displayLabel {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-align: center;
+}
+
+.label {
+    -fx-text-fill: rgb(50,40,40);
 }

@@ -2,7 +2,6 @@ package brickdestroyer.model.entities;
 
 
 import brickdestroyer.model.Crack;
-import brickdestroyer.model.abstract_entities.Brick;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
@@ -47,7 +46,7 @@ public class CementBrick extends Brick {
     }
 
     @Override
-    public Shape getBrick() {
+    public Shape getBrickFace() {
         return brickFace;
     }
 
@@ -65,7 +64,7 @@ public class CementBrick extends Brick {
     public void repair(){
         super.repair();
         crack.reset();
-        brickFace = getBrick();
+        brickFace = getBrickFace();
     }
 
 }

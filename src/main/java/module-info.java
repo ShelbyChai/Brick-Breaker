@@ -10,7 +10,6 @@ module COMP2042.CW.hfyxc3 {
     exports brickdestroyer.model.entities;
     exports brickdestroyer.controller;
     exports brickdestroyer.view;
-    exports brickdestroyer.model.abstract_entities;
     exports brickdestroyer.model.entities_factory;
 
 

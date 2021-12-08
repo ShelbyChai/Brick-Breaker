@@ -1,15 +1,14 @@
 package brickdestroyer.model.entities;
 
-import brickdestroyer.model.Movable;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Player implements Movable {
+public class Player implements Entity, Movable {
 
+    private static final int DEF_MOVE_AMOUNT = 5;
     private static final Color BORDER_COLOR = Color.GREEN.darker().darker();
     private static final Color INNER_COLOR = Color.GREEN;
-    private static final int DEF_MOVE_AMOUNT = 5;
     private final Rectangle playerFace;
     private Point2D ballPoint;
     private final int min;
@@ -33,20 +32,16 @@ public class Player implements Movable {
 
     @Override
     public void move(){
-        // ballPoint is the midpoint of the player rectangle
+
         double x = ballPoint.getX() + moveAmount;
-        // Check if the center position of the player (x) go beyond x and y
+
         if(x < min || x > max)
             return;
 
-        // Move the midpoint of the rectangle
         ballPoint = new Point2D(x, ballPoint.getY());
-
-        // Move the upper-left-corner value of the player
         playerFace.setX(ballPoint.getX()-playerFace.getWidth()/2);
     }
 
-    // Reset the position of the player
     @Override
     public void moveTo(Point2D p){
         ballPoint = p;
@@ -66,19 +61,24 @@ public class Player implements Movable {
         moveAmount = DEF_MOVE_AMOUNT;
     }
 
-    // REDUNDANT CODE
-    public double getXUpperLeft() {return playerFace.getX();}
+    public Rectangle getPlayerFace() {return playerFace;}
 
-    public double getYUpperLeft() {return playerFace.getY();}
-
-    public double getWidth() {return playerFace.getWidth();}
-
-    public double getHeight() {return playerFace.getHeight();}
-
-    public Color getInnerColor() {return INNER_COLOR;}
-
+    @Override
     public Color getBorderColor() {return BORDER_COLOR;}
 
-    public Rectangle getPlayerFace() {return playerFace;}
+    @Override
+    public Color getInnerColor() {return INNER_COLOR;}
+
+    @Override
+    public double getXPosition() {return playerFace.getX();}
+
+    @Override
+    public double getYPosition() {return playerFace.getY();}
+
+    @Override
+    public double getWidth() {return playerFace.getWidth();}
+
+    @Override
+    public double getHeight() {return playerFace.getHeight();}
 
 }

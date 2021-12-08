@@ -1,8 +1,8 @@
 package brickdestroyer.view;
 
 import brickdestroyer.model.game.GameBoardModel;
-import brickdestroyer.model.abstract_entities.Ball;
-import brickdestroyer.model.abstract_entities.Brick;
+import brickdestroyer.model.entities.Ball;
+import brickdestroyer.model.entities.Brick;
 import brickdestroyer.model.entities.Player;
 import brickdestroyer.model.game.GameLogic;
 import javafx.scene.canvas.Canvas;
@@ -14,16 +14,14 @@ import java.util.Objects;
 
 
 public class GameBoardView {
-
-    private final GameLogic gameLogic;
     private final GameBoardModel gameBoardModel;
-
+    private final GameLogic gameLogic;
     private final Canvas canvas;
     private final GraphicsContext gc;
 
-    public GameBoardView(GameBoardModel gameBoardModel, GameLogic gameLogic) {
+    public GameBoardView(GameBoardModel gameBoardModel) {
         this.gameBoardModel = gameBoardModel;
-        this.gameLogic = gameLogic;
+        this.gameLogic = gameBoardModel.getGameLogic();
 
         canvas = new Canvas(GameBoardModel.DEF_WIDTH, GameBoardModel.DEF_HEIGHT);
         canvas.setFocusTraversable(true);
@@ -32,28 +30,43 @@ public class GameBoardView {
 
     public void paint() {
         gc.clearRect(0,0,GameBoardModel.DEF_WIDTH, GameBoardModel.DEF_HEIGHT);
-        drawBall(gameLogic.getBall(),gc);
 
-        drawMessage(gameBoardModel.getMessage(), gc);
-
-        for(Brick brick : gameLogic.getBricks())
-            if(brick.isBroken()) {
-                drawBrick(brick, gc);
-                if(Objects.equals(brick.getName(), "Cement Brick"))
-                    drawCrack(brick.getCrackPath(), gc);
-            }
-
-        drawPlayer(gameLogic.getPlayer(),gc);
+        drawMessage(gameBoardModel.getMessage());
+        drawHighScore(gameBoardModel.getScore());
+        drawWall();
+        drawBall(gameLogic.getBall());
+        drawPlayer(gameLogic.getPlayer());
     }
 
-    private void drawMessage(String message, GraphicsContext gc) {
+    private void drawMessage(String message) {
         gc.setFill(Color.BLUE);
         gc.fillText(message, 250,225);
     }
 
-    private void drawCrack(Path crackPath, GraphicsContext gc) {
-        if (crackPath != null && !crackPath.getElements().isEmpty()) {
+    private void drawHighScore(String highScore) {
+        gc.setFill(Color.BLUE);
+        gc.fillText(highScore, 270, 200);
+    }
 
+    private void drawWall() {
+        for(Brick brick : gameLogic.getBricks())
+            if(brick.isBroken()) {
+                drawBrick(brick);
+                if(Objects.equals(brick.getName(), "Cement Brick"))
+                    drawCrack(brick.getCrackPath());
+            }
+    }
+
+    private void drawBrick(Brick brick) {
+        gc.setFill(brick.getInnerColor());
+        gc.fillRect(brick.getXPosition(), brick.getYPosition(), brick.getWidth(), brick.getHeight());
+
+        gc.setStroke(brick.getBorderColor());
+        gc.strokeRect(brick.getXPosition(), brick.getYPosition(), brick.getWidth(), brick.getHeight());
+    }
+
+    private void drawCrack(Path crackPath) {
+        if (crackPath != null && !crackPath.getElements().isEmpty()) {
             gc.beginPath();
             for (int step = 0; step < Brick.DEF_STEPS; step++) {
                 String[] positionXY = parseStringPath(crackPath, step);
@@ -72,32 +85,29 @@ public class GameBoardView {
         return path.replaceAll("[a-zA-Z]","").replaceAll("[=]","").replaceAll("[\\[-\\]]","").split(", ");
     }
 
-    private void drawBrick(Brick brick, GraphicsContext gc) {
-        gc.setFill(brick.getInnerColor());
-        gc.fillRect(brick.getPosition().getX(),brick.getPosition().getY(),brick.getSize().getWidth(),brick.getSize().getHeight());
-
-        gc.setFill(brick.getBorderColor());
-        gc.strokeRect(brick.getPosition().getX(),brick.getPosition().getY(),brick.getSize().getWidth(),brick.getSize().getHeight());
-    }
-
-    private void drawPlayer(Player player, GraphicsContext gc) {
-        gc.setFill(player.getInnerColor());
-        gc.fillRect(player.getXUpperLeft(),player.getYUpperLeft(),player.getWidth(), player.getHeight());
-
-        gc.setStroke(player.getBorderColor());
-        gc.strokeRect(player.getXUpperLeft(), player.getYUpperLeft(), player.getWidth(), player.getHeight());
-    }
-
-    private void drawBall(Ball ball, GraphicsContext gc) {
+    private void drawBall(Ball ball) {
         gc.setFill(ball.getInnerColor());
-        gc.fillOval(ball.getUpperLeftX(),ball.getUpperLeftY(),ball.getRadius(),ball.getRadius());
+        gc.fillOval(ball.getXPosition(), ball.getYPosition(), ball.getWidth(), ball.getHeight());
 
         gc.setStroke(ball.getBorderColor());
-        gc.strokeOval(ball.getUpperLeftX(),ball.getUpperLeftY(),ball.getRadius(),ball.getRadius());
+        gc.strokeOval(ball.getXPosition(), ball.getYPosition(), ball.getWidth(), ball.getHeight());
+    }
+
+    private void drawPlayer(Player player) {
+        gc.setFill(player.getInnerColor());
+        gc.fillRect(player.getXPosition(), player.getYPosition(), player.getWidth(), player.getHeight());
+
+        gc.setStroke(player.getBorderColor());
+        gc.strokeRect(player.getXPosition(), player.getYPosition(), player.getWidth(), player.getHeight());
     }
 
     public void repaintMessage(String message) {
         gameBoardModel.setMessage(message);
+        paint();
+    }
+
+    public void repaintScore(String score) {
+        gameBoardModel.setScore(score);
         paint();
     }
 

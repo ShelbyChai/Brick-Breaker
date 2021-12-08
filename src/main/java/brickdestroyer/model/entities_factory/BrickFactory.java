@@ -1,7 +1,7 @@
 package brickdestroyer.model.entities_factory;
 
 
-import brickdestroyer.model.abstract_entities.Brick;
+import brickdestroyer.model.entities.Brick;
 import brickdestroyer.model.entities.CementBrick;
 import brickdestroyer.model.entities.ClayBrick;
 import brickdestroyer.model.entities.SteelBrick;

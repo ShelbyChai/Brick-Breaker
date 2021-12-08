@@ -1,4 +1,4 @@
-package brickdestroyer.model;
+package brickdestroyer.model.entities;
 
 import javafx.geometry.Point2D;
 
