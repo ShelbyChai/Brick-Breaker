@@ -10,8 +10,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Path;
 
-import java.util.Objects;
-
 
 public class GameBoardView {
     private final GameBoardModel gameBoardModel;
@@ -52,8 +50,7 @@ public class GameBoardView {
         for(Brick brick : gameLogic.getBricks())
             if(brick.isBroken()) {
                 drawBrick(brick);
-                if(Objects.equals(brick.getName(), "Cement Brick"))
-                    drawCrack(brick.getCrackPath());
+                drawCrack(brick.getCrackPath());
             }
     }
 

@@ -3,15 +3,13 @@ package brickdestroyer.model.game;
 import brickdestroyer.model.entities.Ball;
 import brickdestroyer.model.entities_factory.BallFactory;
 import brickdestroyer.model.entities.Brick;
-import brickdestroyer.model.Levels;
+import brickdestroyer.model.entities.Levels;
 import brickdestroyer.model.entities.Player;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.Rectangle;
 import java.util.Random;
 import brickdestroyer.model.entities.Brick.ImpactDirection;
 
-import static brickdestroyer.model.game.GameBoardModel.DEF_HEIGHT;
-import static brickdestroyer.model.game.GameBoardModel.DEF_WIDTH;
 
 public class GameLogic {
     private Brick[] bricks;
@@ -25,6 +23,7 @@ public class GameLogic {
     private int ballCount;
     private boolean ballLost;
     private int brickCount;
+
     private int currentLevel;
     private int score;
 
@@ -39,13 +38,12 @@ public class GameLogic {
         BallFactory ballFactory = new BallFactory();
         ball = ballFactory.getBallType("Rubber Ball", ballPos);
         player = new Player(ballPos,150,10, drawArea);
-        levels = new Levels(new Rectangle(0, 0, DEF_WIDTH, DEF_HEIGHT), 30, 3, (double)6/2);
+        levels = new Levels(30, 3, (double)6/2);
 
         initialiseSpeed();
         area = drawArea;
     }
 
-    // TODO Create a score logic
     public void move(){
         player.move();
         ball.move();
@@ -63,8 +61,6 @@ public class GameLogic {
             b.repair();
         brickCount = bricks.length;
         ballCount = 3;
-
-        score = 0;
     }
 
     public void nextLevel(){
@@ -73,6 +69,8 @@ public class GameLogic {
 
         if(currentLevel!=1)
             score += 200;
+
+        score += ballCount * 100;
     }
 
     public void initialiseSpeed() {
@@ -95,8 +93,6 @@ public class GameLogic {
         }
         else if(impactWall()){
             brickCount--;
-
-            score += 10;
         }
         else if(impactBorderX()) {
             ball.reverseX();
@@ -108,8 +104,8 @@ public class GameLogic {
             ballCount--;
             ballLost = true;
 
-            if (score >= 50)
-                score -= 50;
+            if (score >= 100)
+                score -= 100;
             else
                 score = 0;
         }
@@ -121,27 +117,61 @@ public class GameLogic {
 
     private boolean impactWall(){
         for(Brick brick : bricks){
-            boolean isCrackableBrick = brick.getName().equalsIgnoreCase("Cement Brick");
-            switch (impactBrick(brick,ball)) {
-                case UP -> {
+            boolean isSpeedUp = brick.getName().equalsIgnoreCase("Haste Brick");
+            boolean isCrackableBrick = brick.getName().equalsIgnoreCase("Cement Brick")
+                    || brick.getName().equalsIgnoreCase("Black Stone Brick");
+
+            switch (impactBrick(brick, ball)) {
+                case UP:
                     ball.reverseY();
+                    speedUp(isSpeedUp);
+                    brickScoreCalculation(brick);
                     return isCrackableBrick ? brick.setImpact(ball.getDown(), ImpactDirection.UP) : brick.setImpact();
-                }
-                case DOWN -> {
+
+                case DOWN:
                     ball.reverseY();
+                    speedUp(isSpeedUp);
+                    brickScoreCalculation(brick);
                     return isCrackableBrick ? brick.setImpact(ball.getUp(), ImpactDirection.DOWN) : brick.setImpact();
-                }
-                case LEFT -> {
+
+                case LEFT:
                     ball.reverseX();
+                    speedUp(isSpeedUp);
+                    brickScoreCalculation(brick);
                     return isCrackableBrick ? brick.setImpact(ball.getRight(), ImpactDirection.RIGHT) : brick.setImpact();
-                }
-                case RIGHT -> {
+
+                case RIGHT:
                     ball.reverseX();
+                    speedUp(isSpeedUp);
+                    brickScoreCalculation(brick);
                     return isCrackableBrick ? brick.setImpact(ball.getLeft(), ImpactDirection.LEFT) : brick.setImpact();
-                }
             }
         }
         return false;
+    }
+
+
+    private void brickScoreCalculation(Brick brick) {
+        switch (brick.getName()) {
+            case "Clay Brick":
+            case "Haste Brick":
+            case "Steel Brick":
+                score += 30;
+                break;
+            case "Cement Brick":
+                score += 60;
+                break;
+            case "Black Stone Brick":
+                score += 90;
+                break;
+        }
+    }
+
+
+    public void speedUp(boolean isSpeedUp) {
+        if (isSpeedUp) {
+            ball.setSpeed(3,-3);
+        }
     }
 
     private boolean impactBorderX(){
@@ -191,7 +221,7 @@ public class GameLogic {
         return ballLost;
     }
 
-    public void setBallSpeedX(int speedX){
+    public void setBallSpeedX(int speedX) {
         ball.setSpeedX(speedX);
     }
     public void setBallSpeedY(int speedY){
@@ -226,8 +256,8 @@ public class GameLogic {
     public Brick[] getBricks() {
         return bricks;
     }
-    public Levels getLevels() {
-        return levels;
-    }
 
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
 }

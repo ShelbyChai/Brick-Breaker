@@ -92,6 +92,10 @@ abstract public class Ball implements Entity,Movable {
         this.speedY = speedY;
     }
 
+    public int getSpeedX () {return speedX;}
+
+    public int getSpeedY () {return speedY;}
+
     public Point2D getCenter(){
         return center;
     }

@@ -38,23 +38,6 @@ public class ScoreBoardController implements Initializable {
         this.sceneManager = sceneManager;
     }
 
-    public void updateScoreList() {
-        HashMap<String, Integer> tempPlayerRecord = scoreBoardModel.getPlayerRecord();
-        String currentPlayerName = scoreBoardModel.getPlayerName();
-        int currentScore = scoreBoardModel.getGameLogic().getScore();
-
-        tempPlayerRecord.put(currentPlayerName, currentScore);
-
-        LinkedHashMap<String, Integer> reverseSortedMap = new LinkedHashMap<>();
-        tempPlayerRecord.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .forEachOrdered(x -> reverseSortedMap.put(x.getKey(), x.getValue()));
-
-        scoreBoardModel.setPlayerRecord(reverseSortedMap);
-        scoreBoardModel.writeHighScore();
-    }
-
     public void showScoreBoard() {
         FXMLLoader scoreBoardLoader = new FXMLLoader(BrickDestroyerMain.class.getResource("/brickdestroyer/fxml/ScoreBoard.fxml"));
         scoreBoardLoader.setController(this);
@@ -64,7 +47,7 @@ public class ScoreBoardController implements Initializable {
             scoreBoardPane.getStylesheets().add(BrickDestroyerMain.class.getResource("/brickdestroyer/css/ScoreBoardStyle.css").toExternalForm());
 
         } catch (IOException e) {
-            System.err.println("HomeMenu.fxml could not be loaded");
+            System.err.println("ScoreBoard.fxml could not be loaded");
             e.printStackTrace();
         }
 
@@ -73,8 +56,9 @@ public class ScoreBoardController implements Initializable {
         stage.setResizable(false);
         stage.show();
 
-        if (scoreBoardModel.getPlayerBoxController() != null)
-            updateScoreList();
+        if (scoreBoardModel.getPlayerBoxController() != null) {
+            scoreBoardModel.updateScoreList();
+        }
 
         setScoreBoardValue();
     }

@@ -1,10 +1,7 @@
 package brickdestroyer.model.entities_factory;
 
 
-import brickdestroyer.model.entities.Brick;
-import brickdestroyer.model.entities.CementBrick;
-import brickdestroyer.model.entities.ClayBrick;
-import brickdestroyer.model.entities.SteelBrick;
+import brickdestroyer.model.entities.*;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 
@@ -21,6 +18,12 @@ public class BrickFactory {
         }
         if (brickType.equalsIgnoreCase("Steel Brick")) {
             return new SteelBrick(position, size);
+        }
+        if (brickType.equalsIgnoreCase("Haste Brick")) {
+            return new HasteBrick(position, size);
+        }
+        if (brickType.equalsIgnoreCase("Black Stone Brick")) {
+            return new BlackStoneBrick(position, size);
         }
         return null;
     }

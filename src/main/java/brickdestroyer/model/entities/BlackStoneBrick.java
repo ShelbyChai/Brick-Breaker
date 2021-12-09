@@ -1,6 +1,5 @@
 package brickdestroyer.model.entities;
 
-
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
@@ -8,20 +7,22 @@ import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
-public class CementBrick extends Brick {
+import java.util.Random;
 
-    private static final String NAME = "Cement Brick";
-    private static final Color DEF_BORDER = Color.rgb(217, 199, 175);
-    private static final Color DEF_INNER = Color.rgb(147, 147, 147);
-    private static final int CEMENT_STRENGTH = 2;
+public class BlackStoneBrick extends Brick{
+    private static final String NAME = "Black Stone Brick";
+    private static final Color DEF_BORDER = Color.rgb(198,198,198);
+    private static final Color DEF_INNER = Color.rgb(47,46,51);
+    private static final int BLACKSTONE_STRENGTH = 2;
+    private static final double BLACKSTONE_PROBABILITY = 0.5;
 
     final private Crack crack;
     private Shape brickFace;
     private Path path;
 
 
-    public CementBrick(Point2D point, Dimension2D size){
-        super(NAME,point,size,DEF_BORDER,DEF_INNER,CEMENT_STRENGTH);
+    public BlackStoneBrick(Point2D point, Dimension2D size){
+        super(NAME,point,size,DEF_BORDER,DEF_INNER,BLACKSTONE_STRENGTH);
         crack = new Crack(DEF_CRACK_DEPTH,DEF_STEPS);
         brickFace = super.getBrickFace();
     }
@@ -33,12 +34,15 @@ public class CementBrick extends Brick {
 
     @Override
     public boolean setImpact(Point2D point, Brick.ImpactDirection direction) {
+        Random rnd = new Random();
         if(!super.isBroken())
             return false;
         super.impact();
-        if(super.isBroken()){
-            crack.makeCrack(point,direction,brickFace);
-            path = crack.draw();
+        if (super.isBroken() ) {
+            if (rnd.nextDouble() < BLACKSTONE_PROBABILITY) {
+                crack.makeCrack(point, direction, brickFace);
+                path = crack.draw();
+            }
             return false;
         }
         return true;
@@ -60,5 +64,4 @@ public class CementBrick extends Brick {
         crack.reset();
         brickFace = getBrickFace();
     }
-
 }

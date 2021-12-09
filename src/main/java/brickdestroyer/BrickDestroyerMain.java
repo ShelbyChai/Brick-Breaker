@@ -19,6 +19,7 @@ public class BrickDestroyerMain extends Application {
         SceneManager sceneManager = new SceneManager(gameLogic);
         sceneManager.setPrimaryStage(primaryStage);
         sceneManager.getHomeMenu();
+//        sceneManager.getWinningBoard();
 
     }
 

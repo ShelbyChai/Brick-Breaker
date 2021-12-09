@@ -12,13 +12,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PlayerBoxController implements Initializable{
+public class NameInputBoxController implements Initializable{
     private final SceneManager sceneManager;
     private final Stage playerBox;
     @FXML
@@ -30,7 +29,7 @@ public class PlayerBoxController implements Initializable{
 
     private String playerName;
 
-    public PlayerBoxController(SceneManager sceneManager) {
+    public NameInputBoxController(SceneManager sceneManager) {
         this.playerName = "";
         this.sceneManager = sceneManager;
         playerBox = new Stage();
@@ -40,12 +39,7 @@ public class PlayerBoxController implements Initializable{
     public void initialize(URL url, ResourceBundle resourceBundle) {
         startGameButton.setOnAction(actionEvent -> {
             if (nameTextField.getText() == null || nameTextField.getText().trim().isEmpty() || nameTextField.getText().contains(",")) {
-                Alert alertBox = new Alert(Alert.AlertType.WARNING);
-                alertBox.setTitle("Player name Warning");
-                alertBox.setHeaderText(null);
-                alertBox.setContentText("Please insert valid a player name!");
-                alertBox.showAndWait();
-
+                showWarningMessage();
                 return;
             }
 
@@ -58,16 +52,16 @@ public class PlayerBoxController implements Initializable{
     }
 
     public void showPlayerBox() {
-        FXMLLoader playerBoxLoader = new FXMLLoader(BrickDestroyerMain.class.getResource("/brickdestroyer/fxml/PlayerBox.fxml"));
+        FXMLLoader playerBoxLoader = new FXMLLoader(BrickDestroyerMain.class.getResource("/brickdestroyer/fxml/NameInputBox.fxml"));
         playerBoxLoader.setController(this);
 
         try {
             Scene scene = new Scene(playerBoxLoader.load());
-            scene.getStylesheets().add(BrickDestroyerMain.class.getResource("/brickdestroyer/css/PlayerBoxStyle.css").toExternalForm());
+            scene.getStylesheets().add(BrickDestroyerMain.class.getResource("/brickdestroyer/css/NameInputBoxStyle.css").toExternalForm());
             playerBox.setScene(scene);
 
         } catch (IOException e) {
-            System.err.println("PlayerBox.fxml could not be loaded");
+            System.err.println("NameInputBox.fxml could not be loaded");
             e.printStackTrace();
 
         }
@@ -79,6 +73,14 @@ public class PlayerBoxController implements Initializable{
         playerBox.initModality(Modality.APPLICATION_MODAL);
         playerBox.initOwner(sceneManager.getPrimaryStage());
         playerBox.show();
+    }
+
+    private void showWarningMessage() {
+        Alert alertBox = new Alert(Alert.AlertType.WARNING);
+        alertBox.setTitle("Player name Warning");
+        alertBox.setHeaderText(null);
+        alertBox.setContentText("Please insert valid a player name!");
+        alertBox.showAndWait();
     }
 
     public String getPlayerName() {

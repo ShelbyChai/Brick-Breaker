@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -43,6 +44,7 @@ public class HomeMenuController implements Initializable {
         Stage stage = sceneManager.getPrimaryStage();
         stage.setScene(new Scene(homePane));
         stage.setTitle("Brick Destroyer");
+        stage.getIcons().add(new Image(String.valueOf(BrickDestroyerMain.class.getResource("/brickdestroyer/images/game-icon.png"))));
         stage.setResizable(false);
         stage.show();
     }

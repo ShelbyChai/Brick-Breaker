@@ -1,6 +1,6 @@
 package brickdestroyer.model.game;
 
-import brickdestroyer.controller.PlayerBoxController;
+import brickdestroyer.controller.NameInputBoxController;
 
 import java.io.*;
 import java.util.*;
@@ -10,14 +10,14 @@ public class ScoreBoardModel {
     public static final int DEF_SCORE_BOARD = 5;
 
     private final GameLogic gameLogic;
-    private final PlayerBoxController playerBoxController;
+    private final NameInputBoxController nameInputBoxController;
     private HashMap<String, Integer> playerRecord;
 
 
-    public ScoreBoardModel(GameLogic gameLogic, PlayerBoxController playerBoxController){
+    public ScoreBoardModel(GameLogic gameLogic, NameInputBoxController nameInputBoxController){
         playerRecord = new HashMap<String, Integer>();
         this.gameLogic = gameLogic;
-        this.playerBoxController = playerBoxController;
+        this.nameInputBoxController = nameInputBoxController;
         readHighScore();
     }
 
@@ -45,13 +45,29 @@ public class ScoreBoardModel {
         } catch (FileNotFoundException e ) {
             System.err.println("high_score.txt could not be read");
             e.printStackTrace();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
+        LinkedHashMap<String, Integer> sortedPlayerRecord = sortScore(getPlayerRecord());
+        setPlayerRecord(sortedPlayerRecord);
+    }
+
+    public void updateScoreList() {
+        HashMap<String, Integer> tempPlayerRecord = getPlayerRecord();
+        String currentPlayerName = getPlayerName();
+        int currentScore = getGameLogic().getScore();
+
+        tempPlayerRecord.put(currentPlayerName, currentScore);
+
+        LinkedHashMap<String, Integer> sortedPlayerRecord = sortScore(tempPlayerRecord);
+
+        setPlayerRecord(sortedPlayerRecord);
+        writeHighScore();
     }
 
     public void writeHighScore() {
+
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("src/main/resources/brickdestroyer/text/high_score.txt"))){
             for (String player : playerRecord.keySet()) {
                 bw.write(player + ", " + playerRecord.get(player));
@@ -62,13 +78,22 @@ public class ScoreBoardModel {
         }
     }
 
+    private LinkedHashMap<String, Integer> sortScore(HashMap<String, Integer> playerRecord) {
+        LinkedHashMap<String, Integer> reverseSortedMap = new LinkedHashMap<>();
+        playerRecord.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .forEachOrdered(x -> reverseSortedMap.put(x.getKey(), x.getValue()));
+
+        return reverseSortedMap;
+    }
 
     public GameLogic getGameLogic() {
         return gameLogic;
     }
 
     public String getPlayerName() {
-        return playerBoxController.getPlayerName();
+        return nameInputBoxController.getPlayerName();
     }
 
     public HashMap<String, Integer> getPlayerRecord() {
@@ -79,7 +104,7 @@ public class ScoreBoardModel {
         this.playerRecord = playerRecord;
     }
 
-    public PlayerBoxController getPlayerBoxController() {
-        return playerBoxController;
+    public NameInputBoxController getPlayerBoxController() {
+        return nameInputBoxController;
     }
 }

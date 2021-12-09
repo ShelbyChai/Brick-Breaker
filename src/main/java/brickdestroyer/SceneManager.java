@@ -9,9 +9,11 @@ import javafx.stage.Stage;
 public class SceneManager {
 
     private GameBoardView gameBoardView;
-    private PlayerBoxController playerBoxController;
+    private NameInputBoxController nameInputBoxController;
     private final GameLogic gameLogic;
     private Stage primaryStage;
+    ScoreBoardModel scoreBoardModel;
+    ScoreBoardController scoreBoardController;
 
     public SceneManager(GameLogic gameLogic) {
         this.gameLogic = gameLogic;
@@ -28,8 +30,8 @@ public class SceneManager {
     }
 
     public void getPlayerBox() {
-        playerBoxController = new PlayerBoxController(this);
-        playerBoxController.showPlayerBox();
+        nameInputBoxController = new NameInputBoxController(this);
+        nameInputBoxController.showPlayerBox();
     }
 
     public void getGameBoard() {
@@ -51,9 +53,14 @@ public class SceneManager {
         pauseMenuController.showPauseMenu();
     }
 
+    public void getWinningBoard() {
+        WinningBoardController winningBoardController = new WinningBoardController(this, scoreBoardModel, gameLogic);
+        winningBoardController.showWinningBoard();
+    }
+
     public void getScoreBoard(){
-        ScoreBoardModel scoreBoardModel = new ScoreBoardModel(gameLogic, playerBoxController);
-        ScoreBoardController scoreBoardController = new ScoreBoardController(scoreBoardModel, this);
+        scoreBoardModel = new ScoreBoardModel(gameLogic, nameInputBoxController);
+        scoreBoardController = new ScoreBoardController(scoreBoardModel, this);
         scoreBoardController.showScoreBoard();
     }
 

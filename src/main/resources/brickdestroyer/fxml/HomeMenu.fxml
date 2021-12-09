@@ -7,20 +7,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="homePane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/HomeMenuStyle.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="greetings" text="Welcome to:">
+      <Label fx:id="greetings" text="Welcome to:" textFill="WHITE">
          <font>
             <Font size="25.0" />
          </font></Label>
-      <Label fx:id="gameTitle" text="Brick Destroy">
+      <Label fx:id="gameTitle" text="Brick Destroy" textFill="WHITE">
          <font>
             <Font size="40.0" />
          </font>
          <padding>
             <Insets bottom="20.0" top="20.0" />
          </padding></Label>
-      <Label fx:id="version" text="Version 0.1">
+      <Label fx:id="version" text="Version 0.1" textFill="WHITE">
          <font>
             <Font size="10.0" />
          </font>

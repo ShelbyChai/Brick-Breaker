@@ -5,7 +5,6 @@ module COMP2042.CW.hfyxc3 {
 
 
     exports brickdestroyer;
-    exports brickdestroyer.model;
     exports brickdestroyer.model.game;
     exports brickdestroyer.model.entities;
     exports brickdestroyer.controller;
@@ -17,5 +16,6 @@ module COMP2042.CW.hfyxc3 {
     opens brickdestroyer.controller to javafx.fxml;
     opens brickdestroyer.model.game to javafx.fxml;
     opens brickdestroyer.view to javafx.fxml;
+    opens brickdestroyer.model.entities to javafx.fxml;
 
 }

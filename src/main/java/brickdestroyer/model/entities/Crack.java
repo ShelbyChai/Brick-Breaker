@@ -1,6 +1,5 @@
-package brickdestroyer.model;
+package brickdestroyer.model.entities;
 
-import brickdestroyer.model.entities.Brick;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.scene.shape.*;
