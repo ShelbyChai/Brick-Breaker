@@ -17,6 +17,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Name Input Box Controller is responsible to show and handle all the user interaction
+ * with the name input box in the game of Brick Destroyer. This class provide
+ * methods that the Name Input Box View fxml can invoke based on the user's interactions.
+ * It lets the user input a name before playing the game their high-score can be
+ * recorded.
+ */
 public class NameInputBoxController implements Initializable{
     private final SceneManager sceneManager;
     private final Stage playerBox;
@@ -29,12 +36,21 @@ public class NameInputBoxController implements Initializable{
 
     private String playerName;
 
+    /**
+     * @param sceneManager For changing the stage and scene of the game.
+     */
     public NameInputBoxController(SceneManager sceneManager) {
         this.playerName = "";
         this.sceneManager = sceneManager;
         playerBox = new Stage();
     }
 
+    /**
+     * This method implements the Initializable interface and contain the basic methods
+     * that the View can invoke based on the user's interactions.
+     * @param url a pointer that represents a Uniform Resource Locator.
+     * @param resourceBundle a resource bundles that contain locale-specific objects.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         startGameButton.setOnAction(actionEvent -> {
@@ -51,6 +67,11 @@ public class NameInputBoxController implements Initializable{
         backButton.setOnAction(actionEvent -> playerBox.close());
     }
 
+    /**
+     * This method is called to stage the name input box.
+     * It loads the name input box FXML file from the resource directory and
+     * create the pop-up name input box.
+     */
     public void showPlayerBox() {
         FXMLLoader playerBoxLoader = new FXMLLoader(BrickDestroyerMain.class.getResource("/brickdestroyer/fxml/NameInputBox.fxml"));
         playerBoxLoader.setController(this);
@@ -75,6 +96,10 @@ public class NameInputBoxController implements Initializable{
         playerBox.show();
     }
 
+    /**
+     * This method creates an alert box when the user didn't enter
+     * their name in the text field of name input box.
+     */
     private void showWarningMessage() {
         Alert alertBox = new Alert(Alert.AlertType.WARNING);
         alertBox.setTitle("Player name Warning");
@@ -83,6 +108,10 @@ public class NameInputBoxController implements Initializable{
         alertBox.showAndWait();
     }
 
+    /**
+     * Getter method for the player name entered by the user.
+     * @return a String that represent the player name of the user.
+     */
     public String getPlayerName() {
         return playerName;
     }

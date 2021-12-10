@@ -17,6 +17,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
+/**
+ * Debug Console Controller is responsible to show and handle all the user interaction
+ * with the debug console panel in the game of Brick Destroyer. This class provide
+ * methods that the Debug Console View fxml can invoke based on the user's interactions.
+ * The player can increment the level count, reset the ball, increase the speed of the ball
+ * using debug console. The debug console can be triggered by tapping on ALT + SHIFT + F1 key.
+ */
 public class DebugConsoleController implements Initializable {
 
     private final DebugConsoleModel debugConsoleModel;
@@ -34,11 +41,21 @@ public class DebugConsoleController implements Initializable {
     @FXML
     private Slider ballYSpeed;
 
+    /**
+     * @param debugConsoleModel Data of the debug console model.
+     * @param sceneManager For changing the stage and scene of the game.
+     */
     public DebugConsoleController(DebugConsoleModel debugConsoleModel, SceneManager sceneManager) {
         this.debugConsoleModel = debugConsoleModel;
         this.sceneManager = sceneManager;
     }
 
+    /**
+     * This method implements the Initializable interface and contain the basic methods
+     * that the View can invoke based on the user's interactions.
+     * @param url a pointer that represents a Uniform Resource Locator.
+     * @param resourceBundle a resource bundles that contain locale-specific objects.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -62,6 +79,11 @@ public class DebugConsoleController implements Initializable {
         });
     }
 
+    /**
+     * This method is called to stage the debug console.
+     * It loads the debug console FXML file from the resource directory and
+     * create the pop-up debug console panel.
+     */
     public void showDebugConsole() {
         Stage debugConsole = new Stage();
         FXMLLoader debugConsoleLoader = new FXMLLoader(BrickDestroyerMain.class.getResource("/brickdestroyer/fxml/DebugConsole.fxml"));

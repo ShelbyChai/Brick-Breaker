@@ -20,6 +20,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
+/**
+ * Pause Menu Controller is responsible to show and handle all the user interaction
+ * with the pause menu in the game of Brick Destroyer. This class provide
+ * methods that the Pause Menu View fxml can invoke based on the user's interactions.
+ * The player can pause, restart and quit the game. This screen can be display
+ * by pressing the ESC key.
+ */
 public class PauseMenuController implements Initializable {
 
     private final PauseMenuModel pauseMenuModel;
@@ -37,11 +44,21 @@ public class PauseMenuController implements Initializable {
     @FXML
     private Button exitButton;
 
+    /**
+     * @param pauseMenuModel Data of the pauseMenuModel.
+     * @param sceneManager For changing the stage and scene of the game.
+     */
     public PauseMenuController(PauseMenuModel pauseMenuModel, SceneManager sceneManager) {
         this.pauseMenuModel = pauseMenuModel;
         this.sceneManager = sceneManager;
     }
 
+    /**
+     * This method implements the Initializable interface and contain the basic methods
+     * that the View can invoke based on the user's interactions.
+     * @param url a pointer that represents a Uniform Resource Locator.
+     * @param resourceBundle a resource bundles that contain locale-specific objects.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         continueButton.setOnAction(this::hidePauseMenu);
@@ -62,6 +79,11 @@ public class PauseMenuController implements Initializable {
         });
     }
 
+    /**
+     * This method is called to stage the debug pause menu.
+     * It loads the pause menu FXML file from the resource directory and
+     * set the stage for pause menu in the game board.
+     */
     public void showPauseMenu() {
 
         FXMLLoader pauseMenuLoader = new FXMLLoader(BrickDestroyerMain.class.getResource("/brickdestroyer/fxml/PauseMenu.fxml"));
@@ -80,13 +102,15 @@ public class PauseMenuController implements Initializable {
 
         pauseMenu.initModality(Modality.APPLICATION_MODAL);
         pauseMenu.initOwner(sceneManager.getPrimaryStage());
-        pauseMenu.setWidth(sceneManager.getPrimaryStage().getWidth()/2);
-        pauseMenu.setHeight(sceneManager.getPrimaryStage().getHeight()/2);
         pauseMenu.setX(sceneManager.getPrimaryStage().getX() + sceneManager.getPrimaryStage().getWidth()/4);
         pauseMenu.setY(sceneManager.getPrimaryStage().getY() + sceneManager.getPrimaryStage().getHeight()/4);
         pauseMenu.show();
     }
 
+    /**
+     * This method is called to hide the pause menu on the game board stage.
+     * @param event an action event that will trigger when player press the ESC key.
+     */
     private void hidePauseMenu(Event event) {
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         stage.hide();

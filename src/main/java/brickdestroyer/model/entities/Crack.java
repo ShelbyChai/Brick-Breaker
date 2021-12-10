@@ -6,6 +6,10 @@ import javafx.scene.shape.*;
 
 import java.util.Random;
 
+/**
+ * Crack class contains the properties and behavior of a crackable
+ * brick class such as cement brick in the game of Brick Destroyer.
+ */
 public class Crack {
 
     private static final int CRACK_SECTIONS = 3;
@@ -17,6 +21,12 @@ public class Crack {
     private final int steps;
 
 
+    /**
+     * Defines and instantiate the properties of the crack class using the given
+     * properties.
+     * @param crackDepth The
+     * @param steps The number of steps and turns for each created crack path.
+     */
     public Crack(int crackDepth, int steps){
         rnd = new Random();
         crackPath = new Path();
@@ -24,6 +34,10 @@ public class Crack {
         this.steps = steps;
     }
 
+    /**
+     *
+     * @return
+     */
     public Path draw(){
         return crackPath;
     }

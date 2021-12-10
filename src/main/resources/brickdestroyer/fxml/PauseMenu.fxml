@@ -9,7 +9,7 @@
 
 <Pane fx:id="pauseMenuPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox fx:id="PauseMenuPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="225.0" prefWidth="300.0">
+      <VBox fx:id="PauseMenuPane" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="300.0" stylesheets="@../css/PauseMenuStyle.css">
          <children>
             <Label text="Pause Menu">
                <font>

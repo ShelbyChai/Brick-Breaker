@@ -15,6 +15,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Info Menu Controller is responsible to show and handle all the user interaction
+ * with the Info Menu in the game of Brick Destroyer. This class provide
+ * methods that the Info Menu View fxml can invoke based on the user's interactions.
+ * This menu shows the key player should interact with to play the game.
+ */
 public class InfoMenuController implements Initializable {
 
     private final SceneManager sceneManager;
@@ -23,10 +29,18 @@ public class InfoMenuController implements Initializable {
     @FXML
     private Button backButton;
 
+    /**
+     * @param sceneManager For changing the stage and scene of the game.
+     */
     public InfoMenuController(SceneManager sceneManager) {
         this.sceneManager = sceneManager;
     }
 
+    /**
+     * This method is called to stage the info menu of the game.
+     * It loads the info menu FXML file from the resource directory and
+     * set the stage to display the info menu page.
+     */
     public void showInfoMenu() {
         FXMLLoader infoLoader = new FXMLLoader(BrickDestroyerMain.class.getResource("/brickdestroyer/fxml/InfoMenu.fxml"));
         infoLoader.setController(this);
@@ -46,6 +60,12 @@ public class InfoMenuController implements Initializable {
     }
 
 
+    /**
+     * This method implements the Initializable interface and contain the basic methods
+     * that the View can invoke based on the user's interactions.
+     * @param url a pointer that represents a Uniform Resource Locator.
+     * @param resourceBundle a resource bundles that contain locale-specific objects.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         backButton.setOnAction(actionEvent -> {
