@@ -79,14 +79,6 @@ public class SceneManager {
     }
 
     /**
-     * Swap the scene to the winning board upon calling this method.
-     */
-    public void getWinningBoard() {
-        WinningBoardController winningBoardController = new WinningBoardController(this, scoreBoardModel, gameLogic);
-        winningBoardController.showWinningBoard();
-    }
-
-    /**
      * Swap the scene to the score board upon calling this method.
      */
     public void getScoreBoard(){

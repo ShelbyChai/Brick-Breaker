@@ -13,7 +13,7 @@ import javafx.scene.shape.Circle;
 abstract public class Ball implements Entity,Movable {
 
     private final Color borderColor;
-    private final Color innerColor;
+    private Color innerColor;
     private Circle ballFace;
     private final int width;
     private final int height;
@@ -103,6 +103,8 @@ abstract public class Ball implements Entity,Movable {
         ballFace = tempCircle;
         setPoints(tempCircle.getRadius(),tempCircle.getRadius());
     }
+
+
 
     /**
      * An abstract makeBall method for the derived ball class to be implemented.

@@ -1,9 +1,2 @@
-dddafd, 530
-aaaa, 220
-Shelby, 40
-fsda, 20
-a, 19
-b, 10
-c, 9
-, 0
-adad, 0
+Thomas, 200
+Sally, 160

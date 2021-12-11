@@ -6,8 +6,12 @@ import brickdestroyer.model.entities.Brick;
 import brickdestroyer.model.entities.Levels;
 import brickdestroyer.model.entities.Player;
 import javafx.geometry.Point2D;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import brickdestroyer.model.entities.Brick.ImpactDirection;
 
 
@@ -44,11 +48,11 @@ public class GameLogic {
         this.score = 0;
 
         BallFactory ballFactory = new BallFactory();
-        ball = ballFactory.getBallType("Rubber Ball", initialPosition);
-        player = new Player(initialPosition,150,10, drawArea);
+        ball = ballFactory.getBallType("Rubber Ball", startPoint);
+        player = new Player(startPoint,150,10, drawArea);
         levels = new Levels(30, 3, (double)6/2);
 
-        initialiseSpeed();
+        initialiseBallSpeed(ball);
         area = drawArea;
     }
 
@@ -69,7 +73,7 @@ public class GameLogic {
     public void resetPoint(){
         player.moveTo(startPoint);
         ball.moveTo(startPoint);
-        initialiseSpeed();
+        initialiseBallSpeed(ball);
         ballLost = false;
     }
 
@@ -102,10 +106,13 @@ public class GameLogic {
     }
 
     /**
-     * This method is called to initialize the starting speed
-     * of the ball using a rng factor.
+     * This method is called to initialize the starting x and y
+     * speed of the ball using a rng factor. The value of the
+     * initial speed y is always negative to make sure the ball
+     * travel upwards the screen.
+     * @param ball a Ball object pass to initialise its starting x and y speed.
      */
-    public void initialiseSpeed() {
+    public void initialiseBallSpeed(Ball ball) {
         Random rnd = new Random();
         int speedX, speedY;
         do {
@@ -115,10 +122,6 @@ public class GameLogic {
         do {
             speedY = -rnd.nextInt(3);
         } while (speedY == 0);
-
-        //TODO
-//        speedX = -2;
-//        speedY = -3;
 
         ball.setSpeed(speedX, speedY);
     }
@@ -144,19 +147,28 @@ public class GameLogic {
         else if(impactBorderFloor()){
             ballCount--;
             ballLost = true;
-
-            if (score >= 100)
-                score -= 100;
-            else
-                score = 0;
+            defaultScoreCalculation();
         }
+    }
+
+    /**
+     * This method is called by findImpact() method to introduce a
+     * penalty to the score if the user loses a ball in the
+     * level. It makes deduct the current available score and make
+     * sure the score wouldn't be negative.
+     */
+    public void defaultScoreCalculation() {
+        if (score >= 100)
+            score -= 100;
+        else
+            score = 0;
     }
 
 
     /**
      * This method is called findImpacts() to detect the impact between player and ball.
      * @param player a Player object that is controlling by the user in the game window.
-     * @param ball a Ball object.
+     * @param ball a Ball object that is currently in the game window.
      * @return a Boolean that is true if there is an impact between player and ball, false if there isn't.
      */
     public boolean setImpact(Player player,Ball ball){
@@ -234,7 +246,7 @@ public class GameLogic {
      */
     public void speedUp(boolean isSpeedUp) {
         if (isSpeedUp) {
-            ball.setSpeed(3,-3);
+            ball.setSpeed(3, -3);
         }
     }
 
@@ -413,7 +425,7 @@ public class GameLogic {
 
     /**
      * Getter method for the Bricks in the current level of the game.
-     * @return a 1d array that contains the bricks of the level.
+     * @return a 1d array that contains the bricks of the current level.
      */
     public Brick[] getBricks() {
         return bricks;

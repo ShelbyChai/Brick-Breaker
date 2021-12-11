@@ -49,8 +49,8 @@ public class GameBoardController{
     }
 
     /**
-     * This class add listener to the canvas when the
-     * game board controller object is created.
+     * This class initialize and add listener to the
+     * canvas when the game board controller object is created.
      */
     private void initializeListener() {
         keyPressed(this.gameBoardView.getCanvas());
@@ -218,9 +218,6 @@ public class GameBoardController{
                     }
                     break;
 
-                case F2:
-                    sceneManager.getWinningBoard();
-                    break;
             }
         });
     }

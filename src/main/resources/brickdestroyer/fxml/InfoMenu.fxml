@@ -23,10 +23,10 @@
       <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="416.0" layoutY="214.0" pickOnBounds="true" preserveRatio="true">
          <Image url="@../images/Esc.png" />
       </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="477.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="488.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
          <Image url="@../images/Alt1.png" />
       </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="527.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="538.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
          <Image url="@../images/Alt2.png" />
       </ImageView>
       <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="416.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true">
@@ -60,5 +60,15 @@
          <font>
             <Font name="System Bold" size="20.0" />
          </font></Label>
+      <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="395.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/add.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="22.0" fitWidth="22.0" layoutX="466.0" layoutY="129.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/add.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

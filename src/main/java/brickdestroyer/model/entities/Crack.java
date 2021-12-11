@@ -46,7 +46,7 @@ public class Crack {
         crackPath.getElements().clear();
     }
 
-    public void makeCrack(Point2D point, Brick.ImpactDirection impactDirection, Shape brickBounds){
+    public void makeCrack(Point2D point, Brick.ImpactDirection impactDirection, Shape brickBounds) {
         Bounds bounds = brickBounds.getBoundsInParent();
         Point2D impact = new Point2D((int)point.getX(),(int)point.getY());
         Point2D start, end, tmp;
@@ -82,7 +82,7 @@ public class Crack {
     private void crack(Point2D start, Point2D end){
         Path path = new Path();
 
-        path.getElements().add(new MoveTo(start.getX(),start.getY()));
+        path.getElements().add(new MoveTo(start.getX(), start.getY()));
 
         double width = (end.getX() - start.getX()) / (double)steps;
         double height = (end.getY() - start.getY()) / (double)steps;

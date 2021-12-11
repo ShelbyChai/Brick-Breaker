@@ -19,6 +19,7 @@ public class Player implements Entity, Movable {
     private Point2D ballPoint;
     private final int min;
     private final int max;
+
     private int moveAmount;
 
 
@@ -158,5 +159,12 @@ public class Player implements Entity, Movable {
      */
     @Override
     public double getHeight() {return playerFace.getHeight();}
+
+    /**
+     * @return
+     */
+    public int getMoveAmount() {
+        return moveAmount;
+    }
 
 }

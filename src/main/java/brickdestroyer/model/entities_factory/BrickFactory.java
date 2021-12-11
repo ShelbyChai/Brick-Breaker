@@ -20,9 +20,8 @@ public class BrickFactory {
      * @return the created Brick types.
      */
     public Brick getBrickType(String brickType, Point2D position, Dimension2D size) {
-        if (brickType == null) {
+        if (brickType == null)
             return null;
-        }
         if (brickType.equalsIgnoreCase("Clay Brick")) {
             return new ClayBrick(position, size);
         }
