@@ -1,6 +1,5 @@
 package brickdestroyer.model.entities;
 
-
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
@@ -130,9 +129,9 @@ abstract public class Brick implements Entity {
     /**
      * Getter method for the condition of whether the brick. This method is used to
      * determine if a crack path is needed to be drawn on a brick.
-     * @return a boolean value which return true when the brick is broken, false if its not.
+     * @return a boolean value which return true when the brick is broken, false if it's not.
      */
-    public final boolean isBroken(){
+    public boolean isBroken(){
         return !broken;
     }
 

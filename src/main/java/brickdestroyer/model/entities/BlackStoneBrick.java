@@ -16,7 +16,7 @@ import java.util.Random;
  * rng factor to determine the successful impact of the ball.
  */
 
-public class BlackStoneBrick extends Brick{
+public class BlackStoneBrick extends Brick {
     private static final String NAME = "Black Stone Brick";
     private static final Color DEF_BORDER = Color.rgb(198,198,198);
     private static final Color DEF_INNER = Color.rgb(47,46,51);

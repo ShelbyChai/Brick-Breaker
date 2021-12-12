@@ -97,7 +97,9 @@ public class GameBoardView {
 
     /**
      * This method is called by drawWall() method to draw the crack path of a crackable
-     * brick on the canvas.
+     * brick on the canvas. This method parse the crackPath variable into individual
+     * path element each containing the double value of X and Y to be drawn on the canvas.
+     * Example of parsing: MoveTo[300, 430] => positionXY[0] = 300; positionXY[1] = 430
      * @param crackPath a Path object that contains the path element of the crack path of
      *                  a brick.
      */
@@ -117,7 +119,7 @@ public class GameBoardView {
     }
 
     /**
-     * This method is called by drawCrack() method to parse the String of the crackPath
+     * This is a helper method for drawCrack() method to parse the String of the crackPath
      * into each individual path element in the form of string.
      * @param crackPath a Path object that contains the path element to be drawn on the game window.
      * @param index an Integer that represent the index value of the for loop.
@@ -178,6 +180,10 @@ public class GameBoardView {
         paint();
     }
 
+    /**
+     * This method return the canvas in the game window
+     * @return a Canvas that is the current image of the game screen.
+     */
     public Canvas getCanvas() {return canvas;}
 
 }

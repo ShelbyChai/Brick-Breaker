@@ -1,2 +1,5 @@
+dsfa, 2680
+, 2680
+Jerry, 2590
 Thomas, 200
 Sally, 160

@@ -9,8 +9,6 @@ import jdk.jfr.Description;
 import org.junit.jupiter.api.Test;
 
 
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class CrackTest {
@@ -34,7 +32,8 @@ class CrackTest {
     }
 
     /**
-     * This test case test whether the crack.reset() method works.
+     * This test case test whether the crack.reset() method reset the crackPath element
+     * in crackPath.
      */
     @Test
     void reset() {
@@ -47,10 +46,13 @@ class CrackTest {
     }
 
     /**
+     * This method test the whether the crackPath x and y are within the bound of the brick.
      * Since the path is created on the brick that means the path element value should be lesser than
      * brick's Max X and Max Y position value. This test case retrieve the crackPath and parse the
      * crackPath element to get its x and y value. This test case checks whether the MaxX and MaxY
      * value of the brick is larger than the first crackPath value.
+     *
+     * Example of parsing: MoveTo[300, 430] => value1 = 300; value2 = 430
      */
     @Test
     @Description("Test if the crack element value is within the brick bound")

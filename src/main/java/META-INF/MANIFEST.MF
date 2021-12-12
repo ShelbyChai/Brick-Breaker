@@ -1,3 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: brickdestroyer.BrickDestroyerMain
+Main-Class: brickdestroyer.Main
 

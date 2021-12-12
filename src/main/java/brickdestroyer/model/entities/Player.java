@@ -17,6 +17,7 @@ public class Player implements Entity, Movable {
     private static final Color INNER_COLOR = Color.GREEN;
     private final Rectangle playerFace;
     private Point2D ballPoint;
+
     private final int min;
     private final int max;
 
@@ -41,9 +42,9 @@ public class Player implements Entity, Movable {
     }
 
     /**
-     * The method returns the newly created player rectangle shape along with the
+     * The method returns the player rectangle shape along with the
      * specified properties. This method defines the overall player shape
-     * to be drawn in the game window
+     * to be drawn in the game window.
      * @param width a double x plane value that defines the width of the player shape to be created.
      * @param height a double y plane value that defines the height of the player shape to be created.
      * @return the generated shape of player.
@@ -54,9 +55,9 @@ public class Player implements Entity, Movable {
     }
 
     /**
-     * Move and update the player coordinate to the new X and Y coordinate
+     * Move and update the player coordinate to the new x and y position
      * in the game window with the constraint of not going out of the defined
-     * min/max game window. This method is called to update the new position of
+     * min/max value in the game window. This method is called to update the new position of
      * the player in the game window.
      */
     @Override
@@ -161,10 +162,31 @@ public class Player implements Entity, Movable {
     public double getHeight() {return playerFace.getHeight();}
 
     /**
-     * @return
+     * This Getter method is created for the purpose of testing PlayerTest.java.
+     * Getter method for the move amount of the player. A negative value represent a left movement
+     * of the player and right represent the right in pixel.
+     * @return an Integer value that is the current moveAmount of the player.
      */
     public int getMoveAmount() {
         return moveAmount;
     }
 
+    /**
+     * This Getter method is created for the purpose of testing PlayerTest.java.
+     * Getter method for receiving the minimum amount of border X position value.
+     * @return an Integer value that represent the minimum X position value of
+     * how far the player can travel to the left.
+     */
+    public int getMin() {
+        return min;
+    }
+
+    /**
+     * This Getter method is created for the purpose of testing GameLogicTest.java.
+     * Getter method for receiving the minimum amount of border X position value.
+     * @return a Point2D value that represent the center x and y position of the player.
+     */
+    public Point2D getBallPoint() {
+        return ballPoint;
+    }
 }

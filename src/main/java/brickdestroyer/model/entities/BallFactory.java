@@ -1,7 +1,5 @@
-package brickdestroyer.model.entities_factory;
+package brickdestroyer.model.entities;
 
-import brickdestroyer.model.entities.Ball;
-import brickdestroyer.model.entities.RubberBall;
 import javafx.geometry.Point2D;
 
 /**

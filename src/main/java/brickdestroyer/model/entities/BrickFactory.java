@@ -1,7 +1,5 @@
-package brickdestroyer.model.entities_factory;
+package brickdestroyer.model.entities;
 
-
-import brickdestroyer.model.entities.*;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 

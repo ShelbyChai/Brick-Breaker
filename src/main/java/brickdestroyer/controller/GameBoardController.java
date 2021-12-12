@@ -2,7 +2,7 @@ package brickdestroyer.controller;
 
 
 import brickdestroyer.SceneManager;
-import brickdestroyer.model.entities.Levels;
+import brickdestroyer.model.game.Levels;
 import brickdestroyer.model.game.GameBoardModel;
 import brickdestroyer.view.GameBoardView;
 import brickdestroyer.model.game.GameLogic;
@@ -75,7 +75,7 @@ public class GameBoardController{
 
         private long lastUpdate = 0;
         // Default: 10_000_000
-        final private static long TIMER_DELAY = 1_000_000;
+        final private static long TIMER_DELAY = 10_000_000;
 
         @Override
         public void handle(long currentNanoTimer) {
@@ -153,6 +153,7 @@ public class GameBoardController{
             } else {
                 gameBoardView.repaintMessage("All WALLS DESTROYED");
                 animationTimer.stop();
+                showCurrentLevelComplete();
 
                 sceneManager.getScoreBoard();
             }
@@ -229,11 +230,18 @@ public class GameBoardController{
     private void showCurrentLevelComplete() {
         int remainingLevel = Levels.LEVELS_COUNT - gameLogic.getCurrentLevel();
         Alert summaryLevelBox = new Alert(Alert.AlertType.INFORMATION);
-        summaryLevelBox.setTitle("Level Summary");
-        summaryLevelBox.setHeaderText("Level " + gameLogic.getCurrentLevel() + " Complete!!!");
-        summaryLevelBox.setContentText
-                ("Current score: " + gameLogic.getScore() + ", Remaining Ball: " + gameLogic.getBallCount() + ", LevelLeft: " + remainingLevel);
-        summaryLevelBox.show();
+        if (!(remainingLevel ==0)) {
+            summaryLevelBox.setTitle("Level Summary");
+            summaryLevelBox.setHeaderText("Level " + gameLogic.getCurrentLevel() + " Complete!!!");
+            summaryLevelBox.setContentText
+                    ("Current score: " + gameLogic.getScore() + ", Remaining Ball: " + gameLogic.getBallCount() + ", LevelLeft: " + remainingLevel);
+
+        } else {
+            summaryLevelBox.setHeaderText("Congratulations! You have completed all levels in the game. ");
+            summaryLevelBox.setContentText
+                    ("Your finale score is: " + gameLogic.getScore() + ". You can now proceed to the leaderboard screen.");
+        }
+            summaryLevelBox.show();
     }
 
     /**

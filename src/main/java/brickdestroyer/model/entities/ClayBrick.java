@@ -1,6 +1,5 @@
 package brickdestroyer.model.entities;
 
-
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;

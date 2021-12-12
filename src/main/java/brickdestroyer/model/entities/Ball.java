@@ -10,10 +10,10 @@ import javafx.scene.shape.Circle;
  * in the game. This class contains all the basic behavior and
  * the getter/setter of ball properties.
  */
-abstract public class Ball implements Entity,Movable {
+abstract public class Ball implements Entity, Movable {
 
     private final Color borderColor;
-    private Color innerColor;
+    private final Color innerColor;
     private Circle ballFace;
     private final int width;
     private final int height;
@@ -22,6 +22,8 @@ abstract public class Ball implements Entity,Movable {
     private Point2D down;
     private Point2D left;
     private Point2D right;
+
+
     private int speedX;
     private int speedY;
 
@@ -51,7 +53,7 @@ abstract public class Ball implements Entity,Movable {
     }
 
     /**
-     * This method is called by move() and moveTo() method to return generated circle.
+     * This method is helper method for move() and moveTo() method to return generated circle.
      * The method returns a newly generated Circle shape with the specified parameter
      * to define the new position and shape of the ball.
      * @return a new Circle shape with the specified center position and radius.
@@ -81,8 +83,8 @@ abstract public class Ball implements Entity,Movable {
     }
 
     /**
-     * Move the ball to a specified x and y position in the game window.
-     * This method is called in the game to move the ball to the specified initial position.
+     * Move the ball to the x and y position in the game window.
+     * This method is called in the game to move the ball to the initial position.
      * @param position a Point2D x and y position that can only be positive value. It defines the
      *                 new position location of the ball in the game window.
      */
@@ -108,9 +110,7 @@ abstract public class Ball implements Entity,Movable {
 
     /**
      * An abstract makeBall method for the derived ball class to be implemented.
-     * The method returns the newly created derived ball circle shape along with the
-     * specified properties. This method defines the overall ball shape
-     * to be drawn in the game window.
+     * This method returns the Circle shape of the ball.
      * @param center a Point2D center x and y position of the center of the ball to be created.
      * @param radius an Integer value of the radius of the ball to be created.
      * @return a new Circle shape with the specified center position and radius.
@@ -242,7 +242,7 @@ abstract public class Ball implements Entity,Movable {
 
     /**
      * Getter method for the upper-left corner y bound of the ball. It defines the y position of the starting
-     * point of the ball to be generated drawn in the game window. The value of it can only be positive.
+     * point of the ball to be generated and drawn in the game window. The value of it can only be positive.
      * @return a Double that contains the upper-left y bound of the ball.
      */
     @Override
@@ -268,6 +268,30 @@ abstract public class Ball implements Entity,Movable {
     @Override
     public double getHeight() {
         return height;
+    }
+
+    /**
+     * This Getter method is created for the purpose of testing BallTest.java.
+     * @return a Circle object that represent the circle shape of the ball.
+     */
+    public Circle getBallFace() {
+        return ballFace;
+    }
+
+    /**
+     * This Getter method is created for the purpose of testing BallTest.java.
+     * @return an Integer value that represent the current x speed of the ball.
+     */
+    public int getSpeedX() {
+        return speedX;
+    }
+
+    /**
+     * This Getter method is created for the purpose of testing BallTest.java.
+     * @return an Integer value that represent the current y speed of the ball.
+     */
+    public int getSpeedY() {
+        return speedY;
     }
 
 }

@@ -1,16 +1,12 @@
 package brickdestroyer.model.game;
 
 import brickdestroyer.model.entities.Ball;
-import brickdestroyer.model.entities_factory.BallFactory;
+import brickdestroyer.model.entities.BallFactory;
 import brickdestroyer.model.entities.Brick;
-import brickdestroyer.model.entities.Levels;
 import brickdestroyer.model.entities.Player;
 import javafx.geometry.Point2D;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import brickdestroyer.model.entities.Brick.ImpactDirection;
 
@@ -52,7 +48,7 @@ public class GameLogic {
         player = new Player(startPoint,150,10, drawArea);
         levels = new Levels(30, 3, (double)6/2);
 
-        initialiseBallSpeed(ball);
+        initialiseBallSpeed();
         area = drawArea;
     }
 
@@ -73,7 +69,7 @@ public class GameLogic {
     public void resetPoint(){
         player.moveTo(startPoint);
         ball.moveTo(startPoint);
-        initialiseBallSpeed(ball);
+        initialiseBallSpeed();
         ballLost = false;
     }
 
@@ -82,7 +78,7 @@ public class GameLogic {
      * This method is called when all ball is lost the all the ball or
      * when the player is tweaking in the debug console.
      */
-    public void wallReset(){
+    public void wallReset() {
         for(Brick b : bricks)
             b.repair();
         brickCount = bricks.length;
@@ -94,7 +90,7 @@ public class GameLogic {
      * This method is called when all the brick in the current level is destroyed
      * level or when the player is tweaking in the debug console.
      */
-    public void nextLevel(){
+    public void nextLevel() {
         setBricks(levels.getLevels()[currentLevel++]);
         setBrickCount(getBricks().length);
 
@@ -110,9 +106,8 @@ public class GameLogic {
      * speed of the ball using a rng factor. The value of the
      * initial speed y is always negative to make sure the ball
      * travel upwards the screen.
-     * @param ball a Ball object pass to initialise its starting x and y speed.
      */
-    public void initialiseBallSpeed(Ball ball) {
+    public void initialiseBallSpeed() {
         Random rnd = new Random();
         int speedX, speedY;
         do {
@@ -131,7 +126,7 @@ public class GameLogic {
      * entity and wall of the game window. It changes the property
      * of the class after an impact.
      */
-    public void findImpacts(){
+    public void findImpacts() {
         if(setImpact(player, ball)){
             ball.reverseY();
         }

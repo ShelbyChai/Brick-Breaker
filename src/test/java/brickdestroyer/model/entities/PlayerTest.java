@@ -5,14 +5,36 @@ import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import org.junit.jupiter.api.Test;
-import brickdestroyer.model.entities.Player;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
+    Point2D initialPosition = new Point2D(300, 430);
     Player player
-            = new Player(new Point2D(300,430),150,10, new Rectangle(0, 0, GameBoardModel.DEF_WIDTH, GameBoardModel.DEF_HEIGHT));
+            = new Player(initialPosition,150,10, new Rectangle(0, 0, GameBoardModel.DEF_WIDTH, GameBoardModel.DEF_HEIGHT));
 
+    /**
+     * This method test whether the player can move over the defined min X position of the border.
+     */
+    @Test
+    void move() {
+        int moveLoop = 1000;
+        for (int i = 0 ; i < moveLoop; i++) {
+            player.moveLeft();
+            player.move();
+        }
+
+        assertEquals(player.getMin(), player.getBallPoint().getX());
+    }
+
+    @Test
+    void moveTo() {
+        player.moveTo(new Point2D(250, 430));
+        assertAll(
+                () -> assertEquals(250, player.getBallPoint().getX()),
+                () -> assertEquals(430, player.getBallPoint().getY())
+        );
+    }
 
     @Test
     void stop() {
@@ -69,4 +91,6 @@ class PlayerTest {
     void getHeight() {
         assertEquals(10, player.getHeight());
     }
+
+
 }
