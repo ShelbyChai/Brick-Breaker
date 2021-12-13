@@ -66,6 +66,23 @@ public class ScoreBoardModel {
     }
 
     /**
+     * This method is called by readHighScore() and updateHighScore() method to sort
+     * and return the playerRecord.
+     * @param playerRecord a HashMap that contains the information of player name and
+     *                     player score of the current game.
+     * @return a LinkedHashMap that contains the sorted playerRecord list.
+     */
+    private LinkedHashMap<String, Integer> sortScore(HashMap<String, Integer> playerRecord) {
+        LinkedHashMap<String, Integer> reverseSortedMap = new LinkedHashMap<>();
+        playerRecord.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                .forEachOrdered(i -> reverseSortedMap.put(i.getKey(), i.getValue()));
+
+        return reverseSortedMap;
+    }
+
+    /**
      * This method is called to update the score list in the playerRecord
      * of the current player score and name.
      */
@@ -96,23 +113,6 @@ public class ScoreBoardModel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * This method is called by readHighScore() and updateHighScore() method to sort
-     * and return the playerRecord.
-     * @param playerRecord a HashMap that contains the information of player name and
-     *                     player score of the current game.
-     * @return a LinkedHashMap that contains the sorted playerRecord list.
-     */
-    private LinkedHashMap<String, Integer> sortScore(HashMap<String, Integer> playerRecord) {
-        LinkedHashMap<String, Integer> reverseSortedMap = new LinkedHashMap<>();
-        playerRecord.entrySet()
-                .stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                .forEachOrdered(i -> reverseSortedMap.put(i.getKey(), i.getValue()));
-
-        return reverseSortedMap;
     }
 
     /**

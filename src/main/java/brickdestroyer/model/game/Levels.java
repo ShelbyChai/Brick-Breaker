@@ -47,51 +47,6 @@ public class Levels {
     }
 
     /**
-     * Generate the overall view structure, position of each brick in each level using the selected type of
-     * brick and properties.
-     * @param brickCnt an Int that represent the number of bricks of the current level.
-     * @param lineCnt an Int that represent the number of lines of the current level.
-     * @param brickDimRatio a Double that represent the width/height dimension ration of each brick in the current level.
-     * @param brickTypeA a String that represent the first type of brick in the level.
-     * @param brickTypeB a String that represent the second type of brick in the level.
-     * @return an array of Brick object that represent a single level in the game.
-     */
-    private Brick[] makeLevel(int brickCnt, int lineCnt, double brickDimRatio, String brickTypeA, String brickTypeB){
-        int brickCount = brickCnt;
-        brickCount -= brickCount % lineCnt;
-        int brickOnLine = brickCount / lineCnt;
-        double brickLength = (double)GameBoardModel.DEF_WIDTH / brickOnLine;
-        double brickHeight = brickLength / brickDimRatio;
-
-        brickCount += lineCnt / 2;
-        Brick[] level  = new Brick[brickCount];
-
-        Dimension2D brickSize = new Dimension2D((int) brickLength,(int) brickHeight);
-        Point2D brickPosition;
-
-        int i;
-        for(i = 0; i < level.length; i++){
-            int line = i / brickOnLine;
-            if(line == lineCnt)
-                break;
-            double positionX = (i % brickOnLine) * brickLength;
-            positionX =(line % 2 == 0) ? positionX : (positionX - (brickLength / 2));
-            double positionY = (line) * brickHeight;
-            brickPosition = new Point2D(positionX,positionY);
-
-            level[i] = generateBrickType(chooseBrick(line, i, brickOnLine), brickPosition, brickSize, brickTypeA, brickTypeB);
-        }
-
-        for(double y = brickHeight; i < level.length; i++, y += 2 * brickHeight){
-            double x = (brickOnLine * brickLength) - (brickLength / 2);
-            brickPosition = new Point2D(x,y);
-            level[i] = makeBrick(brickTypeA, brickPosition,brickSize);
-        }
-
-        return level;
-    }
-
-    /**
      * This method is called by makeLevel() method to decide
      * @param line an Int that represent the current line of the brick to be generated.
      * @param brickIndex an Int that represent the current index number of the brick to be generated.
@@ -145,6 +100,52 @@ public class Levels {
             return makeBrick(brickTypeA, brickPosition,brickSize);
         else
             return b ? makeBrick(brickTypeA, brickPosition,brickSize) : makeBrick(brickTypeB, brickPosition,brickSize);
+    }
+
+    /**
+     * Generate the overall view structure, position of each brick in each level using the selected type of
+     * brick and properties.
+     * @param brickCnt an Int that represent the number of bricks of the current level.
+     * @param lineCnt an Int that represent the number of lines of the current level.
+     * @param brickDimRatio a Double that represent the width/height dimension ration of each brick in the current level.
+     * @param brickTypeA a String that represent the first type of brick in the level.
+     * @param brickTypeB a String that represent the second type of brick in the level.
+     * @return an array of Brick object that represent a single level in the game.
+     */
+    private Brick[] makeLevel(int brickCnt, int lineCnt, double brickDimRatio, String brickTypeA, String brickTypeB){
+        int brickCount = brickCnt;
+        brickCount -= brickCount % lineCnt;
+        int brickOnLine = brickCount / lineCnt;
+        double brickLength = (double)GameBoardModel.DEF_WIDTH / brickOnLine;
+        double brickHeight = brickLength / brickDimRatio;
+
+        brickCount += lineCnt / 2;
+        Brick[] level  = new Brick[brickCount];
+
+
+        Dimension2D brickSize = new Dimension2D((int) brickLength,(int) brickHeight);
+        Point2D brickPosition;
+
+        int i;
+        for(i = 0; i < level.length; i++){
+            int line = i / brickOnLine;
+            if(line == lineCnt)
+                break;
+            double positionX = (i % brickOnLine) * brickLength;
+            positionX =(line % 2 == 0) ? positionX : (positionX - (brickLength / 2));
+            double positionY = (line) * brickHeight;
+            brickPosition = new Point2D(positionX,positionY);
+
+            level[i] = generateBrickType(chooseBrick(line, i, brickOnLine), brickPosition, brickSize, brickTypeA, brickTypeB);
+        }
+
+        for(double y = brickHeight; i < level.length; i++, y += 2 * brickHeight){
+            double x = (brickOnLine * brickLength) - (brickLength / 2);
+            brickPosition = new Point2D(x,y);
+            level[i] = makeBrick(brickTypeA, brickPosition,brickSize);
+        }
+
+        return level;
     }
 
     /**

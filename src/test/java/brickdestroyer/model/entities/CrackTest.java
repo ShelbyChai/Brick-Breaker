@@ -8,8 +8,8 @@ import javafx.scene.shape.Path;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.Test;
 
-
 import static org.junit.jupiter.api.Assertions.*;
+
 
 class CrackTest {
     Brick cementBrick = new CementBrick(new Point2D(300, 430), new Dimension2D(60, 20));

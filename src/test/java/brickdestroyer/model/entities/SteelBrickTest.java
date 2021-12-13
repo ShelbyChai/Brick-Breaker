@@ -3,13 +3,14 @@ package brickdestroyer.model.entities;
 import javafx.geometry.Dimension2D;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 
 class SteelBrickTest {
     Dimension2D dimBrick = new Dimension2D(60, 20);

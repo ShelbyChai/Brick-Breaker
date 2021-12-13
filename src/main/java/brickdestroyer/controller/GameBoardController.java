@@ -81,32 +81,25 @@ public class GameBoardController{
         public void handle(long currentNanoTimer) {
             if (currentNanoTimer - lastUpdate >= TIMER_DELAY) {
                 gameBoardView.paint();
-
                 setUserKeyInput();
                 gameLogic.move();
                 gameLogic.findImpacts();
-
                 gameBoardView.repaintScore("Score: " + gameLogic.getScore());
                 gameBoardView.repaintMessage(String.format("Bricks: %d Balls %d", gameLogic.getBrickCount(), gameLogic.getBallCount()));
-
                 handleBallLost();
-
                 try {
                     handleNextLevel();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-
                 lastUpdate = currentNanoTimer;
             }
         }
-
         @Override
         public void start(){
             super.start();
             gameBoardModel.setTimerRunning(true);
         }
-
         @Override
         public void stop(){
             super.stop();

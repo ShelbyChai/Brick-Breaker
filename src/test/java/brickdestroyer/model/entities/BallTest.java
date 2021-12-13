@@ -4,11 +4,14 @@ import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import org.junit.jupiter.api.Test;
 
+
 import static org.junit.jupiter.api.Assertions.*;
+
 
 class BallTest {
     Point2D initialPosition = new Point2D(300, 430);
     Ball rubberBall = new RubberBall(initialPosition);
+
 
     @Test
     void moveTo() {

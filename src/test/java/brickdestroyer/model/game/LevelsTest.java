@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class LevelsTest {
     Levels levels = new Levels(30, 3, 3);
 

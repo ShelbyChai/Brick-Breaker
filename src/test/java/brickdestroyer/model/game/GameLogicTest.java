@@ -1,13 +1,10 @@
 package brickdestroyer.model.game;
 
 import brickdestroyer.model.entities.Ball;
-import brickdestroyer.model.entities.Brick;
 import brickdestroyer.model.entities.Player;
 import javafx.scene.shape.Rectangle;
-import org.junit.jupiter.api.Test;
 import javafx.geometry.Point2D;
-
-import java.awt.*;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -78,7 +75,6 @@ class GameLogicTest {
         gameLogic.move();
         gameLogic.findImpacts();
 
-        Brick[] brick = gameLogic.getBricks();
         System.out.println("BallCount before wallReset: " + gameLogic.getBrickCount());
 
         gameLogic.wallReset();

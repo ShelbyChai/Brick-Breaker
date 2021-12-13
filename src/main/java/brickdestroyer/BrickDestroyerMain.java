@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 public class BrickDestroyerMain extends Application {
 
     public static void main(String[] args) {
+
         launch(args);
     }
 

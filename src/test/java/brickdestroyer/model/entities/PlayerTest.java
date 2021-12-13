@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 class PlayerTest {
     Point2D initialPosition = new Point2D(300, 430);
     Player player
