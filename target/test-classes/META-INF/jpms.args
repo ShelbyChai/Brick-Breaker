@@ -1,0 +1,4 @@
+--patch-module
+COMP2042.CW.hfyxc3=_
+--add-reads
+COMP2042.CW.hfyxc3=ALL-UNNAMED

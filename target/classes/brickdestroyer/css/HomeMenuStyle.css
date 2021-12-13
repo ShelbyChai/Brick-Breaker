@@ -1,0 +1,56 @@
+.root {
+    -fx-font-family: sans-serif;
+    -fx-focus-color: transparent;
+}
+
+#homePane {
+    -fx-background-image: url("../images/home_menu.png");
+    -fx-background-repeat: stretch;
+    -fx-background-position: center;
+}
+
+.label {
+    -fx-fill-text: rgba(255,255,255);
+    -fx-effect: innershadow( three-pass-box , rgba(105,34,15,0.2) , 6, 0.0 , 0 , 2 );
+}
+
+.button {
+    -fx-text-align: center;
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-pref-width: 150px;
+    -fx-pref-height: 40px;
+    -fx-text-fill: rgb(0,0,0);
+    -fx-background-color:
+        linear-gradient(#ffd65b, #e68400),
+        linear-gradient(#ffef84, #f2ba44),
+        linear-gradient(#ffea6a, #efaa22),
+        linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),
+        linear-gradient(from 0% 0% to 15% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: #654b00;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-padding: 10 20 10 20;
+}
+
+.button:hover {
+    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-text-fill: rgb(230,123,85);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-scale-z: 1.05;
+}
+
+#greetings {
+    -fx-font-size: 25px;
+}
+
+#gameTitle {
+    -fx-font-size: 40px;
+    -fx-font-weight: 900;;
+}
+
+#version {
+    -fx-font-size: 10px;
+}

@@ -1,0 +1,6 @@
+brickdestroyer\model\game\GameLogicTest.class
+brickdestroyer\model\entities\BallTest.class
+brickdestroyer\model\entities\CrackTest.class
+brickdestroyer\model\entities\SteelBrickTest.class
+brickdestroyer\model\entities\PlayerTest.class
+brickdestroyer\model\game\LevelsTest.class

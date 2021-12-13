@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="ANALYZE_TEST_SOURCES" value="false" />
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ac4b9d1b-0713-47f6-b7ce-716cc6f48a76" name="Changes" comment="Completed Javadoc and Junit testing.">
+      <change beforePath="$PROJECT_DIR$/COMP2042_CW_hfyxc3.iml" beforeDir="false" afterPath="$PROJECT_DIR$/COMP2042_CW_hfyxc3.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Class Diagram.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/brickdestroyer/BrickDestroyerMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/brickdestroyer/BrickDestroyerMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/brickdestroyer/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/brickdestroyer/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/brickdestroyer/controller/GameBoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/brickdestroyer/controller/GameBoardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/brickdestroyer/model/game/Levels.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/brickdestroyer/model/game/Levels.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/brickdestroyer/model/game/ScoreBoardModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/brickdestroyer/model/game/ScoreBoardModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/brickdestroyer/text/high_score.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/brickdestroyer/text/high_score.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/brickdestroyer/model/entities/BallTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/brickdestroyer/model/entities/BallTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/brickdestroyer/model/entities/CrackTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/brickdestroyer/model/entities/CrackTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/brickdestroyer/model/entities/PlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/brickdestroyer/model/entities/PlayerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/brickdestroyer/model/entities/SteelBrickTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/brickdestroyer/model/entities/SteelBrickTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/brickdestroyer/model/game/GameLogicTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/brickdestroyer/model/game/GameLogicTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/brickdestroyer/model/game/LevelsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/brickdestroyer/model/game/LevelsTest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="JUnit5 Test Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="226ieb5s48jQ0qLljmYn67fuCoS" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Software_Maintenance/Reference" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\jayde\Desktop\COMP2042_CW_hfyxc3\src\main\resources\com\example\comp2042_cw_hfyxc3" />
+      <recent name="C:\Users\jayde\Desktop\COMP2042_CW_hfyxc3\src\main\resources\com\example\comp2042_cw_hfyxc3\css" />
+      <recent name="C:\Users\jayde\Desktop\COMP2042_CW_hfyxc3\src\main\resources\com\example\comp2042_cw_hfyxc3\fxml" />
+      <recent name="C:\Users\jayde\Desktop\COMP2042_CW_hfyxc3\src\main\java\com\example\comp2042_cw_hfyxc3" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\jayde\Desktop\COMP2042_CW_hfyxc3" />
+      <recent name="C:\Users\jayde\Desktop\COMP2042_CW_hfyxc3\classdiagram" />
+      <recent name="C:\Users\jayde\Desktop\COMP2042_CW_hfyxc3\src\main\resources\brickdestroyer\images" />
+      <recent name="C:\Users\jayde\Desktop\COMP2042_CW_hfyxc3\readme" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="brickdestroyer.model.entities" />
+      <recent name="brickdestroyer.model" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="brickdestroyer.model.game" />
+      <recent name="brickdestroyer.model.entities" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.comp2042_cw_hfyxc3" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="brickdestroyer.Main" />
+      <module name="COMP2042_CW_hfyxc3" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="brickdestroyer.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameLogicTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="COMP2042_CW_hfyxc3" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="brickdestroyer.model.game.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="brickdestroyer.model.game" />
+      <option name="MAIN_CLASS_NAME" value="brickdestroyer.model.game.GameLogicTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="LevelsTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="COMP2042_CW_hfyxc3" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="brickdestroyer.model.game.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="brickdestroyer.model.game" />
+      <option name="MAIN_CLASS_NAME" value="brickdestroyer.model.game.LevelsTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="COMP2042_CW_hfyxc3-1.0-SNAPSHOT-shaded.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/target/COMP2042_CW_hfyxc3-1.0-SNAPSHOT-shaded.jar" />
+      <method v="2" />
+    </configuration>
+    <configuration name="COMP2042_CW_hfyxc3-1.0-SNAPSHOT.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/target/COMP2042_CW_hfyxc3-1.0-SNAPSHOT.jar" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+        <item itemvalue="JAR Application.COMP2042_CW_hfyxc3-1.0-SNAPSHOT-shaded.jar" />
+        <item itemvalue="JAR Application.COMP2042_CW_hfyxc3-1.0-SNAPSHOT.jar" />
+        <item itemvalue="JUnit.LevelsTest" />
+        <item itemvalue="JUnit.GameLogicTest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ac4b9d1b-0713-47f6-b7ce-716cc6f48a76" name="Changes" comment="" />
+      <created>1639164536304</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1639164536304</updated>
+      <workItem from="1639164537432" duration="284000" />
+      <workItem from="1639164832433" duration="186000" />
+      <workItem from="1639165026177" duration="1365000" />
+      <workItem from="1639166429707" duration="145000" />
+      <workItem from="1639166586657" duration="261000" />
+      <workItem from="1639166857054" duration="231000" />
+      <workItem from="1639167100107" duration="324000" />
+      <workItem from="1639167436576" duration="3677000" />
+      <workItem from="1639171156209" duration="726000" />
+      <workItem from="1639171898671" duration="67000" />
+      <workItem from="1639199103672" duration="24478000" />
+      <workItem from="1639233029758" duration="5115000" />
+      <workItem from="1639238201378" duration="14104000" />
+      <workItem from="1639310784167" duration="29679000" />
+      <workItem from="1639365992503" duration="5309000" />
+      <workItem from="1639378603045" duration="21845000" />
+    </task>
+    <task id="LOCAL-00001" summary="Completed Javadoc and Junit testing.">
+      <created>1639341444099</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1639341444099</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Completed Javadoc and Junit testing." />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed Javadoc and Junit testing." />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/COMP2042_CW_hfyxc3$Main.ic" NAME="Main Coverage Results" MODIFIED="1639383339407" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>brickdestroyer.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/COMP2042_CW_hfyxc3$COMP2042_CW_hfyxc3_1_0_SNAPSHOT_jar.ic" NAME="COMP2042_CW_hfyxc3-1.0-SNAPSHOT.jar Coverage Results" MODIFIED="1639235104368" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>

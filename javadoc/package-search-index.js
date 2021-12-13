@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"COMP2042.CW.hfyxc3","l":"brickdestroyer"},{"m":"COMP2042.CW.hfyxc3","l":"brickdestroyer.controller"},{"m":"COMP2042.CW.hfyxc3","l":"brickdestroyer.model.entities"},{"m":"COMP2042.CW.hfyxc3","l":"brickdestroyer.model.game"},{"m":"COMP2042.CW.hfyxc3","l":"brickdestroyer.view"}];updateSearchResults();

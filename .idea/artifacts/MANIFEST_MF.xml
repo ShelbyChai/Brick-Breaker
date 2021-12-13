@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact name="MANIFEST_MF">
+    <output-path>$PROJECT_DIR$/out/artifacts/MANIFEST_MF</output-path>
+    <root id="root">
+      <element id="file-copy" path="$PROJECT_DIR$/target/META-INF/MANIFEST.MF" />
+    </root>
+  </artifact>
+</component>
